@@ -8,7 +8,7 @@ module.exports = {
     var dep = req.body.departure_date
     var ret = req.body.return_date
 
-		skyscanner.getcommuns(one, dep, ret).then(function(destinationsresult){
+		skyscanner.getcommuns(one, two, dep, ret).then(function(destinationsresult){
 				return res.view('index', {
 					searchresults: destinationsresult
 				});
