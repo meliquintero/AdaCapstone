@@ -13,15 +13,25 @@ const DESTINATION = "anywhere"
 module.exports = {
 
   sky48Codes: function(origin) {
+    sails.log.debug("DEBUG", origin);
 
-    var arrayCodes = []
+    var arrayCodes = origin.Quotes.map(function(one) {
+        return one["OutboundLeg"]["DestinationId"]
+      });
 
     return arrayCodes
   },
 
-  getCommons: function(origin1, origin2) {
+  clean: function(arrayCommons, originQuotes) {
+    final = []
 
-    return ['arrayCommons', "melissa"]
+    for (var i = 0, len = originQuotes.Quotes.length; i < len; i++) {
+      if (arrayCommons.includes(originQuotes.Quotes[i]["OutboundLeg"]["DestinationId"])) {
+        final.push(originQuotes.Quotes[i])
+      }
+    }
+    return final
+
   },
 
   getOriginData: function (origin, departure_date, return_time) {
@@ -41,19 +51,16 @@ module.exports = {
   },
 
   matchedDestinations: function(origin1, origin2, departure_date, return_time) {
+    var self = this
     return Promise.join(
+
       this.getOriginData(origin1, departure_date, return_time),
       this.getOriginData(origin2, departure_date, return_time),
       function(origin1Data, origin2Data) {
 
-        //Gett all the destinations Ids
-        var arrayOne = origin1Data.Quotes.map(function(one) {
-          return one["OutboundLeg"]["DestinationId"]
-        });
-
-        var arrayTwo = origin2Data.Quotes.map(function(one) {
-          return one["OutboundLeg"]["DestinationId"]
-        });
+        //Get all the destinations Ids
+        var arrayOne = self.sky48Codes(origin1Data)
+        var arrayTwo = self.sky48Codes(origin2Data)
 
         //find the commun destinations ids withing the two origins
         var arrayCommons = arrayOne.filter(function(n) {
@@ -61,29 +68,11 @@ module.exports = {
         });
 
         //delete from the non common destination from quotes array
-        final1 = []
-
-        sails.log.debug("DEBUG", final1);
-
-
-        for (var i = 0, len = origin1Data.Quotes.length; i < len; i++) {
-          if (arrayCommons.includes(origin1Data.Quotes[i]["OutboundLeg"]["DestinationId"])) {
-            final1.push(origin1Data.Quotes[i])
-          }
-        }
+        origin1Data = self.clean(arrayCommons, origin1Data)
+        origin2Data = self.clean(arrayCommons, origin2Data)
 
 
-       final2 = []
-
-       for (var i = 0, len = origin2Data.Quotes.length; i < len; i++) {
-         if (arrayCommons.includes(origin2Data.Quotes[i]["OutboundLeg"]["DestinationId"])) {
-           final2.push(origin2Data.Quotes[i])
-         }
-       }
-
-      sails.log.debug("DEBUG", final1);
-
-      return [ final1, final2 ]
+      return [origin1Data, origin2Data]
 
       }
     )

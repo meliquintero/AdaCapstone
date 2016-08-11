@@ -16,11 +16,5 @@ module.exports = {
 		  .catch(function (err) {
 				return res.view('404')
 		  })
-
-    //
-    // sails.log.debug("DEBUG", req.body);
-    //   return res.view('index', {
-		// 			searchresults: req.body.origin_two
-    //   })
 	}
 };
