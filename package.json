@@ -7,7 +7,7 @@
   "dependencies": {
     "airportsjs": "^0.2.2",
     "dotenv": "^2.0.0",
-    "ejs": "2.3.4",
+    "ejs": "^2.5.1",
     "grunt": "1.0.1",
     "grunt-contrib-clean": "1.0.0",
     "grunt-contrib-coffee": "1.0.0",
@@ -21,10 +21,13 @@
     "grunt-sails-linker": "~0.10.1",
     "grunt-sync": "0.5.2",
     "include-all": "~0.1.6",
+    "promise": "^7.1.1",
     "rc": "1.0.1",
     "request-promise": "^4.1.1",
+    "sabre-dev-studio": "^1.1.0",
     "sails": "~0.12.4",
-    "sails-disk": "~0.10.9"
+    "sails-disk": "~0.10.9",
+    "skyscanner": "^0.1.0"
   },
   "scripts": {
     "debug": "node debug app.js",
