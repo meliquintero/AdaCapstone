@@ -1,23 +1,25 @@
-
-
 <div class="row">
-  <div class="col-md-3">
+  <div class="col-md-6">
     <h2>  From <%=  searchresults[0]['airportName'] %> </h2>
     <ul>
         <% searchresults[0]['destinations'].forEach(function(destination) { %>
-            <li><%= destination.airportCode %></li>
+            <li><%= destination.airportName %> - <%= destination.airportCode %></li>
+            <li><%= destination.city %></li>
             <li><%= destination.price %></li>
+            <strong><li><%= destination.sumPrices %></li></strong>
             <br><br>
         <% }); %>
     </ul>
   </div>
 
-  <div class="col-md-3">
+  <div class="col-md-6">
     <h2>  From <%=  searchresults[1]['airportName'] %> </h2>
     <ul>
       <% searchresults[1]['destinations'].forEach(function(destination) { %>
-          <li> <%= destination.airportCode %></li>
+          <li><%= destination.airportName %> - <%= destination.airportCode %></li>
+          <li><%= destination.city %></li>
           <li><%= destination.price %></li>
+          <strong><li><%= destination.sumPrices %></li></strong>
 
           <br><br>
       <% }); %>

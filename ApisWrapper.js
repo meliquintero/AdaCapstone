@@ -12,54 +12,84 @@ const LOCALE = "en-US"
 const DESTINATION = "anywhere"
 
 module.exports = {
+  sortBySumPrice: function(originInfo) {
+    originInfo.destinations.sort(function (a, b) {
+      if (a.sumPrices > b.sumPrices) {
+        return 1;
+      }
+      if (a.sumPrices < b.sumPrices) {
+        return -1;
+      }
+      return 0;
+    });
 
-  cleanAgain: function(originQuotes) {
-    for (var i = 0, len = originQuotes.length; i < len; i++) {
+  },
+
+  addTotalPrice: function(originInfoOne, originInfoTwo) {
+    theObj = {}
+
+    originInfoOne.destinations.forEach(function(oneDest, index, array) {
+      theObj[oneDest["city"]] = oneDest['price']
+    })
+
+    originInfoTwo.destinations.forEach(function(oneDest, index, array) {
+      theObj[oneDest["city"]] += oneDest['price']
+    })
+
+    originInfoOne.destinations.forEach(function(oneDest, index, array) {
+      oneDest['sumPrices'] = theObj[oneDest['city']]
+    })
+
+    originInfoTwo.destinations.forEach(function(oneDest, index, array) {
+      oneDest['sumPrices'] = theObj[oneDest['city']]
+    })
+
+  },
+
+  cleanAgain: function(originInfo) {
+    for (var i = 0; i < originInfo.destinations.length; i++) {
       repeated = []
-      for (var j = i + 1, len = originQuotes.length; j < len; j++) {
-        if (originQuotes[i]["OutboundLeg"]["DestinationId"] == originQuotes[j]["OutboundLeg"]["DestinationId"]) {
-          repeated.push(originQuotes[i]["OutboundLeg"]["DestinationId"])
-          repeated.push(originQuotes[j]["OutboundLeg"]["DestinationId"])
+      for (var j = i + 1; j < originInfo.destinations.length; j++) {
+
+        if (originInfo.destinations[i]["city"] == originInfo.destinations[j]["city"]) {
+          repeated.push(originInfo.destinations[i])
+          repeated.push(originInfo.destinations[j])
         }
       }
 
-      sails.log.debug("DEBUG", repeated);
-
       if (repeated.length > 1) {
-              if (repeated[0]['MinPrice'] > repeated[1]['MinPrice']) {
-                var index = array.indexOf(repeated[0]);
-                if (index > -1) {
-                  originQuotes.splice(index, 1);
-                }
-              } else {
-                var index = array.indexOf(repeated[1]);
-                if (index > -1) {
-                  originQuotes.splice(index, 1);
-                }
-              }
+
+        if (repeated[0]['price'] > repeated[1]['price']) {
+          var index = originInfo.destinations.indexOf(repeated[0]);
+        } else {
+          var index = originInfo.destinations.indexOf(repeated[1]);
+        }
+
+        if (index > -1) {
+          originInfo.destinations.splice(index, 1);
+        }
       }
     }
-
-    return originQuotes
   },
 
-  sky48Codes: function(origin) {
-    var arrayCodes = origin.Quotes.map(function(one) {
-      return one["OutboundLeg"]["DestinationId"]
+  getCities: function(originData) {
+    var arrayCodes = originData.destinations.map(function(oneDest) {
+      return oneDest["city"]
     });
 
     return arrayCodes
   },
 
-  clean: function(arrayCommons, originQuotes) {
-    final = []
+  clean: function(arrayCommons, originData) {
+    var finalArray = []
 
-    for (var i = 0, len = originQuotes.Quotes.length; i < len; i++) {
-      if (arrayCommons.includes(originQuotes.Quotes[i]["OutboundLeg"]["DestinationId"])) {
-        final.push(originQuotes.Quotes[i])
+    for (var i = 0, len = originData.destinations.length; i < len; i++) {
+      if (arrayCommons.includes(originData.destinations[i]["city"])) {
+        finalArray.push(originData.destinations[i])
       }
     }
-    return final
+
+    originData['destinations'] = finalArray
 
   },
 
@@ -85,9 +115,9 @@ module.exports = {
   getOriginData: function (origin, departure_date, return_time) {
     var self = this
 
-    var loca = GetAirportInfo.lookupByIataCode(origin.toUpperCase())
+    var originLoca = GetAirportInfo.lookupByIataCode(origin.toUpperCase())
 
-    if (loca['country'] === 'United States') {
+    if (originLoca['country'] === 'United States') {
       var SabreDevStudioFlight = require('sabre-dev-studio/lib/sabre-dev-studio-flight');
       var sabre_dev_studio_flight = new SabreDevStudioFlight({
         client_id:     process.env.SABRE_ID,
@@ -110,10 +140,11 @@ module.exports = {
           } else {
 
             var finalObj =  {
-              airportName: loca['name'],
-              city: loca['city'],
-              country: loca['country'],
-              airportCode: loca['iata'],
+              dataProvider: 'sabre',
+              airportName: originLoca['name'],
+              city: originLoca['city'],
+              country: originLoca['country'],
+              airportCode: originLoca['iata'],
               destinations: []
             }
 
@@ -136,7 +167,7 @@ module.exports = {
 
       return myPromise
 
-    } else if (loca['country'] != 'United States') {
+    } else if (originLoca['country'] != 'United States') {
 
       var skyscannerOptions = {
       uri: 'http://partners.api.skyscanner.net/apiservices/browsequotes/v1.0/' + MARKET + '/' + CURRENCY + '/' + LOCALE + '/' + origin + '/' + DESTINATION + '/' + departure_date + '/' + return_time + '?apiKey=' + process.env.SKYSCANNER_KEY,
@@ -150,12 +181,12 @@ module.exports = {
         var promises = response.Quotes.map(function(element) {
             return self.getSkyscannerLocation(element["OutboundLeg"]["DestinationId"])
             .then(function (skyscannerPlaceInfo) {
-              console.log("API resposnse: ", skyscannerPlaceInfo);
-
+                var destLoca = GetAirportInfo.lookupByIataCode(skyscannerPlaceInfo.PlaceId.slice(0,3))
               return {
-                airportCode: skyscannerPlaceInfo.PlaceId,
-                city: skyscannerPlaceInfo.PlaceName,
-                country: skyscannerPlaceInfo.CountryName,
+                airportName: destLoca['name'],
+                city: destLoca['city'],
+                country: destLoca['country'],
+                airportCode: destLoca['iata'],
                 price: element["MinPrice"]
               }
             })
@@ -164,10 +195,11 @@ module.exports = {
           return Promise.all(promises).then(function(Destinations) {
               console.log("all the files were created");
               var finalObj =  {
-                airportName: loca['name'],
-                city: loca['city'],
-                country: loca['country'],
-                airportCode: loca['iata'],
+                dataProvider: 'skyscanner',
+                airportName: originLoca['name'],
+                city: originLoca['city'],
+                country: originLoca['country'],
+                airportCode: originLoca['iata'],
                 destinations: Destinations
               }
               return finalObj
@@ -175,43 +207,44 @@ module.exports = {
       }
     }
     return rp(skyscannerOptions).promise()
-    } 
+    }
   },
 
   matchedDestinations: function(origin1, origin2, departure_date, return_time) {
-    // var self = this
+    var self = this
     return Promise.join(
 
       this.getOriginData(origin1, departure_date, return_time),
       this.getOriginData(origin2, departure_date, return_time),
       function(origin1Data, origin2Data) {
 
-        //Get all the destinations Ids
-        // var arrayOne = self.sky48Codes(origin1Data)
-        // var arrayTwo = self.sky48Codes(origin2Data)
-        //
-        // //find the commun destinations ids withing the two origins
-        // var arrayCommons = arrayOne.filter(function(n) {
-        //   return arrayTwo.indexOf(n) != -1;
-        // });
-        //
-        // //delete from the non common destination from quotes array
-        // origin1Data = self.clean(arrayCommons, origin1Data)
-        // origin2Data = self.clean(arrayCommons, origin2Data)
+        //Get all the destinations cities
+        var arrayOne = self.getCities(origin1Data)
+        var arrayTwo = self.getCities(origin2Data)
 
-        // //watch out if there are no the same length
-        // if (origin1Data.length != origin2Data.length) {
-        //   sails.log.debug("DEBUG", "step 1");
-        //   var origin1Data = self.cleanAgain(origin1Data)
-        //   var origin2Data = self.cleanAgain(origin2Data)
-        // }
+        // find the commun destinations cities whithing the two origins
+        var arrayCommons = arrayOne.filter(function(n) {
+          return arrayTwo.indexOf(n) != -1;
+        });
+
+        // select the commmon cities
+        self.clean(arrayCommons, origin1Data)
+        self.clean(arrayCommons, origin2Data)
+
+        //clean the skyscanner data, call the method that selects the cheapest
+        if (origin1Data.dataProvider === "skyscanner") {
+            self.cleanAgain(origin1Data)
+        } else if (origin2Data.dataProvider === "skyscanner") {
+            self.cleanAgain(origin2Data)
+        }
+        // adds the total flights price so I can sortem them by price
+        self.addTotalPrice(origin1Data, origin2Data)
+
+        // sort them by price
+        self.sortBySumPrice(origin1Data)
+        self.sortBySumPrice(origin2Data)
 
 
-        // origin1Data.forEach(function(element, index, array) {
-        //   sails.log.debug("DEBUG", index)
-        //   element["DestinationInfo"] = self.getLocaData(element["OutboundLeg"]["DestinationId"])
-        //
-        // });
 
 
       return [origin1Data, origin2Data]
