@@ -1,12 +1,27 @@
-<%=  typeof searchresults %>
-<br><br><br><br>
-<%=  searchresults %>
 
 
-<br><br><br><br>
+<div class="row">
+  <div class="col-md-3">
+    <h2>  From <%=  searchresults[0]['airportName'] %> </h2>
+    <ul>
+        <% searchresults[0]['destinations'].forEach(function(destination) { %>
+            <li><%= destination.airportCode %></li>
+            <li><%= destination.price %></li>
+            <br><br>
+        <% }); %>
+    </ul>
+  </div>
 
-<br><br><br><br>
-<br><br><br><br>
-<%=  JSON.stringify(searchresults) %>
+  <div class="col-md-3">
+    <h2>  From <%=  searchresults[1]['airportName'] %> </h2>
+    <ul>
+      <% searchresults[1]['destinations'].forEach(function(destination) { %>
+          <li> <%= destination.airportCode %></li>
+          <li><%= destination.price %></li>
 
-<br>
+          <br><br>
+      <% }); %>
+    </ul>
+  </div>
+
+</div>

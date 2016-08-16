@@ -13,25 +13,6 @@ const DESTINATION = "anywhere"
 
 module.exports = {
 
-  getLocaData: function(originCode) {
-
-    var options = {
-      uri: 'http://partners.api.skyscanner.net/apiservices/autosuggest/v1.0/' + MARKET + '/' + CURRENCY + '/' + LOCALE + '/?id=' + originCode.toString() + '-sky48&apiKey=' + process.env.SKYSCANNER_KEY,
-      headers: {
-        'User-Agent': 'Request-Promise'
-      },
-      json: true,
-      transform2xxOnly: false,
-      transform: function (response) {
-
-      return response
-      }
-     }
-
-    return rp(options)
-
-  },
-
   cleanAgain: function(originQuotes) {
     for (var i = 0, len = originQuotes.length; i < len; i++) {
       repeated = []
@@ -82,39 +63,82 @@ module.exports = {
 
   },
 
+  getSkyscannerLocation: function(originCode) {
+
+    var options = {
+      uri: 'http://partners.api.skyscanner.net/apiservices/autosuggest/v1.0/' + MARKET + '/' + CURRENCY + '/' + LOCALE + '/?id=' + originCode.toString() + '-sky48&apiKey=' + process.env.SKYSCANNER_KEY,
+      headers: {
+        'User-Agent': 'Request-Promise'
+      },
+      json: true,
+      transform2xxOnly: false,
+      transform: function (response) {
+
+      return response.Places[0]
+      }
+     }
+
+    return rp(options)
+
+  },
+
   getOriginData: function (origin, departure_date, return_time) {
+    var self = this
+
     var loca = GetAirportInfo.lookupByIataCode(origin.toUpperCase())
 
     if (loca['country'] === 'United States') {
-    var SabreDevStudioFlight = require('sabre-dev-studio/lib/sabre-dev-studio-flight');
-    var sabre_dev_studio_flight = new SabreDevStudioFlight({
-      client_id:     process.env.SABRE_ID,
-      client_secret: process.env.SABRE_SECRET,
-      uri:           'https://api.test.sabre.com'
-    });
-
-    var options = {
-       origin: origin,
-       departuredate: departure_date,
-       returndate: return_time
-      //  theme         : 'MOUNTAINS'
-     };
-
-    var myPromise = new ThePromise(function (resolve, reject) {
-      sabre_dev_studio_flight.destination_finder( options, function(error, data) {
-        if (error) {
-         reject(error)
-        } else {
-         resolve(data)
-        }
+      var SabreDevStudioFlight = require('sabre-dev-studio/lib/sabre-dev-studio-flight');
+      var sabre_dev_studio_flight = new SabreDevStudioFlight({
+        client_id:     process.env.SABRE_ID,
+        client_secret: process.env.SABRE_SECRET,
+        uri:           'https://api.test.sabre.com'
       });
-    });
 
-    return myPromise
+      var sabreOptions = {
+        origin: origin,
+        departuredate: departure_date,
+        returndate: return_time
+        //  theme         : 'MOUNTAINS'
+      };
 
-  } else if (loca['country'] != 'United States') {
+      var myPromise = new ThePromise(function (resolve, reject) {
+        sabre_dev_studio_flight.destination_finder( sabreOptions, function(error, data) {
 
-      var options = {
+          if (error) {
+            reject(error)
+          } else {
+
+            var finalObj =  {
+              airportName: loca['name'],
+              city: loca['city'],
+              country: loca['country'],
+              airportCode: loca['iata'],
+              destinations: []
+            }
+
+            JSON.parse(data).FareInfo.forEach(function(element, index, array) {
+              var DestinationLocale = GetAirportInfo.lookupByIataCode(element["DestinationLocation"])
+
+              var obj = {}
+              obj["airportName"] = DestinationLocale['name'],
+              obj["city"] = DestinationLocale['city'],
+              obj["country"] = DestinationLocale['country'],
+              obj["airportCode"] = DestinationLocale['iata'],
+              obj["price"] = element["LowestFare"]
+              finalObj['destinations'].push(obj)
+            });
+
+            resolve(finalObj)
+          }
+        });
+      });
+
+      return myPromise
+
+    } else if (loca['country'] != 'United States') {
+
+      var skyscannerOptions = {
       uri: 'http://partners.api.skyscanner.net/apiservices/browsequotes/v1.0/' + MARKET + '/' + CURRENCY + '/' + LOCALE + '/' + origin + '/' + DESTINATION + '/' + departure_date + '/' + return_time + '?apiKey=' + process.env.SKYSCANNER_KEY,
       headers: {
         'User-Agent': 'Request-Promise'
@@ -122,16 +146,40 @@ module.exports = {
       json: true,
       transform2xxOnly: false,
       transform: function (response) {
-        
-        return response
-        }
+
+        var promises = response.Quotes.map(function(element) {
+            return self.getSkyscannerLocation(element["OutboundLeg"]["DestinationId"])
+            .then(function (skyscannerPlaceInfo) {
+              console.log("API resposnse: ", skyscannerPlaceInfo);
+
+              return {
+                airportCode: skyscannerPlaceInfo.PlaceId,
+                city: skyscannerPlaceInfo.PlaceName,
+                country: skyscannerPlaceInfo.CountryName,
+                price: element["MinPrice"]
+              }
+            })
+        })
+
+          return Promise.all(promises).then(function(Destinations) {
+              console.log("all the files were created");
+              var finalObj =  {
+                airportName: loca['name'],
+                city: loca['city'],
+                country: loca['country'],
+                airportCode: loca['iata'],
+                destinations: Destinations
+              }
+              return finalObj
+          })
       }
     }
-    return rp(options).promise()
+    return rp(skyscannerOptions).promise()
+    } 
   },
 
   matchedDestinations: function(origin1, origin2, departure_date, return_time) {
-    var self = this
+    // var self = this
     return Promise.join(
 
       this.getOriginData(origin1, departure_date, return_time),
