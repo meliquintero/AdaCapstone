@@ -14,10 +14,28 @@ const DESTINATION = "anywhere"
 module.exports = {
   sortBySumPrice: function(originInfo) {
     originInfo.destinations.sort(function (a, b) {
-      if (a.sumPrices > b.sumPrices) {
+      var sumPricesA = Number(a.sumPrices); // ignore upper and lowercase
+      var sumPricesB = Number(b.sumPrices); // ignore upper and lowercase
+
+      if (sumPricesA > sumPricesB) {
         return 1;
       }
-      if (a.sumPrices < b.sumPrices) {
+      if (sumPricesA < sumPricesB) {
+        return -1;
+      }
+      return 0;
+    });
+  },
+
+  sortByCity: function(originInfo) {
+    originInfo.destinations.sort(function (a, b) {
+      var cityA = a.city.toUpperCase(); // ignore upper and lowercase
+      var cityB = b.city.toUpperCase(); // ignore upper and lowercase
+
+      if (cityA > cityB) {
+        return 1;
+      }
+      if (cityA < cityB) {
         return -1;
       }
       return 0;
@@ -25,25 +43,58 @@ module.exports = {
 
   },
 
-  addTotalPrice: function(originInfoOne, originInfoTwo) {
-    theObj = {}
+  fussionExtreme: function(originInfoOne, originInfoTwo) {
+    // sort them by city, so I can loop good
+    this.sortByCity(originInfoOne)
+    this.sortByCity(originInfoTwo)
 
-    originInfoOne.destinations.forEach(function(oneDest, index, array) {
-      theObj[oneDest["city"]] = oneDest['price']
-    })
+    theSuperObj = {}
+    theSuperObj["originOne"] = {
+      airportName: originInfoOne['airportName'],
+      airportCode: originInfoOne['airportCode'],
+      city: originInfoOne['city'],
+      country: originInfoOne['country']
+      }
 
-    originInfoTwo.destinations.forEach(function(oneDest, index, array) {
-      theObj[oneDest["city"]] += oneDest['price']
-    })
+    theSuperObj["originTwo"] = {
+      airportName: originInfoTwo['airportName'],
+      airportCode: originInfoTwo['airportCode'],
+      city: originInfoTwo['city'],
+      country: originInfoTwo['country']
+    }
+    theSuperObj["destinations"] = []
 
-    originInfoOne.destinations.forEach(function(oneDest, index, array) {
-      oneDest['sumPrices'] = theObj[oneDest['city']]
-    })
+    for (var i = 0; i < originInfoTwo.destinations.length; i++) {
+      obj = {}
 
-    originInfoTwo.destinations.forEach(function(oneDest, index, array) {
-      oneDest['sumPrices'] = theObj[oneDest['city']]
-    })
+      //the if Statements are to double checking that I am paring the right cities.
+      if (originInfoTwo.destinations[i]['airportName'] === originInfoOne.destinations[i]['airportName']) {
+        obj['airportName'] = originInfoTwo.destinations[i]['airportName']
+      }
 
+      if (originInfoTwo.destinations[i]['airportCode'] === originInfoOne.destinations[i]['airportCode']) {
+
+        obj['airportCode'] = originInfoTwo.destinations[i]['airportCode']
+      }
+
+      if (originInfoTwo.destinations[i]['city'] ===  originInfoOne.destinations[i]['city']) {
+        obj['city']= originInfoTwo.destinations[i]['city']
+      }
+      if (originInfoTwo.destinations[i]['country'] === originInfoOne.destinations[i]['country']) {
+        obj['country'] = originInfoTwo.destinations[i]['country']
+      }
+
+      obj['priceFromOriginOne'] = originInfoOne.destinations[i]['price']
+      obj['priceFromOriginTwo'] = originInfoTwo.destinations[i]['price']
+      var num = originInfoTwo.destinations[i]['price'] + originInfoOne.destinations[i]['price']
+      obj['sumPrices'] = num.toFixed(2)
+
+      theSuperObj["destinations"].push(obj)
+    }
+
+    this.sortBySumPrice(theSuperObj)
+
+    return theSuperObj
   },
 
   cleanAgain: function(originInfo) {
@@ -132,6 +183,7 @@ module.exports = {
         //  theme         : 'MOUNTAINS'
       };
 
+      //A promise is being waited in the other side
       var myPromise = new ThePromise(function (resolve, reject) {
         sabre_dev_studio_flight.destination_finder( sabreOptions, function(error, data) {
 
@@ -193,7 +245,6 @@ module.exports = {
         })
 
           return Promise.all(promises).then(function(Destinations) {
-              console.log("all the files were created");
               var finalObj =  {
                 dataProvider: 'skyscanner',
                 airportName: originLoca['name'],
@@ -237,17 +288,10 @@ module.exports = {
         } else if (origin2Data.dataProvider === "skyscanner") {
             self.cleanAgain(origin2Data)
         }
-        // adds the total flights price so I can sortem them by price
-        self.addTotalPrice(origin1Data, origin2Data)
 
-        // sort them by price
-        self.sortBySumPrice(origin1Data)
-        self.sortBySumPrice(origin2Data)
+        TheOne = self.fussionExtreme(origin1Data, origin2Data)
 
-
-
-
-      return [origin1Data, origin2Data]
+      return TheOne
 
       }
     )
