@@ -23,33 +23,6 @@ module.exports.connections = {
 
   /***************************************************************************
   *                                                                          *
-  * Local disk storage for DEVELOPMENT ONLY                                  *
-  *                                                                          *
-  * Installed by default.                                                    *
-  *                                                                          *
-  ***************************************************************************/
-  localDiskDb: {
-    adapter: 'sails-disk'
-  },
-
-  /***************************************************************************
-  *                                                                          *
-  * MySQL is the world's most popular relational database.                   *
-  * http://en.wikipedia.org/wiki/MySQL                                       *
-  *                                                                          *
-  * Run: npm install sails-mysql                                             *
-  *                                                                          *
-  ***************************************************************************/
-  // someMysqlServer: {
-  //   adapter: 'sails-mysql',
-  //   host: 'YOUR_MYSQL_SERVER_HOSTNAME_OR_IP_ADDRESS',
-  //   user: 'YOUR_MYSQL_USER', //optional
-  //   password: 'YOUR_MYSQL_PASSWORD', //optional
-  //   database: 'YOUR_MYSQL_DB' //optional
-  // },
-
-  /***************************************************************************
-  *                                                                          *
   * MongoDB is the leading NoSQL database.                                   *
   * http://en.wikipedia.org/wiki/MongoDB                                     *
   *                                                                          *
@@ -64,6 +37,24 @@ module.exports.connections = {
   //   password: 'password', //optional
   //   database: 'your_mongo_db_name_here' //optional
   // },
+
+    // memory: {
+    //   module: 'sails-memory'
+    // },
+    //
+    // // Persistent adapter for DEVELOPMENT ONLY
+    // // (data IS preserved when the server shuts down)
+    // disk: {
+    //   module: 'sails-disk'
+    // },
+
+    someMongoDb: {
+      adapter: 'sails-mongo',
+      host: 'localhost', // defaults to `localhost` if omitted
+      port: 27017, // defaults to 27017 if omitted
+      user: 'root', // or omit if not relevant
+      database: 'in_the_middle' // or omit if not relevant
+    }
 
   /***************************************************************************
   *                                                                          *
@@ -83,10 +74,5 @@ module.exports.connections = {
   // }
 
 
-  /***************************************************************************
-  *                                                                          *
-  * More adapters: https://github.com/balderdashy/sails                      *
-  *                                                                          *
-  ***************************************************************************/
 
 };
