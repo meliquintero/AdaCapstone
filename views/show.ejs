@@ -1,2 +1,20 @@
+<div class="row">
+  <div class="col-md-6">
+    <% searchresults[0].forEach(function(flight) { %>
+      <%= JSON.stringify(flight) %>
+      <br><br>
+    <% }); %>
 
-<%= JSON.stringify(searchresults) %>
+  </div>
+
+  <div class="col-sm-6">
+    <% searchresults[1].forEach(function(flight) { %>
+      <%= JSON.stringify(flight) %>
+      <br><br>
+
+    <% }); %>
+  </div>
+</div>
+
+
+  <%= JSON.stringify(searchresults) %>
