@@ -12,6 +12,93 @@ const LOCALE = "en-US"
 const DESTINATION = "anywhere"
 
 module.exports = {
+
+  getGooglePhotoReference: function(placeId) {
+
+    var options = {
+      uri: 'https://maps.googleapis.com/maps/api/place/details/json?placeid=' + placeId + '&key=' + process.env.GOOGLE_KEY,
+
+        headers: {
+          'User-Agent': 'Request-Promise'
+        },
+        json: true,
+        transform2xxOnly: false,
+        transform: function (response) {
+        return response['result']['photos']
+        }
+    }
+
+    return rp(options)
+  },
+
+  getAllGooglePhotoReferences: function(mainObject) {
+    var aqui = this
+
+    return mainObject.then(function(mainObjectForReal){
+      var thesePromises = mainObjectForReal.destinations.map(function(element) {
+          return aqui.getGooglePhotoReference(element["googleId"])
+          .then(function (googleDetails) {
+            // console.log("gets googleDetails for", element['city'], googleDetails);
+            // if (googleDetails === undefined){
+            //   element["googlePhotoReference"] = "googleDetails[0][photo_reference]"
+            // } else {
+              element["googlePhotoReference"] = googleDetails
+            // }
+
+            return element
+          })
+      })
+
+      return Promise.all(thesePromises).then(function(arrayDestinations) {
+        console.log("hits the REFERENCESSSSSS promises done");
+        mainObjectForReal['destinations'] = arrayDestinations
+        return mainObjectForReal
+      })
+
+    })
+
+  },
+
+  getGoogleId: function(city, country) {
+    var aca = this
+    var options = {
+      uri: 'https://maps.googleapis.com/maps/api/geocode/json?address=' + city + ',+' + country + '&key=' + process.env.GOOGLE_KEY,
+
+        headers: {
+          'User-Agent': 'Request-Promise'
+        },
+        json: true,
+        transform2xxOnly: false,
+        transform: function (response) {
+          // console.log(response);
+          // return aca.getGooglePhotoReference(response['results'][0]['place_id'])
+          //   .then(function (googleDitails) {
+          //     return googleDitails
+          //   })
+          return response
+        }
+    }
+
+    return rp(options)
+  },
+
+  getAllGooglePlaceIds: function(mainObject) {
+    var that = this
+    var thisPromises = mainObject["destinations"].map(function(element) {
+        return that.getGoogleId(element["city"],element["country"])
+        .then(function (googleInfo) {
+          element["googleId"] = googleInfo['results'][0]['place_id']
+          return element
+        })
+    })
+
+    return Promise.all(thisPromises).then(function(Destinations) {
+      mainObject['destinations'] = Destinations
+      return mainObject
+    })
+
+  },
+
   sortBySumPrice: function(originInfo) {
     originInfo.destinations.sort(function (a, b) {
       var sumPricesA = Number(a.sumPrices); // ignore upper and lowercase
@@ -157,7 +244,7 @@ module.exports = {
 
       return response.Places[0]
       }
-     }
+    }
 
     return rp(options)
 
@@ -165,7 +252,6 @@ module.exports = {
 
   getOriginData: function (origin, departure_date, return_time) {
     var self = this
-
     var originLoca = GetAirportInfo.lookupByIataCode(origin.toUpperCase())
 
     if (originLoca['country'] === 'United States') {
@@ -244,17 +330,17 @@ module.exports = {
             })
         })
 
-          return Promise.all(promises).then(function(Destinations) {
-              var finalObj =  {
-                dataProvider: 'skyscanner',
-                airportName: originLoca['name'],
-                city: originLoca['city'],
-                country: originLoca['country'],
-                airportCode: originLoca['iata'],
-                destinations: Destinations
-              }
-              return finalObj
-          })
+        return Promise.all(promises).then(function(Destinations) {
+          var finalObj =  {
+            dataProvider: 'skyscanner',
+            airportName: originLoca['name'],
+            city: originLoca['city'],
+            country: originLoca['country'],
+            airportCode: originLoca['iata'],
+            destinations: Destinations
+          }
+          return finalObj
+        })
       }
     }
     return rp(skyscannerOptions).promise()
@@ -289,9 +375,13 @@ module.exports = {
             self.cleanAgain(origin2Data)
         }
 
-        TheOne = self.fussionExtreme(origin1Data, origin2Data)
+        var TheOne = self.fussionExtreme(origin1Data, origin2Data)
 
-      return TheOne
+        var TheOneOne = self.getAllGooglePlaceIds(TheOne)
+
+        var TheOneOneOne = self.getAllGooglePhotoReferences(TheOneOne)
+
+        return TheOneOneOne
 
       }
     )
