@@ -33,15 +33,34 @@ module.exports = {
           AgentsObj[bigData['Agents'][i]['Id'].toString()] = bigData['Agents'][i]
         }
 
+        var LegsObj = {}
+        for (var i = 0; i < bigData['Legs'].length; i++) {
+          LegsObj[bigData['Legs'][i]['Id'].toString()] = bigData['Legs'][i]
+        }
+
+        var CarriersObj = {}
+        for (var i = 0; i < bigData['Carriers'].length; i++) {
+          CarriersObj[bigData['Carriers'][i]['Id'].toString()] = bigData['Carriers'][i]
+        }
+
         var theArray = []
         for (var i = 0; i < 10; i++) {
+          bigData['Itineraries'][i]['OutboundLegInfo'] = LegsObj[bigData['Itineraries'][i]['OutboundLegId']]
+          bigData['Itineraries'][i]['InboundLegInfo'] = LegsObj[bigData['Itineraries'][i]['InboundLegId']]
+
           bigData['Itineraries'][i]['PricingOptions'].forEach (function(element) {
             element['Agents'][1] = AgentsObj[element['Agents'][0].toString()]
           })
-           obj = {}
-           obj[i.toString()] = bigData['Itineraries'][i]
 
-          theArray.push(obj)
+          bigData['Itineraries'][i]['OutboundLegInfo']['Carriers'].forEach (function(element) {
+            bigData['Itineraries'][i]['OutboundLegInfo']['CarriersInfo'].push(CarriersObj[element])
+          })
+
+          bigData['Itineraries'][i]['InboundLegInfo']['Carriers'].forEach (function(element) {
+            bigData['Itineraries'][i]['InboundLegInfo']['CarriersInfo'] = CarriersObj[element]
+          })
+
+          theArray.push(bigData['Itineraries'][i])
         }
 
         return theArray
