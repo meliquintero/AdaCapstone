@@ -47,6 +47,8 @@ module.exports = {
         for (var i = 0; i < 10; i++) {
           bigData['Itineraries'][i]['OutboundLegInfo'] = LegsObj[bigData['Itineraries'][i]['OutboundLegId']]
           bigData['Itineraries'][i]['InboundLegInfo'] = LegsObj[bigData['Itineraries'][i]['InboundLegId']]
+          bigData['Itineraries'][i]['InboundLegInfo']['CarriersInfo'] = []
+          bigData['Itineraries'][i]['OutboundLegInfo']['CarriersInfo'] = []
 
           bigData['Itineraries'][i]['PricingOptions'].forEach (function(element) {
             element['Agents'][1] = AgentsObj[element['Agents'][0].toString()]
@@ -57,7 +59,7 @@ module.exports = {
           })
 
           bigData['Itineraries'][i]['InboundLegInfo']['Carriers'].forEach (function(element) {
-            bigData['Itineraries'][i]['InboundLegInfo']['CarriersInfo'] = CarriersObj[element]
+            bigData['Itineraries'][i]['InboundLegInfo']['CarriersInfo'].push(CarriersObj[element])
           })
 
           theArray.push(bigData['Itineraries'][i])

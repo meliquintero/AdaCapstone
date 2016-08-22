@@ -1,4 +1,4 @@
 module.exports.models = {
-  // migrate: 'safe',
+  migrate: 'safe',
   'connection': 'someMongoDb'
 };

@@ -53,7 +53,7 @@ process.chdir(__dirname);
     }
   }
 
-console.log("melissa");
   // Start server
-  sails.lift(rc('sails'));
 })();
+
+// require('sails').lift(require('optimist').argv);
