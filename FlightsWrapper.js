@@ -3,8 +3,6 @@ var rp = require('request-promise');
 var GetAirportInfo = require('airportsjs');
 var dotenv = require('dotenv');
 var ThePromise = require('promise');
-// var skyscanner = require("skyscannerjs");
-
 var SabreDevStudioFlight = require('sabre-dev-studio/lib/sabre-dev-studio-flight');
 require('promise/lib/rejection-tracking').enable(
   {allRejections: true}
@@ -50,50 +48,56 @@ module.exports = {
           obj['OutboundLegInfo']['Departure'] = LegsObj[bigData['Itineraries'][i]['OutboundLegId']]['Departure']
           obj['OutboundLegInfo']['Arrival'] = LegsObj[bigData['Itineraries'][i]['OutboundLegId']]['Arrival']
           obj['OutboundLegInfo']['Duration'] = LegsObj[bigData['Itineraries'][i]['OutboundLegId']]['Duration']
-          obj['OutboundLegInfo']['FlightNumbers'] = LegsObj[bigData['Itineraries'][i]['OutboundLegId']]['FlightNumbers']
+          // obj['OutboundLegInfo']['FlightsInfo'] = LegsObj[bigData['Itineraries'][i]['OutboundLegId']]['FlightNumbers']
+
+          obj['OutboundLegInfo']['FlightsInfo'] = []
+
+          LegsObj[bigData['Itineraries'][i]['OutboundLegId']]['FlightNumbers'].forEach(function(elementFlight) {
+
+            var airlineSkyObj = {}
+            airlineSkyObj['FlightNumber'] = elementFlight['FlightNumber']
+            airlineSkyObj['AirlineName'] = CarriersObj[elementFlight['CarrierId'].toString()]['Name']
+            airlineSkyObj['AirlineCode'] = CarriersObj[elementFlight['CarrierId'].toString()]['Code']
+            obj['OutboundLegInfo']['FlightsInfo'].push(airlineSkyObj)
+          })
+
+
+          if (obj['OutboundLegInfo']['FlightsInfo'].length > 1){
+            obj['OutboundLegInfo']['Stops'] = (obj['OutboundLegInfo']['FlightsInfo'].length - 1).toString() + " Stop(s)"
+          } else {
+            obj['OutboundLegInfo']['Stops'] = "Direct"
+          }
+
 
           obj['InboundLegInfo'] = {}
           obj['InboundLegInfo']['Departure'] = LegsObj[bigData['Itineraries'][i]['InboundLegId']]['Departure']
           obj['InboundLegInfo']['Arrival'] = LegsObj[bigData['Itineraries'][i]['InboundLegId']]['Arrival']
           obj['InboundLegInfo']['Duration'] = LegsObj[bigData['Itineraries'][i]['InboundLegId']]['Duration']
-          obj['InboundLegInfo']['FlightNumbers'] = LegsObj[bigData['Itineraries'][i]['InboundLegId']]['FlightNumbers']
+
+
+          obj['InboundLegInfo']['FlightsInfo'] = []
+
+          LegsObj[bigData['Itineraries'][i]['InboundLegId']]['FlightNumbers'].forEach(function(elementFlight) {
+
+            var airlineSkyObj = {}
+            airlineSkyObj['FlightNumber'] = elementFlight['FlightNumber']
+            airlineSkyObj['AirlineName'] = CarriersObj[elementFlight['CarrierId'].toString()]['Name']
+            airlineSkyObj['AirlineCode'] = CarriersObj[elementFlight['CarrierId'].toString()]['Code']
+            obj['InboundLegInfo']['FlightsInfo'].push(airlineSkyObj)
+          })
+
+          if (obj['InboundLegInfo']['FlightsInfo'].length > 1){
+           obj['InboundLegInfo']['Stops'] = (obj['InboundLegInfo']['FlightsInfo'].length - 1).toString() + " Stop(s)"
+          } else {
+             obj['InboundLegInfo']['Stops'] = "Direct"
+          }
+
 
           obj['Price'] = {}
           obj['Price']['CurrencyCode'] = 'USD'
           obj['Price']['DecimalPlaces'] = 2
           obj['Price']['Amount'] = bigData['Itineraries'][i]['PricingOptions'][0]['Price'].toFixed(2)
 
-          if (obj['InboundLegInfo']['FlightNumbers'].length > 1){
-           obj['InboundLegInfo']['Stops'] = obj['InboundLegInfo']['FlightNumbers'].length.toString() + " Stops"
-          } else {
-             obj['InboundLegInfo']['Stops'] = "Direct"
-          }
-
-          if (obj['OutboundLegInfo']['FlightNumbers'].length > 1){
-           obj['OutboundLegInfo']['Stops'] = obj['OutboundLegInfo']['FlightNumbers'].length.toString() + " Stops"
-          } else {
-             obj['OutboundLegInfo']['Stops'] = "Direct"
-          }
-
-
-          obj['OutboundLegInfo']['FlightNumbers'].forEach (function(element) {
-            element['CarrierInfo'] = CarriersObj[element['CarrierId'].toString()]
-          })
-
-          // bigData['Itineraries'][i]['InboundLegInfo']['CarriersInfo'] = []
-          // bigData['Itineraries'][i]['OutboundLegInfo']['CarriersInfo'] = []
-          //
-          // bigData['Itineraries'][i]['PricingOptions'].forEach (function(element) {
-          //   element['Agents'][1] = AgentsObj[element['Agents'][0].toString()]
-          // })
-          //
-          // bigData['Itineraries'][i]['OutboundLegInfo']['Carriers'].forEach (function(element) {
-          //   bigData['Itineraries'][i]['OutboundLegInfo']['CarriersInfo'].push(CarriersObj[element])
-          // })
-          //
-          // bigData['Itineraries'][i]['InboundLegInfo']['Carriers'].forEach (function(element) {
-          //   bigData['Itineraries'][i]['InboundLegInfo']['CarriersInfo'].push(CarriersObj[element])
-          // })
 
           theArray.push(obj)
         }
@@ -141,10 +145,22 @@ module.exports = {
                 obj['OutboundLegInfo'] = {}
                 obj['OutboundLegInfo']['Departure'] =  element['AirItinerary']['OriginDestinationOptions']['OriginDestinationOption'][0]['FlightSegment'][0]['DepartureDateTime']
                 obj['OutboundLegInfo']['Arrival'] =  element['AirItinerary']['OriginDestinationOptions']['OriginDestinationOption'][0]['FlightSegment'][ element['AirItinerary']['OriginDestinationOptions']['OriginDestinationOption'][0]['FlightSegment'].length - 1]['ArrivalDateTime']
-                obj['OutboundLegInfo']['Duration'] = element['AirItinerary']['OriginDestinationOptions']['OriginDestinationOption'][0]['FlightSegment'][0]['ElapsedTime']
-                obj['OutboundLegInfo']['FlightNumbers'] = element['AirItinerary']['OriginDestinationOptions']['OriginDestinationOption'][0]['FlightSegment'][0]['OperatingAirline']
+
+                obj['OutboundLegInfo']['FlightsInfo'] = []
+
+                element['AirItinerary']['OriginDestinationOptions']['OriginDestinationOption'][0]['FlightSegment'].forEach (function(ele) {
+                  var airlineObj = {}
+                  airlineObj['FlightNumber'] = ele['FlightNumber']
+                  airlineObj['AirlineName'] = ele['OperatingAirline']['CompanyShortName']
+                  airlineObj['AirlineCode'] = ele['OperatingAirline']['Code']
+                  airlineObj['Duration'] = ele['OperatingAirline']['ElapsedTime']
+
+                  obj['OutboundLegInfo']['FlightsInfo'].push(airlineObj)
+                })
+
+
                 if (element['AirItinerary']['OriginDestinationOptions']['OriginDestinationOption'][0]['FlightSegment'].length > 1){
-                 obj['OutboundLegInfo']['Stops'] = element['AirItinerary']['OriginDestinationOptions']['OriginDestinationOption'][0]['FlightSegment'].length.toString() + " Stops"
+                 obj['OutboundLegInfo']['Stops'] = (element['AirItinerary']['OriginDestinationOptions']['OriginDestinationOption'][0]['FlightSegment'].length - 1).toString() + " Stop(s)"
                 } else {
                    obj['OutboundLegInfo']['Stops'] = "Direct"
                 }
@@ -153,15 +169,27 @@ module.exports = {
                 obj['InboundLegInfo']['Departure'] =  element['AirItinerary']['OriginDestinationOptions']['OriginDestinationOption'][1]['FlightSegment'][0]['DepartureDateTime']
                 obj['InboundLegInfo']['Arrival'] =  element['AirItinerary']['OriginDestinationOptions']['OriginDestinationOption'][1]['FlightSegment'][ element['AirItinerary']['OriginDestinationOptions']['OriginDestinationOption'][1]['FlightSegment'].length - 1]['ArrivalDateTime']
                 obj['InboundLegInfo']['Duration'] = element['AirItinerary']['OriginDestinationOptions']['OriginDestinationOption'][1]['FlightSegment'][0]['ElapsedTime']
-                obj['InboundLegInfo']['FlightNumbers'] = element['AirItinerary']['OriginDestinationOptions']['OriginDestinationOption'][1]['FlightSegment'][0]['OperatingAirline']
-                if (element['AirItinerary']['OriginDestinationOptions']['OriginDestinationOption'][1]['FlightSegment'].length > 1){
-                 obj['InboundLegInfo']['Stops'] = element['AirItinerary']['OriginDestinationOptions']['OriginDestinationOption'][1]['FlightSegment'].length.toString() + " Stops"
+
+                obj['InboundLegInfo']['FlightsInfo'] = []
+                element['AirItinerary']['OriginDestinationOptions']['OriginDestinationOption'][1]['FlightSegment'].forEach (function(eleIn) {
+                  var airlineInObj = {}
+                  airlineInObj['FlightNumber'] = eleIn['FlightNumber']
+                  airlineInObj['AirlineName'] = eleIn['OperatingAirline']['CompanyShortName']
+                  airlineInObj['AirlineCode'] = eleIn['OperatingAirline']['Code']
+                  airlineInObj['Duration'] = eleIn['OperatingAirline']['ElapsedTime']
+
+                  obj['InboundLegInfo']['FlightsInfo'].push(airlineInObj)
+                })
+
+                                if (element['AirItinerary']['OriginDestinationOptions']['OriginDestinationOption'][1]['FlightSegment'].length > 1){
+                 obj['InboundLegInfo']['Stops'] = (element['AirItinerary']['OriginDestinationOptions']['OriginDestinationOption'][1]['FlightSegment'].length - 1).toString() + " Stop(s)"
                 } else {
                    obj['InboundLegInfo']['Stops'] = "Direct"
                 }
                 obj['Price'] = element['AirItineraryPricingInfo']['ItinTotalFare']['TotalFare']
                 theArray.push(obj)
               })
+
 
               resolve(theArray)
             }
