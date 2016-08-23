@@ -7,7 +7,7 @@ module.exports.routes = {
 
   'GET /auth/google/callback': 'Auth.google',
 
-  'GET /destinations/:originOne/:originTwo/:destination/:DepDate/:RetDate' : 'Destinations.show',
+  'GET /flights/:originOne/:originTwo/:destination/:DepDate/:RetDate' : 'Destinations.show',
 
   'GET /destinations': 'Destinations.index'
 
