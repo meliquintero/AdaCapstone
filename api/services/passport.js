@@ -1,4 +1,5 @@
 var passport = require('passport'),
+  FacebookStrategy = require('passport-facebook').Strategy,
   GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,
   LocalStrategy = require('passport-local').Strategy,
   bcrypt = require('bcrypt');
@@ -78,6 +79,14 @@ passport.deserializeUser(function(id, done) {
     done(err, user);
   });
 });
+
+passport.use(new FacebookStrategy({
+      clientID: sails.config.auth.facebook.clientID,
+      clientSecret: sails.config.auth.facebook.clientSecret,
+      callbackURL: sails.config.auth.facebook.callbackURL
+    },
+  verifyHandler
+));
 
 
  passport.use(new GoogleStrategy({
