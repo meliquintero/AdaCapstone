@@ -1,17 +1,43 @@
 <div class="container">
+<% searchresults.destinations.forEach(function(destination) { %>
+  <% if (destination.googlePhotoReference !== undefined) {%>
+    <% var theReference = destination.googlePhotoReference[0]['photo_reference']%>
+    <div class="jumbotron" style="background-image: url('https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=<%=theReference%>&key=<%=process.env.GOOGLE_KEY%>')">
+  <% } else if (destination.googlePhotoReference === undefined) {%>
+    <div class="jumbotron" style="background-image: url('http://www.muxlowsurveying.com/wp-content/uploads/2015/06/Detroit-Metro-Airport-min.jpg')">
+  <% } %>
+
+    <div class="caption dos">
+
+      <h3><a href="flights/<%=searchresults['originOne']['airportCode']%>/<%=searchresults['originTwo']['airportCode']%>/<%= destination.airportCode %>/<%=depdate%>/<%=retdate%>"><%= destination.city %> </a></h3>
+      <h4><%= destination.country %></h4>
+      <p>
+       <span class="glyphicon glyphicon-plane"></span> From: <%=searchresults['originOne']['airportName']%> $$ <%= destination.priceFromOriginOne %>
+        <br>
+        <span class="glyphicon glyphicon-plane"></span> From: <%=searchresults['originTwo']['airportName']%> $$ <%= destination.priceFromOriginTwo  %>
+        <br>
+        <br>
+        <strong> TOTAL:  <%= destination.sumPrices %></strong>
+        <p> <a href="flights/<%=searchresults['originOne']['airportCode']%>/<%=searchresults['originTwo']['airportCode']%>/<%= destination.airportCode %>/<%=depdate%>/<%=retdate%>" class="btn btn-default" role="button">See more flights to this city</a></p>
+      </p>
+    </div>
+  </div>
+  <br><br>
+<% }); %>
+
 <div class="row">
   <% searchresults.destinations.forEach(function(destination) { %>
-  <div class="col-sm-6 col-md-4">
+  <div class="col-sm-6">
     <a href="destinations/<%=searchresults['originOne']['airportCode']%>/<%=searchresults['originTwo']['airportCode']%>/<%= destination.airportCode %>/<%=depdate%>/<%=retdate%>">
     <div class="thumbnail">
       <% if (destination.googlePhotoReference !== undefined) {%>
         <% var theReference = destination.googlePhotoReference[0]['photo_reference']%>
-        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=<%=theReference%>&key=<%=process.env.GOOGLE_KEY%>" alt="<%= destination.city %>">
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=<%=theReference%>&key=<%=process.env.GOOGLE_KEY%>" alt="<%= destination.city %>">
       <% } %>
 
       <div class="caption">
 
-        <h3><a href="destinations/<%=searchresults['originOne']['airportCode']%>/<%=searchresults['originTwo']['airportCode']%>/<%= destination.airportCode %>/<%=depdate%>/<%=retdate%>"><%= destination.city %> </a></h3>
+        <h3><a href="flights/<%=searchresults['originOne']['airportCode']%>/<%=searchresults['originTwo']['airportCode']%>/<%= destination.airportCode %>/<%=depdate%>/<%=retdate%>"><%= destination.city %> </a></h3>
         <h4><%= destination.country %></h4>
         <p>
           From: <%=searchresults['originOne']['airportName']%> $$ <%= destination.priceFromOriginOne %>
@@ -20,7 +46,7 @@
           <br>
           <br>
           <strong> TOTAL:  <%= destination.sumPrices %></strong>
-          <p> <a href="destinations/<%=searchresults['originOne']['airportCode']%>/<%=searchresults['originTwo']['airportCode']%>/<%= destination.airportCode %>/<%=depdate%>/<%=retdate%>" class="btn btn-default" role="button">See more flights to this city</a></p>
+          <p> <a href="flights/<%=searchresults['originOne']['airportCode']%>/<%=searchresults['originTwo']['airportCode']%>/<%= destination.airportCode %>/<%=depdate%>/<%=retdate%>" class="btn btn-default" role="button">See more flights to this city</a></p>
         </p>
       </div>
     </div>
