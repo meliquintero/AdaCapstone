@@ -2,18 +2,55 @@
 <div class="row">
   <div class="col-md-6">
     <% searchresults[0].forEach(function(flight) { %>
-      <%= JSON.stringify(flight) %>
-      <br><br>
+      <div class="panel panel-success">
+        <div class="panel-body">
+          <div class="price"><%= flight.Price.Amount%></div>
+          <p>
+             <%= originOne %>
+             <span class="glyphicon glyphicon-time"></span>
+             <%=flight.OutboundLegInfo.Departure.slice(11, 16)%>
+             <span class="glyphicon glyphicon-arrow-right"></span>
+             <%= destination %>
+             <span class="glyphicon glyphicon-time"></span>
+             <%=flight.OutboundLegInfo.Arrival.slice(11, 16)%>  /  <%=flight.OutboundLegInfo.Stops%>
+           </p>
+           <% flight.OutboundLegInfo.FlightsInfo.forEach(function(flightInfo) { %>
+             <%= flightInfo.AirlineCode %>
+
+             <% }); %>
+           <p>
+             <%= destination %>
+             <span class="glyphicon glyphicon-time">
+             </span><%=flight.InboundLegInfo.Departure.slice(11, 16)%>
+             <span class="glyphicon glyphicon-arrow-right">
+             </span> <%= originOne %>
+             <span class="glyphicon glyphicon-time">
+             </span><%=flight.InboundLegInfo.Arrival.slice(11, 16)%>  /  <%=flight.InboundLegInfo.Stops%>
+           </p>
+
+           <% flight.InboundLegInfo.FlightsInfo.forEach(function(flightInfo) { %>
+             <%= flightInfo.AirlineCode %>
+
+             <% }); %>
+
+        </div>
+      </div>
     <% }); %>
 
   </div>
 
   <div class="col-sm-6">
+    <div class="panel panel-default">
+
     <% searchresults[1].forEach(function(flight) { %>
+      <div class="panel-body">
+
       <%= JSON.stringify(flight) %>
+      </div>
       <br><br>
 
     <% }); %>
+  </div>
   </div>
 </div>
 

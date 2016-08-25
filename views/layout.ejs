@@ -156,7 +156,7 @@
                 </div>
 
                 <br><br>
-                
+
                 <div class="fb-login-button">
                   <a href="/auth/facebook"><img src="/images/facebook.png" alt="Facebook Signin" width="200"/></a>
                 </div>
@@ -176,8 +176,13 @@
     var $msgAnimateTime = 150;
     var $msgShowTime = 2000;
 
-    $("form").submit(function () {
-        switch(this.id) {
+    $("#div-forms").submit(function (e) {
+      // console.log("THE EVENT", e);
+      // console.log("e.currentTarget", e.currentTarget);
+      // console.log("e.currentTarget.id", e.currentTarget.id);
+      // console.log("THIS", this);
+
+        switch(e.currentTarget.id) {
             case "login-form":
                 var $lg_username=$('#login_username').val();
                 var $lg_password=$('#login_password').val();

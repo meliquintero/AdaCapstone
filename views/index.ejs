@@ -9,12 +9,12 @@
 
     <div class="caption dos">
 
-      <h3><a href="flights/<%=searchresults['originOne']['airportCode']%>/<%=searchresults['originTwo']['airportCode']%>/<%= destination.airportCode %>/<%=depdate%>/<%=retdate%>"><%= destination.city %> </a></h3>
+      <h3><a href="flights/<%=searchresults['originOne']['airportCode']%>/<%=searchresults['originTwo']['airportCode']%>/<%= destination.airportCode %>/<%=depdate%>/<%=retdate%>"><%= destination.city %> </a> </h3>
       <h4><%= destination.country %></h4>
       <p>
-       <span class="glyphicon glyphicon-plane"></span> From: <%=searchresults['originOne']['airportName']%> $$ <%= destination.priceFromOriginOne %>
+       <span class="glyphicon glyphicon-plane"></span> From: <%=searchresults['originOne']['airportCode']%> <span class="glyphicon glyphicon-usd"></span> <%= destination.priceFromOriginOne %>
         <br>
-        <span class="glyphicon glyphicon-plane"></span> From: <%=searchresults['originTwo']['airportName']%> $$ <%= destination.priceFromOriginTwo  %>
+        <span class="glyphicon glyphicon-plane"></span> From: <%=searchresults['originTwo']['airportCode']%> <span class="glyphicon glyphicon-usd"></span> <%= destination.priceFromOriginTwo  %>
         <br>
         <br>
         <strong> TOTAL:  <%= destination.sumPrices %></strong>
@@ -37,16 +37,16 @@
 
       <div class="caption">
 
-        <h3><a href="flights/<%=searchresults['originOne']['airportCode']%>/<%=searchresults['originTwo']['airportCode']%>/<%= destination.airportCode %>/<%=depdate%>/<%=retdate%>"><%= destination.city %> </a></h3>
-        <h4><%= destination.country %></h4>
+        <h3><a href="flights/<%=searchresults['originOne']['airportCode']%>/<%=searchresults['originTwo']['airportCode']%>/<%= destination.airportCode %>/<%=depdate%>/<%=retdate%>"><%= destination.city %> </a> <span> <a href="flights/<%=searchresults['originOne']['airportCode']%>/<%=searchresults['originTwo']['airportCode']%>/<%= destination.airportCode %>/<%=depdate%>/<%=retdate%>" class="btn btn-success" role="button">See more flights to this city</a></span></h3>
+        <h4><%= destination.country %>
+</h4>
         <p>
-          From: <%=searchresults['originOne']['airportName']%> $$ <%= destination.priceFromOriginOne %>
+          From: <%=searchresults['originOne']['airportCode']%> $$ <%= destination.priceFromOriginOne %>
           <br>
-          From: <%=searchresults['originTwo']['airportName']%> $$ <%= destination.priceFromOriginTwo  %>
+          From: <%=searchresults['originTwo']['airportCode']%> $$ <%= destination.priceFromOriginTwo  %>
           <br>
           <br>
           <strong> TOTAL:  <%= destination.sumPrices %></strong>
-          <p> <a href="flights/<%=searchresults['originOne']['airportCode']%>/<%=searchresults['originTwo']['airportCode']%>/<%= destination.airportCode %>/<%=depdate%>/<%=retdate%>" class="btn btn-default" role="button">See more flights to this city</a></p>
         </p>
       </div>
     </div>
