@@ -17,7 +17,6 @@ const LOCALE = "en-US"
 module.exports = {
 
   getTheActualFlights: function(sessionKey) {
-    console.log("gets to getTheActualFlights", sessionKey);
     var options = {
       apiKey: process.env.SKYSCANNER_KEY,
       uri: sessionKey + '?apiKey=' + process.env.SKYSCANNER_KEY, //+ 'pageindex=0&pagesize=20',
@@ -56,8 +55,10 @@ module.exports = {
 
             var airlineSkyObj = {}
             airlineSkyObj['FlightNumber'] = elementFlight['FlightNumber']
+            sails.log( CarriersObj[elementFlight['CarrierId'].toString()])
             airlineSkyObj['AirlineName'] = CarriersObj[elementFlight['CarrierId'].toString()]['Name']
             airlineSkyObj['AirlineCode'] = CarriersObj[elementFlight['CarrierId'].toString()]['Code']
+            airlineSkyObj['AirlineLogo'] = CarriersObj[elementFlight['CarrierId'].toString()]['ImageUrl']
             obj['OutboundLegInfo']['FlightsInfo'].push(airlineSkyObj)
           })
 
@@ -114,7 +115,6 @@ module.exports = {
   getFlightData: function(origin, destination, DepDate, RetDate) {
     var self =  this
     var originLoca = GetAirportInfo.lookupByIataCode(origin.toUpperCase())
-    console.log(originLoca);
 
       if (originLoca['country'] === 'United States') {
 
@@ -181,7 +181,7 @@ module.exports = {
                   obj['InboundLegInfo']['FlightsInfo'].push(airlineInObj)
                 })
 
-                                if (element['AirItinerary']['OriginDestinationOptions']['OriginDestinationOption'][1]['FlightSegment'].length > 1){
+                if (element['AirItinerary']['OriginDestinationOptions']['OriginDestinationOption'][1]['FlightSegment'].length > 1){
                  obj['InboundLegInfo']['Stops'] = (element['AirItinerary']['OriginDestinationOptions']['OriginDestinationOption'][1]['FlightSegment'].length - 1).toString() + " Stop(s)"
                 } else {
                    obj['InboundLegInfo']['Stops'] = "Direct"
@@ -199,7 +199,6 @@ module.exports = {
       return myPromise
 
     } else if (originLoca['country'] != 'United States') {
-      console.log("Hits (originLoca['country'] != 'United States')");
       // /session live key
       var skyscannerOptions = {
         method: 'POST',

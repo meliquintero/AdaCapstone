@@ -34,6 +34,9 @@ module.exports = {
 		flightRequests.theFlights(originOne, originTwo, destination, DepDate, RetDate).then(function(flightsResult){
 			return res.view('show', {
 					searchresults: flightsResult,
+					originOne: originOne,
+					originTwo: originTwo,
+					destination: destination,
 					user: req.user
 				});
 		  })
