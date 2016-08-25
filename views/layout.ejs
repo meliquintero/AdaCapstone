@@ -21,6 +21,47 @@
     <link rel="stylesheet" href="/styles/importer.css">
     <!--STYLES END-->
 
+
+    <!-- CALENDAR -->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+  <script>
+  $( function() {
+    var dateFormat = "yy/mm/dd",
+      froma = $( "#from" )
+        .datepicker({
+          defaultDate: "+4d",
+          changeMonth: true,
+          numberOfMonths: 2
+        })
+        .on( "change", function() {
+          to.datepicker( "option", "minDate", getDate( this ) );
+        }),
+      to = $( "#to" ).datepicker({
+        defaultDate: "+4d",
+        changeMonth: true,
+        numberOfMonths: 2
+      })
+      .on( "change", function() {
+        froma.datepicker( "option", "maxDate", getDate( this ) );
+      });
+
+    function getDate( element ) {
+      console.log("element", element.value);
+      var date;
+      try {
+        date = $.datepicker.parseDate( dateFormat, element.value );
+      } catch( error ) {
+        date = null;
+      }
+
+      return date;
+    }
+  } );
+  </script>
+
   </head>
 
   <body>
@@ -36,13 +77,14 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#"><img src="images/logo.png"></a>
+
+          <a class="navbar-brand" href="/"><img src="images/logo.png"></a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+            <!-- <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li> -->
 
           </ul>
 

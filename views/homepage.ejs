@@ -38,13 +38,17 @@
           </div>
 
           <div class="form-group">
-            <label for="departure_date">Departure Date</label>
-            <input type="date" name="departure_date" class="form-control"/>
+            <label for="from">Departure Date</label>
+            <input type="text" id="from" name="from" class="form-control"/>
+
+            <!-- <input type="date" name="departure_date" class="form-control"/> -->
           </div>
 
           <div class="form-group">
-            <label for="return_date">Return Date</label>
-            <input type="date" name="return_date" class="form-control"/>
+            <label for="to">Return Date</label>
+            <input type="text" id="to" name="to" class="form-control"/>
+
+            <!-- <input type="date" name="return_date" class="form-control"/> -->
           </div>
 
           <button type="submit" class="btn btn-primary">Find Destinations</button>
@@ -55,10 +59,14 @@
 </div>
 
 <div class="container">
-
-
+<!-- GEO LOCATION -->
+<!-- <p>Click the button to get your coordinates.</p>
+<button onclick="getLocation()">Try It</button>
+<p id="demo"></p> -->
 </div>
 
+
+<!-- Airpost outcomplete -->
 <script>
     $(function() {
         $('.air').click(function (e) {
