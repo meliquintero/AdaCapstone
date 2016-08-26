@@ -43,6 +43,9 @@ module.exports = {
         var theArray = []
         for (var i = 0; i < 10; i++) {
           var obj = {}
+
+          // obj['BookingDetailsLink'] = LegsObj[bigData['Itineraries'][i]['BookingDetailsLink']]
+
           obj['OutboundLegInfo'] = {}
           obj['OutboundLegInfo']['Departure'] = LegsObj[bigData['Itineraries'][i]['OutboundLegId']]['Departure']
           obj['OutboundLegInfo']['Arrival'] = LegsObj[bigData['Itineraries'][i]['OutboundLegId']]['Arrival']
@@ -55,9 +58,10 @@ module.exports = {
 
             var airlineSkyObj = {}
             airlineSkyObj['FlightNumber'] = elementFlight['FlightNumber']
-            sails.log( CarriersObj[elementFlight['CarrierId'].toString()])
+            // sails.log( CarriersObj[elementFlight['CarrierId'].toString()])
             airlineSkyObj['AirlineName'] = CarriersObj[elementFlight['CarrierId'].toString()]['Name']
             airlineSkyObj['AirlineCode'] = CarriersObj[elementFlight['CarrierId'].toString()]['Code']
+            // console.log(CarriersObj[elementFlight['CarrierId'].toString()]['ImageUrl']);
             airlineSkyObj['AirlineLogo'] = CarriersObj[elementFlight['CarrierId'].toString()]['ImageUrl']
             obj['OutboundLegInfo']['FlightsInfo'].push(airlineSkyObj)
           })
@@ -98,6 +102,7 @@ module.exports = {
           obj['Price']['CurrencyCode'] = 'USD'
           obj['Price']['DecimalPlaces'] = 2
           obj['Price']['Amount'] = bigData['Itineraries'][i]['PricingOptions'][0]['Price'].toFixed(2)
+          obj['Price']['superLink'] = bigData['Itineraries'][i]['PricingOptions'][0]['DeeplinkUrl']
 
 
           theArray.push(obj)

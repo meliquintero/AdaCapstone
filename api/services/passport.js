@@ -40,7 +40,7 @@ var verifyHandler = function (token, tokenSecret, profile, done) {
                 console.log('found', profile);
                 return done(null, user);
             } else {
-                     console.log("user.create()");
+                     console.log("user.create()", profile);
 
                 User.create({
                     provider: profile.provider,

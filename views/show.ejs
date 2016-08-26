@@ -14,10 +14,6 @@
              <span class="glyphicon glyphicon-time"></span>
              <%=flight.OutboundLegInfo.Arrival.slice(11, 16)%>  /  <%=flight.OutboundLegInfo.Stops%>
            </p>
-           <img src='https://api.sabre.com/v1/lists/utilities/airlines?airlinecode=AI'>
-           <img href='https://api.sabre.com/v1/lists/utilities/airlines?airlinecode=AI'>
-
-
 
            <% flight.OutboundLegInfo.FlightsInfo.forEach(function(flightInfo) { %>
              <%= flightInfo.AirlineCode %>
@@ -33,10 +29,14 @@
              </span><%=flight.InboundLegInfo.Arrival.slice(11, 16)%>  /  <%=flight.InboundLegInfo.Stops%>
            </p>
 
-           <% flight.InboundLegInfo.FlightsInfo.forEach(function(flightInfo) { %>
-             <%= flightInfo.AirlineCode %>
+            <% flight.InboundLegInfo.FlightsInfo.forEach(function(flightInfo) { %>
+              <%= flightInfo.AirlineCode %>
 
-             <% }); %>
+            <% }); %>
+
+            <% if (flight.Price.superLink !== undefined) { %>
+              <a href="<%= flight.Price.superLink%>">BOOK!!!</a>
+            <% } %>
 
         </div>
       </div>

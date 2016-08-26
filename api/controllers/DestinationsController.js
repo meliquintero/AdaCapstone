@@ -16,6 +16,7 @@ module.exports = {
 					searchresults: destinationsresult,
 					depdate: DepDate,
 					retdate: RetDate,
+					searchBar: "true",
 					user: req.user
 				});
 		  })
@@ -39,6 +40,7 @@ module.exports = {
 					originOne: originOne,
 					originTwo: originTwo,
 					destination: destination,
+					searchBar: "true",
 					user: req.user
 				});
 		  })
