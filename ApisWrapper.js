@@ -252,10 +252,8 @@ module.exports = {
   },
 
   getOriginData: function (origin, departure_date, return_time) {
-    console.log("hit getOriginData", origin, departure_date, return_time);
     var self = this
     var originLoca = GetAirportInfo.lookupByIataCode(origin.toUpperCase())
-    console.log("originLoca", originLoca);
     if (originLoca['country'] === 'United States') {
       var SabreDevStudioFlight = require('sabre-dev-studio/lib/sabre-dev-studio-flight');
       var sabre_dev_studio_flight = new SabreDevStudioFlight({
@@ -287,8 +285,6 @@ module.exports = {
               airportCode: originLoca['iata'],
               destinations: []
             }
-
-            console.log("sabre_dev_studio_flight data",data);
 
             JSON.parse(data).FareInfo.forEach(function(element, index, array) {
               var DestinationLocale = GetAirportInfo.lookupByIataCode(element["DestinationLocation"])
@@ -376,6 +372,8 @@ module.exports = {
           return arrayTwo.indexOf(n) != -1;
         });
 
+        console.log("arrayCommons", arrayCommons);
+
         // select the commmon cities
         self.clean(arrayCommons, origin1Data)
         self.clean(arrayCommons, origin2Data)
@@ -392,7 +390,7 @@ module.exports = {
         var TheOneOne = self.getAllGooglePlaceIds(TheOne)
 
         var TheOneOneOne = self.getAllGooglePhotoReferences(TheOneOne)
-
+        console.log("TheOneOneOne", TheOneOneOne);
         return TheOneOneOne
 
       }
