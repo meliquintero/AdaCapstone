@@ -2,7 +2,7 @@ module.exports = {
 	index: function (req, res) {
 
 		return res.view('homepage', {
-			searchBar: undefined,
+			searchBar: "false",
 			user: req.user
 		});
 	}
