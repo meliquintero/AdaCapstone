@@ -224,6 +224,8 @@ module.exports = {
     var finalArray = []
 
     for (var i = 0, len = originData.destinations.length; i < len; i++) {
+      console.log(originData.destinations[i]["city"]);
+
       if (arrayCommons.includes(originData.destinations[i]["city"])) {
         finalArray.push(originData.destinations[i])
       }
