@@ -10,9 +10,74 @@ const MARKET = "US"
 const CURRENCY = "USD"
 const LOCALE = "en-US"
 const DESTINATION = "anywhere"
-objMatchingSkyscannerId = {}
 
 module.exports = {
+
+  getTheHotel: function(coordinates, departure_date, return_time) {
+    console.log('testinghard', coordinates, departure_date, return_time);
+    if (coordinates === undefined) {
+      coordinates = "18.040953,-63.1089"
+    }
+    var options = {
+      // method: 'POST',
+
+      uri: 'http://partners.api.skyscanner.net/apiservices/hotels/liveprices/v2/'+ MARKET + '/' + CURRENCY + '/' + LOCALE + '/' + coordinates + '-latlong/' + departure_date + '/' + return_time + '/2/1?apiKey=' + process.env.SKYSCANNER_KEY,
+      // http://partners.api.skyscanner.net/apiservices/hotels/liveprices/v2/{market}/{currency}/{locale}/{entityid}/{checkindate}/{checkoutdate}/{guests}/{rooms}?apiKey={apiKey}[&pageSize={pageSize}][&imageLimit={imageLimit}]
+      // apiKey: process.env.SKYSCANNER_KEY,
+
+      resolveWithFullResponse: true,
+      headers: {
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+        'User-Agent': 'Request-Promise',
+        'Accept': 'application/json'
+      },
+      // body: {
+        // 'apiKey': process.env.SKYSCANNER_KEY,
+        // 'locale': LOCALE,
+        // 'country': "US",
+        // 'currency': CURRENCY,
+        // entityId: coordinates + '-latlong',
+        // checkindate: departure_date,
+        // checkoutdate: return_time,
+        // guests: 2,
+        // rooms: 1,
+      // },
+
+      // transform2xxOnly: true,
+      json: true,
+      transform: function (body, response, total) {
+        console.log("colombiano34body", body);
+        console.log("colombiano34response", response.headers);
+      return response
+      }
+    }
+
+    return rp(options).promise()
+  },
+
+  getHotels: function(superObject, departure_date, return_time) {
+    console.log("insideerr");
+
+    var aqui = this
+
+    return superObject.then(function(mainObjectForReal){
+      var hotelPromises = mainObjectForReal.destinations.map(function(element) {
+          return aqui.getTheHotel(element["coordinates"], departure_date, return_time)
+          .then(function (hotelsResponse) {
+              element["hotels"] = hotelsResponse
+            return element
+          })
+      })
+
+      return Promise.all(hotelPromises).then(function(arrayDestinations) {
+        console.log("Hotel requests are done");
+        mainObjectForReal['destinations'] = arrayDestinations
+        return mainObjectForReal
+      })
+
+    })
+
+  },
 
   getGooglePhotoReference: function(placeId) {
 
@@ -51,7 +116,6 @@ module.exports = {
       })
 
       return Promise.all(thesePromises).then(function(arrayDestinations) {
-        console.log("hits the REFERENCESSSSSS promises done");
         mainObjectForReal['destinations'] = arrayDestinations
         return mainObjectForReal
       })
@@ -161,11 +225,13 @@ module.exports = {
       }
 
       if (originInfoTwo.destinations[i]['airportCode'] === originInfoOne.destinations[i]['airportCode']) {
-
         obj['airportCode'] = originInfoTwo.destinations[i]['airportCode']
       }
 
       if (originInfoTwo.destinations[i]['city'] ===  originInfoOne.destinations[i]['city']) {
+        var thisLocale  = GetAirportInfo.lookupByIataCode(originInfoOne.destinations[i]['airportCode'])
+        console.log(thisLocale);
+        obj['coordinates'] = thisLocale['latitude'] + "," + thisLocale['longitude']
         obj['city']= originInfoTwo.destinations[i]['city']
       }
       if (originInfoTwo.destinations[i]['country'] === originInfoOne.destinations[i]['country']) {
@@ -220,16 +286,17 @@ module.exports = {
   },
 
   clean: function(arrayCommons, originData) {
-    console.log("gets to clean: function", arrayCommons, "originData.destinationslength", originData['destinations'].length);
+    console.log("gets to clean: function  originData.destinationslength", originData['destinations'].length);
+    console.log('arrayCommons', arrayCommons);
     var finalArray = []
 
-    for (var i = 0, len = originData.destinations.length; i < len; i++) {
-      console.log(originData.destinations[i]["city"]);
+    // for (var i = 0, len = originData.destinations.length; i < len; i++) {
+      console.log('destinations[0]', originData.destinations[0]["city"]);
 
-      if (arrayCommons.includes(originData.destinations[i]["city"])) {
-        finalArray.push(originData.destinations[i])
+      if (arrayCommons.includes(originData.destinations[0]["city"])) {
+        finalArray.push(originData.destinations[0])
       }
-    }
+    // }
 
     originData['destinations'] = finalArray
     console.log("finalArray.length", finalArray.length);
@@ -326,18 +393,13 @@ module.exports = {
             .then(function (skyscannerPlaceInfo) {
                 var destLoca = GetAirportInfo.lookupByIataCode(skyscannerPlaceInfo.PlaceId.slice(0,3))
 
-                objMatchingSkyscannerId[destLoca['iata']] = {
-                skyscannerId: element["OutboundLeg"]["DestinationId"],
-                city: destLoca['city'],
-                iata: destLoca['iata']
-                }
-                console.log(objMatchingSkyscannerId);
               return {
                 airportName: destLoca['name'],
                 city: destLoca['city'],
                 country: destLoca['country'],
                 airportCode: destLoca['iata'],
                 price: element["MinPrice"]
+
               }
             })
         })
@@ -360,7 +422,6 @@ module.exports = {
   },
 
   matchedDestinations: function(origin1, origin2, departure_date, return_time) {
-    console.log("params", origin1, origin2, departure_date, return_time);
     var self = this
     return Promise.join(
 
@@ -377,12 +438,10 @@ module.exports = {
           return arrayTwo.indexOf(n) != -1;
         });
 
-        console.log("origin1Data before clean", origin1Data);
-
         // select the commmon cities
         self.clean(arrayCommons, origin1Data)
         self.clean(arrayCommons, origin2Data)
-        console.log("origin1Data after clean", origin1Data);
+        // console.log("origin1Data after clean", origin1Data);
 
         //clean the skyscanner data, call the method that selects the cheapest
         if (origin1Data.dataProvider === "skyscanner") {
@@ -392,11 +451,10 @@ module.exports = {
         }
 
         var TheOne = self.fussionExtreme(origin1Data, origin2Data)
-        console.log("TheOne", TheOne);
         var TheOneOne = self.getAllGooglePlaceIds(TheOne)
-
         var TheOneOneOne = self.getAllGooglePhotoReferences(TheOneOne)
-        console.log("TheOneOneOne", TheOneOneOne);
+        // console.log('get to the TheOneWithHotels');
+        // TheOneWithHotels = self.getHotels(TheOneOneOne, departure_date, return_time)
         return TheOneOneOne
 
       }
