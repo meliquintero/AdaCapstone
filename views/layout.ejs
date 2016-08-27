@@ -111,13 +111,7 @@
 
 
           <ul class="nav navbar-nav navbar-right">
-            <% if (user !== undefined) {%>
-              <li><a><%=user.displayName%></a></li>
-              <li class="text-center"><a class="btn btn-primary btn-lg" role="button" href="/auth/logout">Login out</a></li>
-            <% } else if (user === undefined) {%>
-              <!-- <li><a href="/auth/google">Login With Google</a></li> -->
-              <li class="text-center"><a href="#" class="btn btn-primary btn-lg" role="button" data-toggle="modal" data-target="#login-modal">Login In</a></li>
-            <%}%>
+
 
           </ul>
         </div><!-- /.navbar-collapse -->
