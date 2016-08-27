@@ -252,9 +252,10 @@ module.exports = {
   },
 
   getOriginData: function (origin, departure_date, return_time) {
+    console.log("hit getOriginData", origin, departure_date, return_time);
     var self = this
     var originLoca = GetAirportInfo.lookupByIataCode(origin.toUpperCase())
-
+    console.log("originLoca", originLoca);
     if (originLoca['country'] === 'United States') {
       var SabreDevStudioFlight = require('sabre-dev-studio/lib/sabre-dev-studio-flight');
       var sabre_dev_studio_flight = new SabreDevStudioFlight({
@@ -269,7 +270,7 @@ module.exports = {
         returndate: return_time
         //  theme         : 'MOUNTAINS'
       };
-
+      console.log("sabreOptions", sabreOptions);
       //A promise is being waited in the other side
       var myPromise = new ThePromise(function (resolve, reject) {
         sabre_dev_studio_flight.destination_finder( sabreOptions, function(error, data) {
@@ -286,6 +287,8 @@ module.exports = {
               airportCode: originLoca['iata'],
               destinations: []
             }
+
+            console.log("sabre_dev_studio_flight data",data);
 
             JSON.parse(data).FareInfo.forEach(function(element, index, array) {
               var DestinationLocale = GetAirportInfo.lookupByIataCode(element["DestinationLocation"])
@@ -356,6 +359,7 @@ module.exports = {
   },
 
   matchedDestinations: function(origin1, origin2, departure_date, return_time) {
+    console.log("params", origin1, origin2, departure_date, return_time);
     var self = this
     return Promise.join(
 
