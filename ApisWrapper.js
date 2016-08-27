@@ -372,11 +372,12 @@ module.exports = {
           return arrayTwo.indexOf(n) != -1;
         });
 
-        console.log("arrayCommons", arrayCommons);
+        console.log("origin1Data before clean", origin1Data);
 
         // select the commmon cities
         self.clean(arrayCommons, origin1Data)
         self.clean(arrayCommons, origin2Data)
+        console.log("origin1Data after clean", origin1Data);
 
         //clean the skyscanner data, call the method that selects the cheapest
         if (origin1Data.dataProvider === "skyscanner") {
@@ -386,7 +387,7 @@ module.exports = {
         }
 
         var TheOne = self.fussionExtreme(origin1Data, origin2Data)
-
+        console.log("TheOne", TheOne);
         var TheOneOne = self.getAllGooglePlaceIds(TheOne)
 
         var TheOneOneOne = self.getAllGooglePhotoReferences(TheOneOne)
