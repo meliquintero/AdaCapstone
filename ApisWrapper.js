@@ -220,6 +220,7 @@ module.exports = {
   },
 
   clean: function(arrayCommons, originData) {
+    console.log("gets to clean: function", arrayCommons, "originData.destinationslength", originData['destinations'].length);
     var finalArray = []
 
     for (var i = 0, len = originData.destinations.length; i < len; i++) {
@@ -229,6 +230,8 @@ module.exports = {
     }
 
     originData['destinations'] = finalArray
+    console.log("finalArray.length", finalArray.length);
+    console.log("originData.destinationslength", originData['destinations'].length);
 
   },
 
