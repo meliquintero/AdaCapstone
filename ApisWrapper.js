@@ -10,6 +10,7 @@ const MARKET = "US"
 const CURRENCY = "USD"
 const LOCALE = "en-US"
 const DESTINATION = "anywhere"
+objMatchingSkyscannerId = {}
 
 module.exports = {
 
@@ -320,6 +321,13 @@ module.exports = {
             return self.getSkyscannerLocation(element["OutboundLeg"]["DestinationId"])
             .then(function (skyscannerPlaceInfo) {
                 var destLoca = GetAirportInfo.lookupByIataCode(skyscannerPlaceInfo.PlaceId.slice(0,3))
+
+                objMatchingSkyscannerId[destLoca['iata']] = {
+                skyscannerId: element["OutboundLeg"]["DestinationId"],
+                city: destLoca['city'],
+                iata: destLoca['iata']
+                }
+                console.log(objMatchingSkyscannerId);
               return {
                 airportName: destLoca['name'],
                 city: destLoca['city'],
