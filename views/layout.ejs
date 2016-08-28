@@ -89,34 +89,32 @@
   <body>
 
 
-    <nav class="navbar navbar-default" data-spy="affix" data-offset-top="100">
-      <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
+        <div class="mainPitch">
+          <div class="container">
 
-          <a class="navbar-brand" href="/"><img src="images/logo.png"></a>
+            <a href="/"><img src="images/logo.png"></a>
+
+            <form method="post" action="/destinations" class = "form-inblock">
+              <div class="form-group">
+                <label for="origin_one">Origin</label>
+                <input type="text" name="origin_one" class="form-control air" id="term" placeholder="City name or airport code" />
+
+                <label for="origin_two">Origin</label>
+                <input type="text" name="origin_two" class="form-control air" id="term" placeholder="City name or airport code" />
+
+                <label for="from">Departure Date</label>
+                <input type="text" id="from" name="from" class="form-control"/>
+
+                <label for="to">Return Date</label>
+                <input type="text" id="to" name="to" class="form-control"/>
+              </div>
+
+              <button type="submit" class="btn btn-primary">Find Destinations</button>
+            </form>
+          </div>
         </div>
+      </div>
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav">
-            <!-- <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li> -->
-          </ul>
-
-
-          <ul class="nav navbar-nav navbar-right">
-
-
-          </ul>
-        </div><!-- /.navbar-collapse -->
-      </div><!-- /.container-fluid -->
-    </nav>
 
     <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
     	<div class="modal-dialog">
