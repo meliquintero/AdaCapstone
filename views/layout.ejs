@@ -1,3 +1,19 @@
+Skip to content
+This repository
+Search
+Pull requests
+Issues
+Gist
+ @melissajimison
+ Unwatch 2
+  Star 0
+ Fork 0 davejimison/inthemiddle Private
+ Code  Issues 0  Pull requests 0  Wiki  Pulse  Graphs
+Branch: master Find file Copy pathinthemiddle/views/layout.ejs
+f14c28f  4 minutes ago
+@davejimison davejimison fixed datepicker on layout.ejs
+1 contributor
+RawBlameHistory     390 lines (336 sloc)  16.1 KB
 <!DOCTYPE html>
 <html>
   <head>
@@ -31,7 +47,6 @@
 
     <!-- <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
-
 <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
 <script type="text/javascript" src="js/jquery-ui-1.8.18.custom.min.js"></script> -->
 
@@ -51,35 +66,45 @@
       froma = $( "#from" )
         .datepicker({
           defaultDate: "+4d",
-          changeMonth: true,
-          numberOfMonths: 2
-
+          changeMonth: false,
+          numberOfMonths: 2,
+           minDate: 0
         })
         .on( "change", function() {
-          to.datepicker( "option", "minDate", getDate( this ) );
+            getDate( this );
+//          to.datepicker( "option", "minDate", getDate( this ) );
           console.log("this to", this);
-
         }),
       to = $( "#to" ).datepicker({
         defaultDate: "+4d",
-        changeMonth: true,
-        numberOfMonths: 2
+        changeMonth: false,
+        numberOfMonths: 2,
+        minDate: 0
       })
       .on( "change", function() {
         console.log("this Fromma", this);
-        froma.datepicker( "option", "maxDate", getDate( this ) );
+//        froma.datepicker( "option", "maxDate", getDate( this ) );
       });
-
     function getDate( element ) {
       console.log("element", element.value);
-      var date;
-      try {
-        date = $.datepicker.parseDate( dateFormat, element.value );
-      } catch( error ) {
-        date = null;
-      }
-
-      return date;
+        var nD = new Date(element.value);
+        var crazy = nD.setDate(nD.getDate()+15);
+        $('#to').datepicker('destroy');
+        to = $( "#to" ).datepicker({
+            defaultDate: "+4d",
+            changeMonth: false,
+            numberOfMonths: 2,
+            minDate: new Date(element.value),
+            maxDate: new Date(crazy)
+        });
+//        var date;
+//      try {
+//        date = $.datepicker.parseDate( dateFormat, element.value );
+//      } catch( error ) {
+//        date = null;
+//      }
+//
+//      return date;
     }
   } );
   </script>
@@ -87,34 +112,30 @@
   </head>
 
   <body>
-
-
-        <div class="mainPitch">
-          <div class="container">
-
-            <a href="/"><img src="images/logo.png"></a>
-
-            <form method="post" action="/destinations" class = "form-inblock">
-              <div class="form-group">
-                <label for="origin_one">Origin</label>
-                <input type="text" name="origin_one" class="form-control air" id="term" placeholder="City name or airport code" />
-
-                <label for="origin_two">Origin</label>
-                <input type="text" name="origin_two" class="form-control air" id="term" placeholder="City name or airport code" />
-
-                <label for="from">Departure Date</label>
-                <input type="text" id="from" name="from" class="form-control"/>
-
-                <label for="to">Return Date</label>
-                <input type="text" id="to" name="to" class="form-control"/>
-              </div>
-
-              <button type="submit" class="btn btn-primary">Find Destinations</button>
-            </form>
-          </div>
+<!--
+    <nav class="navbar navbar-default" data-spy="affix" data-offset-top="100">
+      <div class="container-fluid">
+        &lt;!&ndash; Brand and toggle get grouped for better mobile display &ndash;&gt;
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/"><img src="images/logo.png"></a>
         </div>
-      </div>
-
+        &lt;!&ndash; Collect the nav links, forms, and other content for toggling &ndash;&gt;
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            &lt;!&ndash; <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li> &ndash;&gt;
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+          </ul>
+        </div>&lt;!&ndash; /.navbar-collapse &ndash;&gt;
+      </div>&lt;!&ndash; /.container-fluid &ndash;&gt;
+    </nav>
+-->
 
     <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
     	<div class="modal-dialog">
@@ -222,7 +243,6 @@
 
   <script>
   $(function() {
-
     var $formLogin = $('#login-form');
     var $formLost = $('#lost-form');
     var $formRegister = $('#register-form');
@@ -230,13 +250,11 @@
     var $modalAnimateTime = 300;
     var $msgAnimateTime = 150;
     var $msgShowTime = 2000;
-
     $("#div-forms").submit(function (e) {
       // console.log("THE EVENT", e);
       // console.log("e.currentTarget", e.currentTarget);
       // console.log("e.currentTarget.id", e.currentTarget.id);
       // console.log("THIS", this);
-
         switch(e.currentTarget.id) {
             case "login-form":
                 var $lg_username=$('#login_username').val();
@@ -273,14 +291,12 @@
         }
         return false;
     });
-
     $('#login_register_btn').click( function () { modalAnimate($formLogin, $formRegister) });
     $('#register_login_btn').click( function () { modalAnimate($formRegister, $formLogin); });
     $('#login_lost_btn').click( function () { modalAnimate($formLogin, $formLost); });
     $('#lost_login_btn').click( function () { modalAnimate($formLost, $formLogin); });
     $('#lost_register_btn').click( function () { modalAnimate($formLost, $formRegister); });
     $('#register_lost_btn').click( function () { modalAnimate($formRegister, $formLost); });
-
     function modalAnimate ($oldForm, $newForm) {
         var $oldH = $oldForm.height();
         var $newH = $newForm.height();
@@ -291,13 +307,11 @@
             });
         });
     }
-
     function msgFade ($msgId, $msgText) {
         $msgId.fadeOut($msgAnimateTime, function() {
             $(this).text($msgText).fadeIn($msgAnimateTime);
         });
     }
-
     function msgChange($divTag, $iconTag, $textTag, $divClass, $iconClass, $msgText) {
         var $msgOld = $divTag.text();
         msgFade($textTag, $msgText);
@@ -328,7 +342,6 @@
                       // make the request
                       console.log($(e.target).val());
                       apca.request( $(e.target).val() );
-
                       apca.onSuccess = function (data) {
                           if (data.status) { // success
                               response( $.map( data.airports, function( item ) {
