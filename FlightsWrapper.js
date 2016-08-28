@@ -58,14 +58,11 @@ module.exports = {
 
             var airlineSkyObj = {}
             airlineSkyObj['FlightNumber'] = elementFlight['FlightNumber']
-            // sails.log( CarriersObj[elementFlight['CarrierId'].toString()])
             airlineSkyObj['AirlineName'] = CarriersObj[elementFlight['CarrierId'].toString()]['Name']
             airlineSkyObj['AirlineCode'] = CarriersObj[elementFlight['CarrierId'].toString()]['Code']
-            // console.log(CarriersObj[elementFlight['CarrierId'].toString()]['ImageUrl']);
             airlineSkyObj['AirlineLogo'] = CarriersObj[elementFlight['CarrierId'].toString()]['ImageUrl']
             obj['OutboundLegInfo']['FlightsInfo'].push(airlineSkyObj)
           })
-
 
           if (obj['OutboundLegInfo']['FlightsInfo'].length > 1){
             obj['OutboundLegInfo']['Stops'] = (obj['OutboundLegInfo']['FlightsInfo'].length - 1).toString() + " Stop(s)"
@@ -243,7 +240,6 @@ module.exports = {
       this.getFlightData(originOne, destination, DepDate, RetDate),
       this.getFlightData(originTwo, destination, DepDate, RetDate),
       function(origin1Data, origin2Data) {
-        console.log("gets to the join promise");
         return [origin1Data, origin2Data]
       })
 

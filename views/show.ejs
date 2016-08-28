@@ -45,18 +45,46 @@
   </div>
 
   <div class="col-sm-6">
-    <div class="panel panel-default">
-
     <% searchresults[1].forEach(function(flight) { %>
-      <div class="panel-body">
+      <div class="panel panel-success">
+        <div class="panel-body">
+          <div class="price"><%= flight.Price.Amount%></div>
+          <p>
+             <%= originOne %>
+             <span class="glyphicon glyphicon-time"></span>
+             <%=flight.OutboundLegInfo.Departure.slice(11, 16)%>
+             <span class="glyphicon glyphicon-arrow-right"></span>
+             <%= destination %>
+             <span class="glyphicon glyphicon-time"></span>
+             <%=flight.OutboundLegInfo.Arrival.slice(11, 16)%>  /  <%=flight.OutboundLegInfo.Stops%>
+           </p>
 
-      <%= JSON.stringify(flight) %>
+           <% flight.OutboundLegInfo.FlightsInfo.forEach(function(flightInfo) { %>
+             <%= flightInfo.AirlineCode %>
+
+             <% }); %>
+           <p>
+             <%= destination %>
+             <span class="glyphicon glyphicon-time">
+             </span><%=flight.InboundLegInfo.Departure.slice(11, 16)%>
+             <span class="glyphicon glyphicon-arrow-right">
+             </span> <%= originOne %>
+             <span class="glyphicon glyphicon-time">
+             </span><%=flight.InboundLegInfo.Arrival.slice(11, 16)%>  /  <%=flight.InboundLegInfo.Stops%>
+           </p>
+
+            <% flight.InboundLegInfo.FlightsInfo.forEach(function(flightInfo) { %>
+              <%= flightInfo.AirlineCode %>
+
+            <% }); %>
+
+            <% if (flight.Price.superLink !== undefined) { %>
+              <a href="<%= flight.Price.superLink%>">BOOK!!!</a>
+            <% } %>
+
+        </div>
       </div>
-      <br><br>
-
     <% }); %>
   </div>
-  </div>
 </div>
-
 </div>
