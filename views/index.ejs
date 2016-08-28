@@ -1,5 +1,4 @@
 <!-- vertical bar -->
-<div class="row">
 
   <div class="mainPitch">
     <div class="container">
@@ -26,9 +25,10 @@
   </div>
 
   <!-- vertical bar -->
+  <div class="row">
 
   <div class="container">
-  <div class="col-sm-8">
+  <div class="col-md-10">
 
     <% if (searchresults.destinations[0].googlePhotoReference !== undefined) {%>
       <% var theReference = searchresults.destinations[0].googlePhotoReference[0]['photo_reference']%>
@@ -59,7 +59,7 @@
     <% for (var i = 1; i < searchresults.destinations.length; i++) { %>
 
       <div class="col-sm-6">
-        <a href="destinations/<%=searchresults['originOne']['airportCode']%>/<%=searchresults['originTwo']['airportCode']%>/<%= searchresults.destinations[i].airportCode %>/<%=depdate%>/<%=retdate%>">
+        <a href="flights/<%=searchresults['originOne']['airportCode']%>/<%=searchresults['originTwo']['airportCode']%>/<%= searchresults.destinations[i].airportCode %>/<%=depdate%>/<%=retdate%>">
         <div class="thumbnail">
           <% if (searchresults.destinations[i].googlePhotoReference !== undefined) {%>
             <% var theReference = searchresults.destinations[i].googlePhotoReference[0]['photo_reference']%>
