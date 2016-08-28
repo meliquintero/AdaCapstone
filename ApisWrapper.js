@@ -290,13 +290,13 @@ module.exports = {
     console.log('arrayCommons', arrayCommons);
     var finalArray = []
 
-    // for (var i = 0, len = originData.destinations.length; i < len; i++) {
+    for (var i = 0, len = originData.destinations.length; i < len; i++) {
       console.log('destinations[0]', originData.destinations[0]["city"]);
 
       if (arrayCommons.includes(originData.destinations[0]["city"])) {
         finalArray.push(originData.destinations[0])
       }
-    // }
+    }
 
     originData['destinations'] = finalArray
     console.log("finalArray.length", finalArray.length);
