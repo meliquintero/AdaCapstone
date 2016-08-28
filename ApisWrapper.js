@@ -14,7 +14,6 @@ const DESTINATION = "anywhere"
 module.exports = {
 
   getTheHotel: function(coordinates, departure_date, return_time) {
-    console.log('testinghard', coordinates, departure_date, return_time);
     if (coordinates === undefined) {
       coordinates = "18.040953,-63.1089"
     }
@@ -104,13 +103,7 @@ module.exports = {
       var thesePromises = mainObjectForReal.destinations.map(function(element) {
           return aqui.getGooglePhotoReference(element["googleId"])
           .then(function (googleDetails) {
-            // console.log("gets googleDetails for", element['city'], googleDetails);
-            // if (googleDetails === undefined){
-            //   element["googlePhotoReference"] = "googleDetails[0][photo_reference]"
-            // } else {
               element["googlePhotoReference"] = googleDetails
-            // }
-
             return element
           })
       })
@@ -135,11 +128,6 @@ module.exports = {
         json: true,
         transform2xxOnly: false,
         transform: function (response) {
-          // console.log(response);
-          // return aca.getGooglePhotoReference(response['results'][0]['place_id'])
-          //   .then(function (googleDitails) {
-          //     return googleDitails
-          //   })
           return response
         }
     }
@@ -230,7 +218,6 @@ module.exports = {
 
       if (originInfoTwo.destinations[i]['city'] ===  originInfoOne.destinations[i]['city']) {
         var thisLocale  = GetAirportInfo.lookupByIataCode(originInfoOne.destinations[i]['airportCode'])
-        console.log(thisLocale);
         obj['coordinates'] = thisLocale['latitude'] + "," + thisLocale['longitude']
         obj['city']= originInfoTwo.destinations[i]['city']
       }
@@ -286,21 +273,15 @@ module.exports = {
   },
 
   clean: function(arrayCommons, originData) {
-    console.log("gets to clean: function  originData.destinationslength", originData['destinations'].length);
-    console.log('arrayCommons', arrayCommons);
     var finalArray = []
 
     for (var i = 0, len = originData.destinations.length; i < len; i++) {
-      console.log('destinations[city]', originData.destinations[i]["city"]);
-
       if (arrayCommons.includes(originData.destinations[i]["city"])) {
         finalArray.push(originData.destinations[i])
       }
     }
 
     originData['destinations'] = finalArray
-    console.log("finalArray.length", finalArray.length);
-    console.log("originData.destinationslength", originData['destinations'].length);
 
   },
 
@@ -340,7 +321,6 @@ module.exports = {
         returndate: return_time
         //  theme         : 'MOUNTAINS'
       };
-      console.log("sabreOptions", sabreOptions);
       //A promise is being waited in the other side
       var myPromise = new ThePromise(function (resolve, reject) {
         sabre_dev_studio_flight.destination_finder( sabreOptions, function(error, data) {
@@ -441,7 +421,6 @@ module.exports = {
         // select the commmon cities
         self.clean(arrayCommons, origin1Data)
         self.clean(arrayCommons, origin2Data)
-        // console.log("origin1Data after clean", origin1Data);
 
         //clean the skyscanner data, call the method that selects the cheapest
         if (origin1Data.dataProvider === "skyscanner") {
