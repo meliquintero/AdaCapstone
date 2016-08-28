@@ -1,57 +1,57 @@
-<div class="container">
-<% searchresults.destinations.forEach(function(destination) { %>
-  <% if (destination.googlePhotoReference !== undefined) {%>
-    <% var theReference = destination.googlePhotoReference[0]['photo_reference']%>
+
+
+<div class="col-sm-6">
+
+  <% if (searchresults.destinations[0].googlePhotoReference !== undefined) {%>
+    <% var theReference = searchresults.destinations[0].googlePhotoReference[0]['photo_reference']%>
     <div class="jumbotron" style="background-image: url('https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=<%=theReference%>&key=<%=process.env.GOOGLE_KEY%>')">
-  <% } else if (destination.googlePhotoReference === undefined) {%>
+  <% } else if (searchresults.destinations[0].googlePhotoReference === undefined) {%>
     <div class="jumbotron" style="background-image: url('http://www.muxlowsurveying.com/wp-content/uploads/2015/06/Detroit-Metro-Airport-min.jpg')">
   <% } %>
 
     <div class="caption dos">
 
-      <h3><a href="flights/<%=searchresults['originOne']['airportCode']%>/<%=searchresults['originTwo']['airportCode']%>/<%= destination.airportCode %>/<%=depdate%>/<%=retdate%>"><%= destination.city %> </a> </h3>
-      <h4><%= destination.country %></h4>
+      <h3><a href="flights/<%=searchresults['originOne']['airportCode']%>/<%=searchresults['originTwo']['airportCode']%>/<%= searchresults.destinations[0].airportCode %>/<%=depdate%>/<%=retdate%>"><%= searchresults.destinations[0].city %> </a> </h3>
+      <h4><%= searchresults.destinations[0].country %></h4>
       <p>
-       <span class="glyphicon glyphicon-plane"></span> From: <%=searchresults['originOne']['airportCode']%> <span class="glyphicon glyphicon-usd"></span> <%= destination.priceFromOriginOne %>
+       <span class="glyphicon glyphicon-plane"></span> From: <%=searchresults['originOne']['airportCode']%> <span class="glyphicon glyphicon-usd"></span> <%= searchresults.destinations[0].priceFromOriginOne %>
         <br>
-        <span class="glyphicon glyphicon-plane"></span> From: <%=searchresults['originTwo']['airportCode']%> <span class="glyphicon glyphicon-usd"></span> <%= destination.priceFromOriginTwo  %>
+        <span class="glyphicon glyphicon-plane"></span> From: <%=searchresults['originTwo']['airportCode']%> <span class="glyphicon glyphicon-usd"></span> <%= searchresults.destinations[0].priceFromOriginTwo  %>
         <br>
         <br>
-        <strong> TOTAL:  <%= destination.sumPrices %></strong>
-        <p> <a href="flights/<%=searchresults['originOne']['airportCode']%>/<%=searchresults['originTwo']['airportCode']%>/<%= destination.airportCode %>/<%=depdate%>/<%=retdate%>" class="btn btn-default" role="button">See more flights to this city</a></p>
+        <strong> TOTAL:  <%= searchresults.destinations[0].sumPrices %></strong>
+        <p> <a href="flights/<%=searchresults['originOne']['airportCode']%>/<%=searchresults['originTwo']['airportCode']%>/<%= searchresults.destinations[0].airportCode %>/<%=depdate%>/<%=retdate%>" class="btn btn-default" role="button">See more flights to this city</a></p>
       </p>
     </div>
   </div>
   <br><br>
-<% }); %>
+    
+  </div>
 
-<div class="row">
-  <% searchresults.destinations.forEach(function(destination) { %>
-  <div class="col-sm-6">
-    <a href="destinations/<%=searchresults['originOne']['airportCode']%>/<%=searchresults['originTwo']['airportCode']%>/<%= destination.airportCode %>/<%=depdate%>/<%=retdate%>">
+  <% for (var i = 1; i < searchresults.destinations.length; i++) { %>
+
+  <div class="col-sm-3">
+    <a href="destinations/<%=searchresults['originOne']['airportCode']%>/<%=searchresults['originTwo']['airportCode']%>/<%= searchresults.destinations[i].airportCode %>/<%=depdate%>/<%=retdate%>">
     <div class="thumbnail">
-      <% if (destination.googlePhotoReference !== undefined) {%>
-        <% var theReference = destination.googlePhotoReference[0]['photo_reference']%>
-        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=<%=theReference%>&key=<%=process.env.GOOGLE_KEY%>" alt="<%= destination.city %>">
+      <% if (searchresults.destinations[i].googlePhotoReference !== undefined) {%>
+        <% var theReference = searchresults.destinations[i].googlePhotoReference[0]['photo_reference']%>
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=<%=theReference%>&key=<%=process.env.GOOGLE_KEY%>" alt="<%= searchresults.destinations[i].city %>">
       <% } %>
 
       <div class="caption">
 
-        <h3><a href="flights/<%=searchresults['originOne']['airportCode']%>/<%=searchresults['originTwo']['airportCode']%>/<%= destination.airportCode %>/<%=depdate%>/<%=retdate%>"><%= destination.city %> </a> <span> <a href="flights/<%=searchresults['originOne']['airportCode']%>/<%=searchresults['originTwo']['airportCode']%>/<%= destination.airportCode %>/<%=depdate%>/<%=retdate%>" class="btn btn-success" role="button">See more flights to this city</a></span></h3>
-        <h4><%= destination.country %>
-</h4>
+        <h3><a href="flights/<%=searchresults['originOne']['airportCode']%>/<%=searchresults['originTwo']['airportCode']%>/<%= searchresults.destinations[i].airportCode %>/<%=depdate%>/<%=retdate%>"><%= searchresults.destinations[0].city %> </a> <span> <a href="flights/<%=searchresults['originOne']['airportCode']%>/<%=searchresults['originTwo']['airportCode']%>/<%= searchresults.destinations[0].airportCode %>/<%=depdate%>/<%=retdate%>" class="btn btn-success" role="button">See more flights to this city</a></span></h3>
+        <h4><%= searchresults.destinations[i].country %></h4>
         <p>
-          From: <%=searchresults['originOne']['airportCode']%> $$ <%= destination.priceFromOriginOne %>
+          From: <%=searchresults['originOne']['airportCode']%> $$ <%= searchresults.destinations[i].priceFromOriginOne %>
           <br>
-          From: <%=searchresults['originTwo']['airportCode']%> $$ <%= destination.priceFromOriginTwo  %>
+          From: <%=searchresults['originTwo']['airportCode']%> $$ <%= searchresults.destinations[i].priceFromOriginTwo  %>
           <br>
           <br>
-          <strong> TOTAL:  <%= destination.sumPrices %></strong>
+          <strong> TOTAL:  <%= searchresults.destinations[i].sumPrices %></strong>
         </p>
       </div>
     </div>
     </a>
   </div>
-  <% }); %>
-</div>
-</div>
+  <% } %>
