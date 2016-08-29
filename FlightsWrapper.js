@@ -42,24 +42,24 @@ module.exports = {
 
         var theArray = []
         for (var i = 0; i < 50; i++) {
-          console.log('unodavid', bigData['Itineraries'][i]['PricingOptions'][0]['Price'].toFixed(2), "dos", bigData['Itineraries'][i-1]['PricingOptions'][0]['Price'].toFixed(2));
-          sails.log(unodavid, bigData['Itineraries'][i]['PricingOptions'][0]['Price'].toFixed(2));
-          if (bigData['Itineraries'][i]['PricingOptions'][0]['Price'].toFixed(2) === bigData['Itineraries'][i-1]['PricingOptions'][0]['Price'].toFixed(2)) {
-            console.log(bigData['Itineraries'][i]['PricingOptions'][0]['Price'].toFixed(2));
+          if (i === 0 ){
+            var prev = bigData['Itineraries'].length - 1
+          } else {
+            var prev = i - 1
+          }
+
+          if (bigData['Itineraries'][i]['PricingOptions'][0]['Price'].toFixed(2) === bigData['Itineraries'][prev]['PricingOptions'][0]['Price'].toFixed(2)) {
             continue;
           }
 
           var obj = {}
-
           obj['OutboundLegInfo'] = {}
           obj['OutboundLegInfo']['Departure'] = LegsObj[bigData['Itineraries'][i]['OutboundLegId']]['Departure']
           obj['OutboundLegInfo']['Arrival'] = LegsObj[bigData['Itineraries'][i]['OutboundLegId']]['Arrival']
           obj['OutboundLegInfo']['Duration'] = LegsObj[bigData['Itineraries'][i]['OutboundLegId']]['Duration']
-
           obj['OutboundLegInfo']['FlightsInfo'] = []
 
           LegsObj[bigData['Itineraries'][i]['OutboundLegId']]['FlightNumbers'].forEach(function(elementFlight) {
-
             var airlineSkyObj = {}
             airlineSkyObj['FlightNumber'] = elementFlight['FlightNumber']
             airlineSkyObj['AirlineName'] = CarriersObj[elementFlight['CarrierId'].toString()]['Name']
@@ -79,12 +79,9 @@ module.exports = {
           obj['InboundLegInfo']['Departure'] = LegsObj[bigData['Itineraries'][i]['InboundLegId']]['Departure']
           obj['InboundLegInfo']['Arrival'] = LegsObj[bigData['Itineraries'][i]['InboundLegId']]['Arrival']
           obj['InboundLegInfo']['Duration'] = LegsObj[bigData['Itineraries'][i]['InboundLegId']]['Duration']
-
-
           obj['InboundLegInfo']['FlightsInfo'] = []
 
           LegsObj[bigData['Itineraries'][i]['InboundLegId']]['FlightNumbers'].forEach(function(elementFlight) {
-
             var airlineSkyObj = {}
             airlineSkyObj['FlightNumber'] = elementFlight['FlightNumber']
             airlineSkyObj['AirlineName'] = CarriersObj[elementFlight['CarrierId'].toString()]['Name']
@@ -104,7 +101,6 @@ module.exports = {
           obj['Price']['DecimalPlaces'] = 2
           obj['Price']['Amount'] = bigData['Itineraries'][i]['PricingOptions'][0]['Price'].toFixed(2)
           obj['Price']['superLink'] = bigData['Itineraries'][i]['PricingOptions'][0]['DeeplinkUrl']
-
 
           theArray.push(obj)
         }
@@ -135,7 +131,6 @@ module.exports = {
         destination: destination,
         departuredate: DepDate,
         returndate: RetDate
-            //  theme         : 'MOUNTAINS'
       };
 
       //A promise is being waited in the other side
@@ -176,7 +171,6 @@ module.exports = {
 
                   obj['OutboundLegInfo']['FlightsInfo'].push(airlineObj)
                 })
-
 
                 if (sabreTotal.PricedItineraries[i]['AirItinerary']['OriginDestinationOptions']['OriginDestinationOption'][0]['FlightSegment'].length > 1){
                  obj['OutboundLegInfo']['Stops'] = (sabreTotal.PricedItineraries[i]['AirItinerary']['OriginDestinationOptions']['OriginDestinationOption'][0]['FlightSegment'].length - 1).toString() + " Stop(s)"
@@ -251,13 +245,11 @@ module.exports = {
   },
 
   theFlights: function(originOne, originTwo, destination, DepDate, RetDate) {
-      // var self = this
     return Promise.join(
       this.getFlightData(originOne, destination, DepDate, RetDate),
       this.getFlightData(originTwo, destination, DepDate, RetDate),
       function(origin1Data, origin2Data) {
         return [origin1Data, origin2Data]
-      })
-
+    })
   }
 };
