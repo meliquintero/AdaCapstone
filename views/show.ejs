@@ -1,24 +1,34 @@
-<div class="mainPitch">
-    <a href="/"><img src="images/logo.png"></a>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
 
-    <form method="post" action="/destinations" class = "form-inblock">
-      <div class="form-group">
-        <label for="origin_one">Origin</label>
-        <input type="text" name="origin_one" class="form-control air" id="term" placeholder="City name or airport code" />
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
-        <label for="origin_two">Origin</label>
-        <input type="text" name="origin_two" class="form-control air" id="term" placeholder="City name or airport code" />
+      <form class="navbar-form form-inline">
+        <div class="form-group">
+          <input type="text" name="origin_one" class="form-control air" id="term" placeholder="City name or airport code" />
 
-        <label for="from">Departure Date</label>
-        <input type="text" id="from" name="from" class="form-control"/>
+          <input type="text" name="origin_two" class="form-control air" id="term" placeholder="City name or airport code" />
 
-        <label for="to">Return Date</label>
-        <input type="text" id="to" name="to" class="form-control"/>
-      </div>
+          <input type="text" id="from" name="from" class="form-control" placeholder="Departure Date"/>
 
-      <button type="submit" class="btn btn-primary">Find Destinations</button>
-    </form>
-</div>
+          <input type="text" id="to" name="to" class="form-control" placeholder="Return Date"/>
+
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+      </form>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
 
 <div class="container">
 <div class="row">
