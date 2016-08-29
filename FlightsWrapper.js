@@ -41,16 +41,20 @@ module.exports = {
         }
 
         var theArray = []
-        for (var i = 0; i < 10; i++) {
-          var obj = {}
+        for (var i = 0; i < 50; i++) {
+          console.log('unodavid', bigData['Itineraries'][i]['PricingOptions'][0]['Price'].toFixed(2), "dos", bigData['Itineraries'][i-1]['PricingOptions'][0]['Price'].toFixed(2));
+          sails.log(unodavid, bigData['Itineraries'][i]['PricingOptions'][0]['Price'].toFixed(2));
+          if (bigData['Itineraries'][i]['PricingOptions'][0]['Price'].toFixed(2) === bigData['Itineraries'][i-1]['PricingOptions'][0]['Price'].toFixed(2)) {
+            console.log(bigData['Itineraries'][i]['PricingOptions'][0]['Price'].toFixed(2));
+            continue;
+          }
 
-          // obj['BookingDetailsLink'] = LegsObj[bigData['Itineraries'][i]['BookingDetailsLink']]
+          var obj = {}
 
           obj['OutboundLegInfo'] = {}
           obj['OutboundLegInfo']['Departure'] = LegsObj[bigData['Itineraries'][i]['OutboundLegId']]['Departure']
           obj['OutboundLegInfo']['Arrival'] = LegsObj[bigData['Itineraries'][i]['OutboundLegId']]['Arrival']
           obj['OutboundLegInfo']['Duration'] = LegsObj[bigData['Itineraries'][i]['OutboundLegId']]['Duration']
-          // obj['OutboundLegInfo']['FlightsInfo'] = LegsObj[bigData['Itineraries'][i]['OutboundLegId']]['FlightNumbers']
 
           obj['OutboundLegInfo']['FlightsInfo'] = []
 
@@ -142,15 +146,31 @@ module.exports = {
               reject(error)
             } else {
               var theArray = []
-              JSON.parse(sabreResult).PricedItineraries.forEach(function(element, index, array) {
+
+              var sabreTotal = JSON.parse(sabreResult)
+
+              for ( var i = 0; i < sabreTotal.PricedItineraries.length; i++)  {
+                if (i === 0 ){
+                  var prev = sabreTotal.PricedItineraries.length - 1
+                } else {
+                  var prev = i - 1
+
+                }
+                console.log(i , 'array[index] ', sabreTotal.PricedItineraries[i]);
+                console.log(sabreTotal.PricedItineraries[i]['AirItineraryPricingInfo']['ItinTotalFare']['TotalFare'], sabreTotal.PricedItineraries[prev]['AirItineraryPricingInfo']['ItinTotalFare']['TotalFare']);
+                if (sabreTotal.PricedItineraries[i]['AirItineraryPricingInfo']['ItinTotalFare']['TotalFare']['Amount'] === sabreTotal.PricedItineraries[prev]['AirItineraryPricingInfo']['ItinTotalFare']['TotalFare']['Amount']) {
+                    continue;
+
+                  }
+
                 var obj = {}
                 obj['OutboundLegInfo'] = {}
-                obj['OutboundLegInfo']['Departure'] =  element['AirItinerary']['OriginDestinationOptions']['OriginDestinationOption'][0]['FlightSegment'][0]['DepartureDateTime']
-                obj['OutboundLegInfo']['Arrival'] =  element['AirItinerary']['OriginDestinationOptions']['OriginDestinationOption'][0]['FlightSegment'][ element['AirItinerary']['OriginDestinationOptions']['OriginDestinationOption'][0]['FlightSegment'].length - 1]['ArrivalDateTime']
+                obj['OutboundLegInfo']['Departure'] =  sabreTotal.PricedItineraries[i]['AirItinerary']['OriginDestinationOptions']['OriginDestinationOption'][0]['FlightSegment'][0]['DepartureDateTime']
+                obj['OutboundLegInfo']['Arrival'] =  sabreTotal.PricedItineraries[i]['AirItinerary']['OriginDestinationOptions']['OriginDestinationOption'][0]['FlightSegment'][ sabreTotal.PricedItineraries[i]['AirItinerary']['OriginDestinationOptions']['OriginDestinationOption'][0]['FlightSegment'].length - 1]['ArrivalDateTime']
 
                 obj['OutboundLegInfo']['FlightsInfo'] = []
 
-                element['AirItinerary']['OriginDestinationOptions']['OriginDestinationOption'][0]['FlightSegment'].forEach (function(ele) {
+                sabreTotal.PricedItineraries[i]['AirItinerary']['OriginDestinationOptions']['OriginDestinationOption'][0]['FlightSegment'].forEach (function(ele) {
                   var airlineObj = {}
                   airlineObj['FlightNumber'] = ele['FlightNumber']
                   airlineObj['AirlineName'] = ele['OperatingAirline']['CompanyShortName']
@@ -161,19 +181,19 @@ module.exports = {
                 })
 
 
-                if (element['AirItinerary']['OriginDestinationOptions']['OriginDestinationOption'][0]['FlightSegment'].length > 1){
-                 obj['OutboundLegInfo']['Stops'] = (element['AirItinerary']['OriginDestinationOptions']['OriginDestinationOption'][0]['FlightSegment'].length - 1).toString() + " Stop(s)"
+                if (sabreTotal.PricedItineraries[i]['AirItinerary']['OriginDestinationOptions']['OriginDestinationOption'][0]['FlightSegment'].length > 1){
+                 obj['OutboundLegInfo']['Stops'] = (sabreTotal.PricedItineraries[i]['AirItinerary']['OriginDestinationOptions']['OriginDestinationOption'][0]['FlightSegment'].length - 1).toString() + " Stop(s)"
                 } else {
                    obj['OutboundLegInfo']['Stops'] = "Direct"
                 }
 
                 obj['InboundLegInfo'] = {}
-                obj['InboundLegInfo']['Departure'] =  element['AirItinerary']['OriginDestinationOptions']['OriginDestinationOption'][1]['FlightSegment'][0]['DepartureDateTime']
-                obj['InboundLegInfo']['Arrival'] =  element['AirItinerary']['OriginDestinationOptions']['OriginDestinationOption'][1]['FlightSegment'][ element['AirItinerary']['OriginDestinationOptions']['OriginDestinationOption'][1]['FlightSegment'].length - 1]['ArrivalDateTime']
-                obj['InboundLegInfo']['Duration'] = element['AirItinerary']['OriginDestinationOptions']['OriginDestinationOption'][1]['FlightSegment'][0]['ElapsedTime']
+                obj['InboundLegInfo']['Departure'] =  sabreTotal.PricedItineraries[i]['AirItinerary']['OriginDestinationOptions']['OriginDestinationOption'][1]['FlightSegment'][0]['DepartureDateTime']
+                obj['InboundLegInfo']['Arrival'] =  sabreTotal.PricedItineraries[i]['AirItinerary']['OriginDestinationOptions']['OriginDestinationOption'][1]['FlightSegment'][ sabreTotal.PricedItineraries[i]['AirItinerary']['OriginDestinationOptions']['OriginDestinationOption'][1]['FlightSegment'].length - 1]['ArrivalDateTime']
+                obj['InboundLegInfo']['Duration'] = sabreTotal.PricedItineraries[i]['AirItinerary']['OriginDestinationOptions']['OriginDestinationOption'][1]['FlightSegment'][0]['ElapsedTime']
 
                 obj['InboundLegInfo']['FlightsInfo'] = []
-                element['AirItinerary']['OriginDestinationOptions']['OriginDestinationOption'][1]['FlightSegment'].forEach (function(eleIn) {
+                sabreTotal.PricedItineraries[i]['AirItinerary']['OriginDestinationOptions']['OriginDestinationOption'][1]['FlightSegment'].forEach (function(eleIn) {
                   var airlineInObj = {}
                   airlineInObj['FlightNumber'] = eleIn['FlightNumber']
                   airlineInObj['AirlineName'] = eleIn['OperatingAirline']['CompanyShortName']
@@ -183,15 +203,14 @@ module.exports = {
                   obj['InboundLegInfo']['FlightsInfo'].push(airlineInObj)
                 })
 
-                if (element['AirItinerary']['OriginDestinationOptions']['OriginDestinationOption'][1]['FlightSegment'].length > 1){
-                 obj['InboundLegInfo']['Stops'] = (element['AirItinerary']['OriginDestinationOptions']['OriginDestinationOption'][1]['FlightSegment'].length - 1).toString() + " Stop(s)"
+                if (sabreTotal.PricedItineraries[i]['AirItinerary']['OriginDestinationOptions']['OriginDestinationOption'][1]['FlightSegment'].length > 1){
+                 obj['InboundLegInfo']['Stops'] = (sabreTotal.PricedItineraries[i]['AirItinerary']['OriginDestinationOptions']['OriginDestinationOption'][1]['FlightSegment'].length - 1).toString() + " Stop(s)"
                 } else {
                    obj['InboundLegInfo']['Stops'] = "Direct"
                 }
-                obj['Price'] = element['AirItineraryPricingInfo']['ItinTotalFare']['TotalFare']
+                obj['Price'] = sabreTotal.PricedItineraries[i]['AirItineraryPricingInfo']['ItinTotalFare']['TotalFare']
                 theArray.push(obj)
-              })
-
+              }
 
               resolve(theArray)
             }
