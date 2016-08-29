@@ -13,7 +13,6 @@ const DESTINATION = "anywhere"
 
 module.exports = {
   getGooglePhotoReference: function(placeId) {
-    console.log('gets to getGooglePhotoReference', placeId);
     var options = {
       uri: 'https://maps.googleapis.com/maps/api/place/details/json?placeid=' + placeId + '&key=' + process.env.GOOGLE_KEY,
 
@@ -23,7 +22,6 @@ module.exports = {
         json: true,
         transform2xxOnly: false,
         transform: function (response) {
-          console.log('getGooglePhotoReferenceResponse', response);
         return response['result']['photos']
         }
     }
@@ -42,7 +40,6 @@ module.exports = {
       transform2xxOnly: false,
       transform: function (response) {
         return that.getGooglePhotoReference(response['results'][0]['place_id']).then(function(dataForReal){
-          console.log("dataForReal", dataForReal);
           return dataForReal
         })
       }

@@ -46,9 +46,18 @@
 </div>
 
 <div class="container">
-<!-- GEO LOCATION -->
-<!-- <p>Click the button to get your coordinates.</p>
-<button onclick="getLocation()">Try It</button>
-<p id="demo"></p> -->
-<%= JSON.stringify(searchresults)%>
+  <ul id="rig">
+    <% searchresults.destinations.forEach(function(topDestination) { %>
+      <li>
+        <a class="rig-cell" href="#">
+          <% var photoRef = topDestination.googlePhotoReference[1].photo_reference %>
+          <img class="rig-img" src="https://maps.googleapis.com/maps/api/place/photo?maxheight=400&photoreference=<%=photoRef%>&key=<%=process.env.GOOGLE_KEY%>" alt="">
+          <span class="rig-overlay"></span>
+          <span class="rig-text">
+            <%= topDestination.skyscannerInfo.DestinationInfo.CityName %>, <%= topDestination.skyscannerInfo.DestinationInfo.CountryName%>, <%= topDestination.skyscannerInfo.skyscannerQuote.MinPrice %>
+          </span>
+        </a>
+      </li>
+    <%})%>
+  </ul>
 </div>
