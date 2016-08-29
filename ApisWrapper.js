@@ -118,7 +118,6 @@ module.exports = {
   },
 
   getGoogleId: function(city, country) {
-    var aca = this
     var options = {
       uri: 'https://maps.googleapis.com/maps/api/geocode/json?address=' + city + ',+' + country + '&key=' + process.env.GOOGLE_KEY,
 

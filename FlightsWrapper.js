@@ -154,14 +154,11 @@ module.exports = {
                   var prev = sabreTotal.PricedItineraries.length - 1
                 } else {
                   var prev = i - 1
-
                 }
-                console.log(i , 'array[index] ', sabreTotal.PricedItineraries[i]);
-                console.log(sabreTotal.PricedItineraries[i]['AirItineraryPricingInfo']['ItinTotalFare']['TotalFare'], sabreTotal.PricedItineraries[prev]['AirItineraryPricingInfo']['ItinTotalFare']['TotalFare']);
-                if (sabreTotal.PricedItineraries[i]['AirItineraryPricingInfo']['ItinTotalFare']['TotalFare']['Amount'] === sabreTotal.PricedItineraries[prev]['AirItineraryPricingInfo']['ItinTotalFare']['TotalFare']['Amount']) {
-                    continue;
 
-                  }
+                if (sabreTotal.PricedItineraries[i]['AirItineraryPricingInfo']['ItinTotalFare']['TotalFare']['Amount'] === sabreTotal.PricedItineraries[prev]['AirItineraryPricingInfo']['ItinTotalFare']['TotalFare']['Amount']) {
+                  continue;
+                }
 
                 var obj = {}
                 obj['OutboundLegInfo'] = {}

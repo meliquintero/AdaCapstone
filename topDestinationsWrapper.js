@@ -12,8 +12,27 @@ const LOCALE = "en-US"
 const DESTINATION = "anywhere"
 
 module.exports = {
+  getGooglePhotoReference: function(placeId) {
+    console.log('gets to getGooglePhotoReference', placeId);
+    var options = {
+      uri: 'https://maps.googleapis.com/maps/api/place/details/json?placeid=' + placeId + '&key=' + process.env.GOOGLE_KEY,
+
+        headers: {
+          'User-Agent': 'Request-Promise'
+        },
+        json: true,
+        transform2xxOnly: false,
+        transform: function (response) {
+          console.log('getGooglePhotoReferenceResponse', response);
+        return response['result']['photos']
+        }
+    }
+
+    return rp(options)
+  },
+
   getGoogleId: function(city, country) {
-    var aca = this
+    var that = this
     var options = {
       uri: 'https://maps.googleapis.com/maps/api/geocode/json?address=' + city + ',+' + country + '&key=' + process.env.GOOGLE_KEY,
       headers: {
@@ -22,7 +41,10 @@ module.exports = {
       json: true,
       transform2xxOnly: false,
       transform: function (response) {
-        return response['results'][0]['place_id']
+        return that.getGooglePhotoReference(response['results'][0]['place_id']).then(function(dataForReal){
+          console.log("dataForReal", dataForReal);
+          return dataForReal
+        })
       }
     }
 
@@ -42,21 +64,36 @@ module.exports = {
         transform2xxOnly: false,
         transform: function (response) {
           placesSuperObj = {}
-            for (var i = 0; i < response.Places.length; i++) {
+          for (var i = 0; i < response.Places.length; i++) {
               placesSuperObj[response.Places[i]['PlaceId'].toString()] = response.Places[i]
-
           }
-          response.Quotes.forEach(function(element, index, array) {
-              element["DestinationInfo"] = placesSuperObj[element['OutboundLeg']['DestinationId'].toString()]
-          })
 
+          var tenResult = []
 
-          var promises = response.Quotes.map(function(element) {
+          for (var i = 0; i < 10; i++) {
+            //add continue if city is the same
+            if (i === 0 ){
+              var prev = 4
+            } else {
+              var prev = i - 1
+            }
+
+            if (placesSuperObj[response.Quotes[i]['OutboundLeg']['DestinationId'].toString()]['CityName'] === placesSuperObj[response.Quotes[prev]['OutboundLeg']['DestinationId'].toString()]['CityName']) {
+              continue;
+            }
+
+            quoteObj = {}
+            quoteObj['DestinationInfo'] = placesSuperObj[response.Quotes[i]['OutboundLeg']['DestinationId'].toString()]
+            quoteObj['skyscannerQuote'] = response.Quotes[i]
+            tenResult.push(quoteObj)
+          }
+
+          var promises = tenResult.map(function(element) {
               return self.getGoogleId(element['DestinationInfo']["CityName"], element['DestinationInfo']["CountryName"])
               .then(function (googlePlaceInfo) {
                 return {
                   skyscannerInfo: element,
-                  googleId: googlePlaceInfo
+                  googlePhotoReference: googlePlaceInfo
                 }
               })
           })
