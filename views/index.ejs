@@ -1,90 +1,94 @@
-<!-- vertical bar -->
+<nav class="navbar navbar-default" data-spy="affix" data-offset-top="557">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
 
-  <div class="mainPitch">
-    <div class="container">
-      <a href="/"><img src="images/logo.png"></a>
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
-      <form method="post" action="/destinations" class = "form-inblock">
+      <form method="post" action="/destinations" class="navbar-form form-inline">
         <div class="form-group">
-          <label for="origin_one">Origin</label>
           <input type="text" name="origin_one" class="form-control air" id="term" placeholder="City name or airport code" />
 
-          <label for="origin_two">Origin</label>
           <input type="text" name="origin_two" class="form-control air" id="term" placeholder="City name or airport code" />
 
-          <label for="from">Departure Date</label>
-          <input type="text" id="from" name="from" class="form-control"/>
+          <input type="text" id="from" name="from" class="form-control" placeholder="Departure Date"/>
 
-          <label for="to">Return Date</label>
-          <input type="text" id="to" name="to" class="form-control"/>
+          <input type="text" id="to" name="to" class="form-control" placeholder="Return Date"/>
+
         </div>
-
-        <button type="submit" class="btn btn-primary">Find Destinations</button>
+        <button type="submit" class="btn btn-default">Submit</button>
       </form>
-    </div>
-  </div>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
 
-  <!-- vertical bar -->
-  <div class="row">
+<div class="container">
 
-  <div class="container">
-  <div class="col-md-10">
+  <% if (searchresults.destinations[0].googlePhotoReference !== undefined) {%>
+        <% var theReference = searchresults.destinations[0].googlePhotoReference[0]['photo_reference']%>
+        <div class="jumbotron" style="background-image: url('https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=<%=theReference%>&key=<%=process.env.GOOGLE_KEY%>')">
+  <% } else if (searchresults.destinations[0].googlePhotoReference === undefined) {%>
+        <div class="jumbotron" style="background-image: url('http://www.muxlowsurveying.com/wp-content/uploads/2015/06/Detroit-Metro-Airport-min.jpg')">
+  <% } %>
 
-    <% if (searchresults.destinations[0].googlePhotoReference !== undefined) {%>
-      <% var theReference = searchresults.destinations[0].googlePhotoReference[0]['photo_reference']%>
-      <div class="row" style="background-image: url('https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=<%=theReference%>&key=<%=process.env.GOOGLE_KEY%>')">
-    <% } else if (searchresults.destinations[0].googlePhotoReference === undefined) {%>
-      <div class="row" style="background-image: url('http://www.muxlowsurveying.com/wp-content/uploads/2015/06/Detroit-Metro-Airport-min.jpg')">
+    <div class="caption dos">
+
+      <h3><a href="flights/<%=searchresults['originOne']['airportCode']%>/<%=searchresults['originTwo']['airportCode']%>/<%= searchresults.destinations[0].airportCode %>/<%=depdate%>/<%=retdate%>"><%= searchresults.destinations[0].city %> </a> </h3>
+      <h4><%= searchresults.destinations[0].country %></h4>
+      <p>
+        <span class="glyphicon glyphicon-plane"></span> From: <%=searchresults['originOne']['airportCode']%> <span class="glyphicon glyphicon-usd"></span> <%= searchresults.destinations[0].priceFromOriginOne %>
+        <br>
+        <span class="glyphicon glyphicon-plane"></span> From: <%=searchresults['originTwo']['airportCode']%> <span class="glyphicon glyphicon-usd"></span> <%= searchresults.destinations[0].priceFromOriginTwo  %>
+        <br>
+        <br>
+        <strong> TOTAL:  <%= searchresults.destinations[0].sumPrices %></strong>
+        <p> <button href="flights/<%=searchresults['originOne']['airportCode']%>/<%=searchresults['originTwo']['airportCode']%>/<%= searchresults.destinations[0].airportCode %>/<%=depdate%>/<%=retdate%>" class="btn-flights">See more flights to this city</button></p>
+      </p>
+    </div> <!-- caption dos -->
+  </div> <!-- jumbotron -->
+  <div class="container-flights">
+
+  <% for (var i = 1; i < searchresults.destinations.length; i++) { %>
+
+    <% if (searchresults.destinations[i].googlePhotoReference !== undefined) {%>
+      <% var theReference = searchresults.destinations[i].googlePhotoReference[0]['photo_reference']%>
+      <div class="destination-box" style="background-image: url('https://maps.googleapis.com/maps/api/place/photo?maxwidth=600&photoreference=<%=theReference%>&key=<%=process.env.GOOGLE_KEY%>')"; "background-size: 300px 100px, cover";>
+    <% } else{  %>
+      <div class="destination-box"
     <% } %>
 
-      <div class="caption dos">
+    <div class="destination-info">
+        <div class="destination-header">
 
-        <h3><a href="flights/<%=searchresults['originOne']['airportCode']%>/<%=searchresults['originTwo']['airportCode']%>/<%= searchresults.destinations[0].airportCode %>/<%=depdate%>/<%=retdate%>"><%= searchresults.destinations[0].city %> </a> </h3>
-        <h4><%= searchresults.destinations[0].country %></h4>
-        <p>
-          <span class="glyphicon glyphicon-plane"></span> From: <%=searchresults['originOne']['airportCode']%> <span class="glyphicon glyphicon-usd"></span> <%= searchresults.destinations[0].priceFromOriginOne %>
-          <br>
-          <span class="glyphicon glyphicon-plane"></span> From: <%=searchresults['originTwo']['airportCode']%> <span class="glyphicon glyphicon-usd"></span> <%= searchresults.destinations[0].priceFromOriginTwo  %>
-          <br>
-          <br>
-          <strong> TOTAL:  <%= searchresults.destinations[0].sumPrices %></strong>
-          <p> <a href="flights/<%=searchresults['originOne']['airportCode']%>/<%=searchresults['originTwo']['airportCode']%>/<%= searchresults.destinations[0].airportCode %>/<%=depdate%>/<%=retdate%>" class="btn btn-default" role="button">See more flights to this city</a></p>
-        </p>
-      </div>
-    </div>
-    <br><br>
-
-    <div class="row">
-
-    <% for (var i = 1; i < searchresults.destinations.length; i++) { %>
-
-      <div class="col-sm-6">
-        <a href="flights/<%=searchresults['originOne']['airportCode']%>/<%=searchresults['originTwo']['airportCode']%>/<%= searchresults.destinations[i].airportCode %>/<%=depdate%>/<%=retdate%>">
-        <div class="thumbnail">
-          <% if (searchresults.destinations[i].googlePhotoReference !== undefined) {%>
-            <% var theReference = searchresults.destinations[i].googlePhotoReference[0]['photo_reference']%>
-            <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=<%=theReference%>&key=<%=process.env.GOOGLE_KEY%>" alt="<%= searchresults.destinations[i].city %>">
-          <% } %>
-
-          <div class="caption">
-
-            <h3><a href="flights/<%=searchresults['originOne']['airportCode']%>/<%=searchresults['originTwo']['airportCode']%>/<%= searchresults.destinations[i].airportCode %>/<%=depdate%>/<%=retdate%>"><%= searchresults.destinations[i].city %> </a> <span> <a href="flights/<%=searchresults['originOne']['airportCode']%>/<%=searchresults['originTwo']['airportCode']%>/<%= searchresults.destinations[i].airportCode %>/<%=depdate%>/<%=retdate%>" class="btn btn-success" role="button">See more flights to this city</a></span></h3>
-            <h4><%= searchresults.destinations[i].country %></h4>
-            <p>
-              From: <%=searchresults['originOne']['airportCode']%> $$ <%= searchresults.destinations[i].priceFromOriginOne %>
-              <br>
-              From: <%=searchresults['originTwo']['airportCode']%> $$ <%= searchresults.destinations[i].priceFromOriginTwo  %>
-              <br>
-              <br>
-              <strong> TOTAL:  <%= searchresults.destinations[i].sumPrices %></strong>
-            </p>
-          </div>
+        <button href="flights/<%=searchresults['originOne']['airportCode']%>/<%=searchresults['originTwo']['airportCode']%>/<%= searchresults.destinations[i].airportCode %>/<%=depdate%>/<%=retdate%>" class="btn-flights" >See more flights to this city</button>
+        <h3><%= searchresults.destinations[i].city %></h3>
+        <h4><%= searchresults.destinations[i].country %></h4>
         </div>
-      </a>
-      </div>
-      <% } %>
-    </div>
-  </div>
-</div>
+        <div class="destination-copy">
+        <p>
+          &#9992; <%=searchresults['originOne']['airportCode']%> <span class="glyphicon glyphicon-usd"></span> <%= searchresults.destinations[i].priceFromOriginOne %>
+          <br>
+          &#9992; <%=searchresults['originTwo']['airportCode']%> <span class="glyphicon glyphicon-usd"></span> <%= searchresults.destinations[i].priceFromOriginTwo  %>
+          <br>
+          <br>
+          <div class="total-flights">
 
-</div>
+          <p> TOTAL:
+            <br> <%= searchresults.destinations[i].sumPrices %></p>
+        </div>
+        </p>
+
+      </div> <!-- destination-copy -->
+      </div> <!-- destination-info -->
+    </div> <!-- destination-box -->
+  <% } %>
+  </div> <!-- container-flights -->
+</div> <!-- container -->

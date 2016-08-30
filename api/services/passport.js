@@ -57,6 +57,7 @@ var verifyHandler = function (token, tokenSecret, profile, done) {
                             console.log("err");
                             throw err;
                         }
+                        console.log("execUser",user);
                         return done(null, user);
                     });
             }
