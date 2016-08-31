@@ -31,18 +31,23 @@
 </nav>
 
 <div class="container">
+  <div class="container-flights">
 
   <% if (searchresults.destinations[0].googlePhotoReference !== undefined) {%>
         <% var theReference = searchresults.destinations[0].googlePhotoReference[0]['photo_reference']%>
-        <div class="jumbotron" style="background-image: url('https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=<%=theReference%>&key=<%=process.env.GOOGLE_KEY%>')">
+        <div class="main-destination-box" style="background-image: url('https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=<%=theReference%>&key=<%=process.env.GOOGLE_KEY%>')">
   <% } else if (searchresults.destinations[0].googlePhotoReference === undefined) {%>
-        <div class="jumbotron" style="background-image: url('http://www.muxlowsurveying.com/wp-content/uploads/2015/06/Detroit-Metro-Airport-min.jpg')">
+        <div class="main-destination-box" style="background-image: url('http://www.muxlowsurveying.com/wp-content/uploads/2015/06/Detroit-Metro-Airport-min.jpg')">
   <% } %>
 
-    <div class="caption dos">
+    <div class="main-destination-info">
+      <div class="main-destination-header">
 
-      <h3><a href="flights/<%=searchresults['originOne']['airportCode']%>/<%=searchresults['originTwo']['airportCode']%>/<%= searchresults.destinations[0].airportCode %>/<%=depdate%>/<%=retdate%>"><%= searchresults.destinations[0].city %> </a> </h3>
+      <h3><%= searchresults.destinations[0].city %> </h3>
       <h4><%= searchresults.destinations[0].country %></h4>
+
+      </div>
+      <div class="main-destination-copy">
       <p>
         <span class="glyphicon glyphicon-plane"></span> From: <%=searchresults['originOne']['airportCode']%> <span class="glyphicon glyphicon-usd"></span> <%= searchresults.destinations[0].priceFromOriginOne %>
         <br>
@@ -50,25 +55,41 @@
         <br>
         <br>
         <strong> TOTAL:  <%= searchresults.destinations[0].sumPrices %></strong>
-        <p> <button href="flights/<%=searchresults['originOne']['airportCode']%>/<%=searchresults['originTwo']['airportCode']%>/<%= searchresults.destinations[0].airportCode %>/<%=depdate%>/<%=retdate%>" class="btn-flights">See more flights to this city</button></p>
       </p>
-    </div> <!-- caption dos -->
-  </div> <!-- jumbotron -->
+      <a href="flights/<%=searchresults['originOne']['airportCode']%>/<%=searchresults['originTwo']['airportCode']%>/<%= searchresults.destinations[0].airportCode %>/<%=depdate%>/<%=retdate%>" type="button" class="btn-flight" >See more flights to this city</a>
+
+    </div> <!-- main-destination-copy -->
+
+  </div> <!-- main-destination-info -->
+  </div> <!-- main-destination-box -->
+  </div> <!-- main-destination-box -->
+
   <div class="container-flights">
 
   <% for (var i = 1; i < searchresults.destinations.length; i++) { %>
 
     <% if (searchresults.destinations[i].googlePhotoReference !== undefined) {%>
       <% var theReference = searchresults.destinations[i].googlePhotoReference[0]['photo_reference']%>
-      <div class="destination-box" style="background-image: url('https://maps.googleapis.com/maps/api/place/photo?maxwidth=600&photoreference=<%=theReference%>&key=<%=process.env.GOOGLE_KEY%>')"; "background-size: 300px 100px, cover";>
+      <div class="destination-box" style="background-image: url('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photoreference=<%=theReference%>&key=<%=process.env.GOOGLE_KEY%>')"; "background-size: 300px 100px, cover";>
     <% } else{  %>
       <div class="destination-box"
     <% } %>
 
+    <%= i === searchresults.destinations.length - 1 && searchresults.destinations.length % 2 === 0 %>
+
+    <% if (i === searchresults.destinations.length - 1 && searchresults.destinations.length % 2 === 0 ) {%>
+        <script type="text/javascript">
+          $(".destination-box").addClass("big");
+        </script>
+
+    <% } %>
+
+
+
     <div class="destination-info">
         <div class="destination-header">
 
-        <button href="flights/<%=searchresults['originOne']['airportCode']%>/<%=searchresults['originTwo']['airportCode']%>/<%= searchresults.destinations[i].airportCode %>/<%=depdate%>/<%=retdate%>" class="btn-flights" >See more flights to this city</button>
+        <a href="flights/<%=searchresults['originOne']['airportCode']%>/<%=searchresults['originTwo']['airportCode']%>/<%= searchresults.destinations[i].airportCode %>/<%=depdate%>/<%=retdate%>" type="button" class="btn-flights" >See more flights to this city</a>
         <h3><%= searchresults.destinations[i].city %></h3>
         <h4><%= searchresults.destinations[i].country %></h4>
         </div>
@@ -84,8 +105,6 @@
           <p> TOTAL:
             <br> <%= searchresults.destinations[i].sumPrices %></p>
         </div>
-        </p>
-
       </div> <!-- destination-copy -->
       </div> <!-- destination-info -->
     </div> <!-- destination-box -->

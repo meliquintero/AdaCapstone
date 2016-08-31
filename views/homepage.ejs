@@ -35,7 +35,7 @@
 
 <!-- NAVBAR -->
 
-<nav class="navbar navbar-default" data-spy="affix" data-offset-top="557">
+<nav class="navbar navbar-default" data-spy="affix" data-offset-top="566">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -61,17 +61,18 @@
           <input type="text" id="to" name="to" class="form-control" placeholder="Return Date"/>
 
         </div>
-        <button type="submit" class="btn btn-default">Submit</button>
+        <button type="submit" class="btn btn-default btn-lg">Submit</button>
       </form>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
 
+<div class="bounce"><i class="fa fa-angle-double-down"></i></div>
+
+<p class="subtitle fancy"><span>Top Places</span></p>
 
 
-
-
-<div class="container">
+<div class="container-flights">
   <ul id="rig">
     <% searchresults.destinations.forEach(function(topDestination) { %>
       <li>
@@ -80,7 +81,8 @@
           <img class="rig-img" src="https://maps.googleapis.com/maps/api/place/photo?maxheight=400&photoreference=<%=photoRef%>&key=<%=process.env.GOOGLE_KEY%>" alt="">
           <span class="rig-overlay"></span>
           <span class="rig-text">
-            <%= topDestination.skyscannerInfo.DestinationInfo.CityName %>, <%= topDestination.skyscannerInfo.DestinationInfo.CountryName%>, <%= topDestination.skyscannerInfo.skyscannerQuote.MinPrice %>
+            <%= topDestination.skyscannerInfo.DestinationInfo.CityName %>, <%= topDestination.skyscannerInfo.DestinationInfo.CountryName%>
+            <br> $<%= topDestination.skyscannerInfo.skyscannerQuote.MinPrice %>
           </span>
         </a>
       </li>

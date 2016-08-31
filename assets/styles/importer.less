@@ -1,50 +1,15 @@
-/**
- * importer.less
- *
- * By default, new Sails projects are configured to compile this file
- * from LESS to CSS.  Unlike CSS files, LESS files are not compiled and
- * included automatically unless they are imported below.
- *
- * The LESS files imported below are compiled and included in the order
- * they are listed.  Mixins, variables, etc. should be imported first
- * so that they can be accessed by subsequent LESS stylesheets.
- *
- * (Just like the rest of the asset pipeline bundled in Sails, you can
- * always omit, customize, or replace this behavior with SASS, SCSS,
- * or any other Grunt tasks you like.)
- */
-
-
-
-// For example:
-//
-// @import 'variables/colors.less';
-// @import 'mixins/foo.less';
-// @import 'mixins/bar.less';
-// @import 'mixins/baz.less';
-//
-// @import 'styleguide.less';
-// @import 'pages/login.less';
-// @import 'pages/signup.less';
-//
-// etc.
-
-.thumbnail a>img, .thumbnail>img {
-    display: block;
-    max-width: 100%;
-    height: 240px;
-}
-
-input[type=date]::-webkit-clear-button,
-input[type=date]::-webkit-inner-spin-button {
-    display: none;
+body {
+  font-size: 18px;
 }
 
 .jumbotron {
   min-height: 420px;
   margin-top: 0px;
   background-repeat: no-repeat;
+}
 
+.dos {
+  float: right;
 }
 
 .mainPitch {
@@ -57,6 +22,11 @@ input[type=date]::-webkit-inner-spin-button {
   padding: 3%;
 }
 
+.mainPitch img {
+  max-width: 100%;
+  height: auto;
+}
+
 .navbar-default {
   background-color: #A63DF2;
   background-image: none;
@@ -66,8 +36,13 @@ input[type=date]::-webkit-inner-spin-button {
   z-index: 1000;
 }
 
-.form {
-  float: right !important
+.navbar-form {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.navbar .btn-navbar {
+  border:0px !important;
 }
 
 .form-group {
@@ -79,140 +54,17 @@ input[type=text] {
   font-size: 16px !important;
   line-height: 40px !important;
   margin-right: 2% !important;
+  width: 20% !important;
+
 }
 
-@import url(http://fonts.googleapis.com/css?family=Roboto);
-
-* {
-  font-family: 'Roboto', sans-serif;
-}
-
-#login-modal .modal-dialog {
-    width: 350px;
-}
-
-#login-modal input[type=text], input[type=password] {
-	margin-top: 10px;
-}
-
-#div-login-msg,
-#div-lost-msg,
-#div-register-msg {
-    border: 1px solid #dadfe1;
-    height: 30px;
-    line-height: 28px;
-    transition: all ease-in-out 500ms;
-}
-
-#div-login-msg.success,
-#div-lost-msg.success,
-#div-register-msg.success {
-    border: 1px solid #68c3a3;
-    background-color: #c8f7c5;
-}
-
-#div-login-msg.error,
-#div-lost-msg.error,
-#div-register-msg.error {
-    border: 1px solid #eb575b;
-    background-color: #ffcad1;
-}
-
-#icon-login-msg,
-#icon-lost-msg,
-#icon-register-msg {
-    width: 30px;
-    float: left;
-    line-height: 28px;
-    text-align: center;
-    background-color: #dadfe1;
-    margin-right: 5px;
-    transition: all ease-in-out 500ms;
-}
-
-#icon-login-msg.success,
-#icon-lost-msg.success,
-#icon-register-msg.success {
-    background-color: #68c3a3 !important;
-}
-
-#icon-login-msg.error,
-#icon-lost-msg.error,
-#icon-register-msg.error {
-    background-color: #eb575b !important;
-}
-
-#img_logo {
-    max-height: 100px;
-    max-width: 100px;
-}
-
-/* #########################################
-   #    override the bootstrap configs     #
-   ######################################### */
-
-.modal-backdrop.in {
-    filter: alpha(opacity=50);
-    opacity: .8;
-}
-
-.modal-content {
-    background-color: #ececec;
-    border: 1px solid #bdc3c7;
-    border-radius: 0px;
-    outline: 0;
-}
-
-.modal-header {
-    min-height: 16.43px;
-    padding: 15px 15px 15px 15px;
-    border-bottom: 0px;
-}
-
-.modal-body {
-    position: relative;
-    padding: 5px 15px 5px 15px;
-}
-
-.modal-footer {
-    padding: 15px 15px 15px 15px;
-    text-align: left;
-    border-top: 0px;
-}
-
-.checkbox {
-    margin-bottom: 0px;
-}
 
 .btn {
     border-radius: 0px;
 }
 
-// .btn:focus,
-// .btn:active:focus,
-// .btn.active:focus,
-// .btn.focus,
-// .btn:active.focus,
-// .btn.active.focus {
-//     outline: none;
-// }
-
 .btn-lg, .btn-group-lg>.btn {
     border-radius: 0px;
-}
-
-.btn-link {
-    padding: 5px 10px 0px 0px;
-    color: #95a5a6;
-}
-
-.btn-link:hover, .btn-link:focus {
-    color: #00DFBA;
-    text-decoration: none;
-}
-
-.glyphicon {
-    top: 0px;
 }
 
 .form-control {
@@ -220,18 +72,13 @@ input[type=text] {
   // width:100% !important;
 }
 
-.gg-login-button, .fb-login-button  {
-  display: table;
-  margin: 0 auto;
+
+// DATEPICKER
+.ui-autocomplete {
+  z-index: 1001 !important;
 }
 
-
 .ui-datepicker {
-
-
-  // width: 17em !important;
-	// padding: .2em .2em 0 !important;
-	// display: none !important;
   background:#2CC2CC !important;
 }
 
@@ -239,32 +86,39 @@ input[type=text] {
 	margin: 0 2.3em;
 	line-height: 1.8em;
 	text-align: center;
-    color:#FFFFFF;
-    background:#063538;
+  color:#FFFFFF;
+  background:#F4BA56;
 }
-
-
 
 
 // HOMEPAGE
 
-
 #rig {
-    max-width:900px;
+    max-width:80%;
     margin:0 auto; /*center aligned*/
     padding:0;
     font-size:0; /* Remember to change it back to normal font size if have captions */
     list-style:none;
-    background-color:#00AC8F;
+    background-color:white;
 }
 #rig li {
+  // border: solid red;
     display: inline-block;
     *display:inline;/*for IE6 - IE7*/
-    width:50%;
+    // width:50%;
     vertical-align:middle;
     box-sizing:border-box;
     margin:0;
     padding:0;
+    font-size: 2rem;
+    font-family: 'Permanent Marker', cursive;
+    -webkit-flex-basis: 30em;
+    -ms-flex-preferred-size: 30em;
+    flex-basis: 30em;
+    -webkit-box-flex: 1;
+    -webkit-flex-grow: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
 }
 
 /* The wrapper for each item */
@@ -279,11 +133,13 @@ input[type=text] {
 /* If have the image layer */
 .rig-img {
     display:block;
-    width: 100%;
+    height: 100%;
     height: auto;
     border:none;
     transform:scale(1);
     transition:all 1s;
+    overflow: hidden;
+
 }
 
 #rig li:hover .rig-img {
@@ -319,9 +175,9 @@ input[type=text] {
     width:100%;
     text-align:center;
     text-transform:capitalize;
-    font-size:18px;
+    font-size: 3rem;
     font-weight:bold;
-    font-family: 'Oswald', sans-serif;
+    font-family: 'Architects Daughter', cursive;
     font-weight:normal!important;
     top:40%;
     color:white;
@@ -330,6 +186,7 @@ input[type=text] {
     transform:translateY(-20px);
     transition:all .3s;
 }
+
 #rig li:hover .rig-text {
     transform:translateY(0px);
     opacity:0.9;
@@ -343,24 +200,32 @@ input[type=text] {
 
 @media (max-width: 700px) {
     #rig li {
-        width:33.33%;
+        width:70%;
     }
 }
 
 @media (max-width: 550px) {
     #rig li {
-        width:50%;
+        width:80%;
     }
 }
 
-.destination-box {
-  display: inline-block;
-  width: 40%;
-  height: 400px;
-  border: 3px solid #73AD21;
-  position: relative;
-  overflow: visible;
+// HOMEPAGE
 
+.container-flights {
+  // border: solid blue;
+  display: flex;
+  flex-wrap: wrap;
+  -webkit-box-pack: justify;
+  justify-content: space-between !important;
+}
+
+.main-destination-box {
+  display: inline-block;
+    height: 600px;
+    border: 3px solid #73AD21;
+    overflow: visible;
+    background-size: cover;
     border: 1px solid gainsboro;
     border-radius: 3px;
     box-shadow: 0 2px 4px #e6e6e6;
@@ -373,27 +238,87 @@ input[type=text] {
     flex-grow: 1;
     margin: 0 1em 1.5em 1em;
     position: relative;
+    border: 2px solid green;
+
+}
+
+.main-destination-info {
+    position: absolute;
+    right: 0px;
+    height: 100%;
+    overflow: visible;
+    background: white;
+    width: 24%;
+    display: inline-block;
+    border: 2px solid blue;
+
+}
+
+.main-destination-header {
+    float: left;
+    width: : 100%;
+    border-bottom: 2px solid gainsboro;
+    padding-bottom: 4px;
+    clear: both;
+    border: 2px solid yellow;
+
+}
+
+.main-destination-copy {
+  float: left;
+  padding: 1em 1em;
+  width: 100%;
+  clear: both;
+  border: 2px solid red;
+
+}
+
+.big {
+  height: 600px !important;
+}
+
+.destination-box {
+  display: inline-block;
+  width: 40%;
+  height: 400px;
+  border: 3px solid #73AD21;
+  position: relative;
+  overflow: visible;
+  background-size: cover;
+  border: 1px solid gainsboro;
+  border-radius: 3px;
+  box-shadow: 0 2px 4px #e6e6e6;
+  -webkit-flex-basis: 30em;
+  -ms-flex-preferred-size: 30em;
+  flex-basis: 30em;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  margin: 0 1em 1.5em 1em;
+  position: relative;
 }
 
 .destination-header {
+  padding-left: 2rem;
   float: left;
   width: 100%;
-  border-bottom: 3px solid blue;
+  border-bottom: 2px solid gainsboro;
   padding-bottom: 4px;
 }
 
 .destination-info {
   position: absolute;;
   bottom: 0px;
-  height: 40%;
+  height: 35%;
   overflow: visible;
   background: white;
   width: 100%;
-
 }
 
 .destination-copy {
   float: left;
+  padding: 1em 1em;
 }
 
 .total-flights {
@@ -404,48 +329,57 @@ input[type=text] {
   border: solid red;
 }
 
-
+.btn-flight {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 10px 12px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  font-size: 14px;
+  position: absolute;
+  bottom: 4rem;
+  margin: auto;
+  margin-right: auto;
+}
 .btn-flights {
-    background-color: #4CAF50; /* Green */
-    border: none;
-    color: white;
-    padding: 10px 12px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    margin: 4px 2px;
-    cursor: pointer;
-    font-size: 14px;
-    position: absolute;
-    right: 0px;
-    top:0px;
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 10px 12px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 4px 2px;
+  cursor: pointer;
+  font-size: 14px;
+  position: absolute;
+  right: 0px;
+  top:0px;
+}
+
+a.btn-flights {
+  text-decoration: none;
 }
 
 .destination-header h3{
-  border: solid yellow;
   width: 50%;
   margin-top: 8px;
   margin-bottom: 5px;
 }
 
 .destination-header h4{
-  border: solid black;
   margin-top: 5px;
-  margin-bottom: 5px;
+  margin-bottom: 2px;
 }
 
 .destination-info p {
   position: relative;
+
 }
-.container-flights {
-  display: flex;
 
-  flex-wrap: wrap;
-    -webkit-box-pack: justify;
-
-
-  justify-content: space-between !important;
-}
 
 // SHOW
 .price {
@@ -456,6 +390,7 @@ input[type=text] {
   margin-right: 10px;
   height: 100%
 }
+
 .tinerarie-box{
   float: left;
   width: 70%;
@@ -472,22 +407,96 @@ input[type=text] {
   display: inline-block;
   width: 10%;
   border: solid blue;
-
 }
 
 .booking {
   border: solid green;
   display: inline-block;
   width: 10%;
-
 }
 
-
 .affix {
-    top: 0;
-    width: 100%;
+  top: 0;
+  width: 100%;
 }
 
 .affix + .container-fluid {
-    padding-top: 5rem;
+  padding-top: 5rem;
+}
+
+
+
+.fancy {
+  color: #6B19A5;
+  font-size: 12rem;
+  line-height: 100px;
+  font-weight: normal;
+  margin-bottom: 0px;
+  margin-top: 20px;
+  text-align: center;
+  text-shadow: 0 1px 1px #fff;
+}
+
+.fancy span {
+  font-family: 'Rock Salt', cursive;
+  text-shadow: 2px 2px 2px #CCCCCC;
+}
+
+
+@import url(http://weloveiconfonts.com/api/?family=fontawesome);
+
+.fa {
+  width: 80px;
+  display: block;
+  text-align: center;
+  color:#21A558;
+  font:normal 65px 'FontAwesome';
+  line-height:80px;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+
+}
+.fa-angle-double-down:before {content: "\f103";}
+
+.bounce {
+  border: solid blue;
+  position: absolute;
+  top: 68.5rem;
+  bottom: 30px;
+  left: 5% ;
+  width: 90px;
+  height: 90px ;
+  margin-left:-30px;
+  border: 4px solid #21A558;
+  -webkit-border-radius:50%;
+  -moz-border-radius:50%;
+  -ms-border-radius:50%;
+  border-radius:50%;
+  animation: bounce 2s infinite;
+  -webkit-animation: bounce 2s infinite;
+  -moz-animation: bounce 2s infinite;
+  -o-animation: bounce 2s infinite;
+}
+
+@-webkit-keyframes bounce {
+ 0%, 20%, 50%, 80%, 100% {-webkit-transform: translateY(0);}
+ 40% {-webkit-transform: translateY(-30px);}
+ 60% {-webkit-transform: translateY(-15px);}
+}
+
+@-moz-keyframes bounce {
+ 0%, 20%, 50%, 80%, 100% {-moz-transform: translateY(0);}
+ 40% {-moz-transform: translateY(-30px);}
+ 60% {-moz-transform: translateY(-15px);}
+}
+
+@-o-keyframes bounce {
+ 0%, 20%, 50%, 80%, 100% {-o-transform: translateY(0);}
+ 40% {-o-transform: translateY(-30px);}
+ 60% {-o-transform: translateY(-15px);}
+}
+@keyframes bounce {
+ 0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+ 40% {transform: translateY(-30px);}
+ 60% {transform: translateY(-15px);}
 }
