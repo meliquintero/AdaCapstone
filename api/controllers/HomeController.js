@@ -15,5 +15,11 @@ module.exports = {
 					return res.view('404')
 			})
 
+	},
+
+	about: function (req, res) {
+					return res.view('about', {
+						user: req.user
+					});
 	}
 };

@@ -90,6 +90,16 @@ input[type=text] {
   background:#F4BA56;
 }
 
+.navbar-default .navbar-nav > li,
+.navbar-default .navbar-nav > li:hover,
+.navbar-default .navbar-nav > li:focus {
+     color: #ddd;
+     background: #F4BA56;
+     margin-top: 10px !important;
+     margin-right: 50px !important;
+     margin-right: 20px !important;
+}
+
 
 // HOMEPAGE
 
@@ -198,9 +208,9 @@ input[type=text] {
     }
 }
 
-@media (max-width: 700px) {
+@media (max-width: 800px) {
     #rig li {
-        width:70%;
+        width:80%;
     }
 }
 
@@ -322,7 +332,7 @@ input[type=text] {
 }
 
 .btn-flight {
-  background-color: #4CAF50; /* Green */
+  background-color: #1DBF60; /* Green */
   border: none;
   color: white;
   padding: 10px 12px;
@@ -337,7 +347,7 @@ input[type=text] {
   margin-right: auto;
 }
 .btn-flights {
-  background-color: #4CAF50; /* Green */
+  background-color: #1DBF60; /* Green */
   border: none;
   color: white;
   padding: 10px 12px;
@@ -353,7 +363,7 @@ input[type=text] {
 }
 
 a:hover {
-    color:green;
+    color: #1DBF60;
     text-decoration:none;
 }
 
@@ -386,10 +396,11 @@ a.btn-flights {
 .price {
   float: left;
   border: solid #3DF288;
-  width: 10%;
+  width: 15%;
   padding: 20px;
   margin-right: 10px;
-  height: 100%
+  height: 100%;
+  overflow: visible;
 }
 
 .tinerarie-box{
@@ -414,6 +425,7 @@ a.btn-flights {
   border: solid green;
   display: inline-block;
   width: 10%;
+  overflow: visible;
 }
 
 .affix {
@@ -500,4 +512,50 @@ a.btn-flights {
  0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
  40% {transform: translateY(-30px);}
  60% {transform: translateY(-15px);}
+}
+
+
+
+// about
+
+.tecnologies {
+  font-family: 'Permanent Marker', cursive;
+  color: #6B19A5;
+  text-align: center;
+  font-size: 52px;
+}
+
+.container-flex {
+  margin-left: 7%;
+  margin-right: auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: stretch;
+
+  // -webkit-box-pack: justify;
+  // justify-content: space-between;
+}
+
+.tech{
+  // box-shadow: 0 2px 4px #F4BA56;
+  -webkit-flex-basis: 18em;
+  -ms-flex-preferred-size: 18em;
+  flex-basis: 18em;
+  margin: 1em 1em 2em 2em;
+}
+
+.tech img {
+  max-height: 200px;
+  max-width: 100%;
+
+}
+
+.tech-tittle {
+  font-size: 38px;
+  clear: both;
+  font-family: 'Architects Daughter', cursive;
+  margin-left: 8%;
+  padding: 1rem;
+  color: #21A558;
+
 }

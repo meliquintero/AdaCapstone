@@ -9,6 +9,9 @@ module.exports.routes = {
 
   'GET /flights/:originOne/:originTwo/:destination/:DepDate/:RetDate' : 'Destinations.show',
 
-  'GET /destinations': 'Destinations.index'
+  'GET /destinations': 'Destinations.index',
+
+  'GET /about': 'Home.about'
+
 
 };
