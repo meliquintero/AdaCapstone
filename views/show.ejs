@@ -113,41 +113,71 @@
       <div class="panel panel-success">
         <div class="panel-body">
           <div class="price"><%= flight.Price.Amount%></div>
-          <p>
-             <%= originTwo %>
-             <span class="glyphicon glyphicon-time"></span>
-             <%=flight.OutboundLegInfo.Departure.slice(11, 16)%>
-             <span class="glyphicon glyphicon-arrow-right"></span>
-             <%= destination %>
-             <span class="glyphicon glyphicon-time"></span>
-             <%=flight.OutboundLegInfo.Arrival.slice(11, 16)%>  /  <%=flight.OutboundLegInfo.Stops%>
-           </p>
+          <div class="tinerarie-box">
+            <div class="tinerarie-row">
 
-           <% flight.OutboundLegInfo.FlightsInfo.forEach(function(flightInfo) { %>
-             <%= flightInfo.AirlineCode %>
+              <div class="tinerarie">
+                <p><h3><%= originOne %></h3>
+                  <span class="glyphicon glyphicon-time"></span>
+                  <%=flight.OutboundLegInfo.Departure.slice(11, 16)%>
+                </p>
+              </div>
 
-             <% }); %>
-           <p>
-             <%= destination %>
-             <span class="glyphicon glyphicon-time">
-             </span><%=flight.InboundLegInfo.Departure.slice(11, 16)%>
-             <span class="glyphicon glyphicon-arrow-right">
-             </span> <%= originOne %>
-             <span class="glyphicon glyphicon-time">
-             </span><%=flight.InboundLegInfo.Arrival.slice(11, 16)%>  /  <%=flight.InboundLegInfo.Stops%>
-           </p>
+              <div class="arrow">
+                <span class="glyphicon glyphicon-arrow-right"></span>
+                &#10144;
+              </div>
 
-            <% flight.InboundLegInfo.FlightsInfo.forEach(function(flightInfo) { %>
-              <%= flightInfo.AirlineCode %>
+              <div class="tinerarie">
+                <p> <h3><%= destination %> </h3>
+                  <span class="glyphicon glyphicon-time"></span>
+                  <%=flight.OutboundLegInfo.Arrival.slice(11, 16)%>
+                </p>
+              </div>
+              <div class="tinerarie">
+                <p>
+                  <%=flight.OutboundLegInfo.Stops%>
+                  <br>
+                  <% flight.OutboundLegInfo.FlightsInfo.forEach(function(flightInfo) { %>
+                    <strong><%= flightInfo.AirlineCode %></strong>
+                  <% }); %>
+                </p>
+              </div>
+            </div>
 
-            <% }); %>
+            <div class="tinerarie-row">
+              <div class="tinerarie">
+                <p><h3><%= destination %></h3>
+                  <span class="glyphicon glyphicon-time">
+                  </span><%=flight.InboundLegInfo.Departure.slice(11, 16)%> &emsp;
+                </p>
+              </div>
+              <div class="arrow">
+                <span class="glyphicon glyphicon-arrow-right"></span>
+              </div>
+              <div class="tinerarie">
+                <p><h3><%= originOne %></h3>
+                  <span class="glyphicon glyphicon-time">
+                  </span><%=flight.InboundLegInfo.Arrival.slice(11, 16)%>
+                </p>
+              </div>
+              <div class="tinerarie">
+                <%=flight.InboundLegInfo.Stops%>
+                <br>
+                <% flight.InboundLegInfo.FlightsInfo.forEach(function(flightInfo) { %>
+                  <%= flightInfo.AirlineCode %>
+                <% }); %>
+              </div>
+            </div> <!-- row-->
+          </div><!-- box-->
 
+          <div class="booking">
             <% if (flight.Price.superLink !== undefined) { %>
               <a href="<%= flight.Price.superLink%>">BOOK!!!</a>
-            <% } %>
-
-        </div>
-      </div>
+              <% } %>
+          </div>
+        </div> <!-- panel panel-success -->
+      </div> <!-- panel-body -->
     <% }); %>
   </div>
 </div>
