@@ -24,18 +24,19 @@ body {
 
 }
 
-.mainPitch img {
+.board img {
   max-width: 100%;
   height: auto;
 }
 
 .board {
+  padding: 18%;
   display: inline-block;
   background-color: #F2F2E6;
   overflow: auto;
-  border-radius: 5%;
+  border-radius: 2%;
   box-shadow:0 0 6px rgba(0,0,0,0.3);
-
+  margin-bottom: 3vh;
 }
 
 .navbar-default {
@@ -45,11 +46,6 @@ body {
   margin-bottom: 0px;
   height: 80px;
   z-index: 1000;
-}
-
-.navbar-form {
-  margin-left: auto !important;
-  margin-right: auto !important;
 }
 
 .navbar .btn-navbar {
@@ -65,7 +61,6 @@ input[type=text] {
   font-size: 16px !important;
   line-height: 40px !important;
   margin-right: 2% !important;
-  width: 12vw !important;
 
 }
 
@@ -74,8 +69,17 @@ input[type=text] {
     border-radius: 0px;
 }
 
-.btn-lg, .btn-group-lg>.btn {
-    border-radius: 0px;
+.btn-lg, .btn-group-lg > .btn {
+  background: #1DBF60;
+  color: white;
+  border-radius: 0px;
+  border-color: #21A558;
+}
+
+.btn-lg, .btn-group-lg > .btn:hover {
+  color: white;
+  background: #21A558;
+
 }
 
 .form-control {
@@ -98,14 +102,16 @@ input[type=text] {
 	line-height: 1.8em;
 	text-align: center;
   color:#FFFFFF;
-  background:#F4BA56;
+  background:#F4BA56; //yellow
+  text-shadow: 1.8px 1.8px 3px #000000;
+
 }
 
 .navbar-default .navbar-nav > li,
 .navbar-default .navbar-nav > li:hover,
 .navbar-default .navbar-nav > li:focus {
      color: #fff;
-     background: #F4BA56;
+     background: #F4BA56; //yellow
      margin-top: 10px !important;
      margin-right: 50px !important;
      margin-right: 20px !important;
@@ -333,7 +339,7 @@ input[type=text] {
 
 .total-flight {
   font-family: 'Architects Daughter', cursive !important;
-  background-color: #F4BA56;
+  background-color: #F4BA56; //yellow
   padding: 2rem;
 }
 
@@ -343,7 +349,7 @@ input[type=text] {
   right: 2%;
   text-align: center;
   font-family: 'Architects Daughter', cursive;
-  background-color: #F4BA56;
+  background-color: #F4BA56; //yellow
   height: 50%;
   width: 25%;
 }
@@ -379,9 +385,9 @@ input[type=text] {
   top:8px;
 }
 
-.btn-flights a:hover {
+.btn-flights > a:hover {
   color: black;
-  background-color:#21A558;
+  background:#21A558;
   text-decoration:none;
 }
 
@@ -502,7 +508,7 @@ a.btn-flights {
 }
 
 .fancy span {
-  font-family: 'Rock Salt', cursive;
+  font-family: 'Permanent Marker', cursive;
   text-shadow: 2px 2px 2px #CCCCCC;
 }
 
@@ -580,6 +586,13 @@ a.btn-flights {
 
 }
 
+.sub-one {
+  font-family: 'Architects Daughter', cursive;
+  font-size: 5rem;
+  line-height: 4rem;
+
+}
+
 h1 {
   font-family: 'Permanent Marker', cursive;
   color: #6B19A5;
@@ -598,7 +611,7 @@ h1 {
 }
 
 .tech{
-  // box-shadow: 0 2px 4px #F4BA56;
+  // box-shadow: 0 2px 4px #F4BA56; //yellow
   -webkit-flex-basis: 18em;
   -ms-flex-preferred-size: 18em;
   flex-basis: 18em;
@@ -622,10 +635,20 @@ h1 {
 }
 
 label {
-  font-family: 'Permanent Marker', cursive;
-
+  font-family: 'Abel', cursive;
+  text-shadow: 1.2px 1.2px 1.5px #CCCCCC;
+  font-size: 2.4rem;
 }
 
 footer {
   background: #BA5AFF;
+  display: inline-flex;
+}
+
+footer img, footer p {
+  float: right;
+}
+
+#myCarousel {
+  width: 100%;
 }
