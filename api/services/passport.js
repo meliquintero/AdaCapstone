@@ -84,7 +84,7 @@ passport.deserializeUser(function(id, done) {
 passport.use(new FacebookStrategy({
       clientID: sails.config.auth.facebook.clientID,
       clientSecret: sails.config.auth.facebook.clientSecret,
-      callbackURL: sails.config.auth.facebook.callbackURL
+      callbackURL: "/auth/google/callback"
     },
   verifyHandler
 ));
