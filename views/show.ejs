@@ -120,8 +120,7 @@
   </div>
 
   <div class="col-sm-6">
-    <h1 class="tecnologies">Flights from <%= originTwo%></h1>
-
+    <h2 class="sub">Flights from <%= originTwo %></h2>
     <% searchresults[1].forEach(function(flight) { %>
       <div class="panel panel-success">
         <div class="panel-body">
@@ -129,7 +128,7 @@
             <div class="tinerarie-row">
 
               <div class="tinerarie">
-                <p><h3><%= originOne %></h3>
+                <p><h3><%= originTwo %></h3>
                   <span class="glyphicon glyphicon-time"></span>
                   <%=flight.OutboundLegInfo.Departure.slice(11, 16)%>
                 </p>
