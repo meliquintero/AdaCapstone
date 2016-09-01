@@ -33,6 +33,9 @@ body {
   display: inline-block;
   background-color: #F2F2E6;
   overflow: auto;
+  border-radius: 5%;
+  box-shadow:0 0 6px rgba(0,0,0,0.3);
+
 }
 
 .navbar-default {
@@ -277,7 +280,7 @@ input[type=text] {
 
 .main-destination-copy {
   float: left;
-  padding: 1em 1em;
+  padding-left: 1em;
   width: 100%;
   clear: both;
   border: 2px solid red;
@@ -329,7 +332,7 @@ input[type=text] {
 }
 
 .total-flight {
-  font-family: 'Permanent Marker', cursive;
+  font-family: 'Architects Daughter', cursive !important;
   background-color: #F4BA56;
   padding: 2rem;
 }
@@ -339,7 +342,7 @@ input[type=text] {
   bottom: 2%;
   right: 2%;
   text-align: center;
-  font-family: 'Permanent Marker', cursive;
+  font-family: 'Architects Daughter', cursive;
   background-color: #F4BA56;
   height: 50%;
   width: 25%;
@@ -373,11 +376,12 @@ input[type=text] {
   font-size: 14px;
   position: absolute;
   right: 0px;
-  top:5px;
+  top:8px;
 }
 
 .btn-flights a:hover {
-  color: #21A558;
+  color: black;
+  background-color:#21A558;
   text-decoration:none;
 }
 
@@ -394,7 +398,7 @@ a.btn-flights {
   margin-top: 8px;
   margin-bottom: 5px;
   font-family: 'Architects Daughter', cursive;
-
+  font-size: 34px;
 }
 
 .destination-header h4{
@@ -418,10 +422,13 @@ a.btn-flights {
   float: left;
   border: solid #3DF288;
   width: 44%;
-  padding: 20px;
+  padding-top: 20px;
   margin-right: 10px;
   height: 100%;
   overflow: visible;
+  font-family: 'Architects Daughter', cursive;
+  font-size: 2rem;
+  text-align: center;
 }
 
 .tinerarie-box{
@@ -439,6 +446,8 @@ a.btn-flights {
 
 .tinerarie h3 {
   border: solid green;
+  margin-top: 0px;
+  margin-bottom: 1px;
 
 }
 
@@ -561,10 +570,20 @@ a.btn-flights {
 // about
 
 .tecnologies {
+  font-size: 52px;
+  margin-top: 8rem;
+}
+
+.sub {
+  font-family: 'Architects Daughter', cursive;
+  font-size: 5rem;
+
+}
+
+h1 {
   font-family: 'Permanent Marker', cursive;
   color: #6B19A5;
   text-align: center;
-  font-size: 52px;
 }
 
 .container-flex {
@@ -605,4 +624,8 @@ a.btn-flights {
 label {
   font-family: 'Permanent Marker', cursive;
 
+}
+
+footer {
+  background: #BA5AFF;
 }

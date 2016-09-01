@@ -13,5 +13,4 @@ module.exports.routes = {
 
   'GET /about': 'Home.about'
 
-
 };
