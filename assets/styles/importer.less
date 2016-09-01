@@ -61,7 +61,15 @@ input[type=text] {
   font-size: 16px !important;
   line-height: 40px !important;
   margin-right: 2% !important;
+  width: 12vw !important;
 
+}
+
+
+@media (max-width: 700px) {
+    input[type=text] {
+        width:100% !important;
+    }
 }
 
 
@@ -230,7 +238,7 @@ input[type=text] {
 
 @media (max-width: 550px) {
     #rig li {
-        width:80%;
+        width:100%;
     }
 }
 
@@ -642,13 +650,26 @@ label {
 
 footer {
   background: #BA5AFF;
-  display: inline-flex;
+  height: 8rem;
+
 }
 
-footer img, footer p {
+footer img {
   float: right;
+  align: right;
 }
 
+footer p {
+  margin-top:2rem;
+  text-align: right;
+  font-style: italic;
+}
+
+
+footer a {
+  text-decoration: underline !important;
+  color: #25282b;
+}
 #myCarousel {
   width: 100%;
 }
