@@ -16,15 +16,23 @@ body {
   position: absolute;
   background: rgba(166,61,242,0.7);
   margin-top: 3%;
-  max-width: 20%;
-  height:70%;
+  max-width: 20vw;
+  height: 65vh;
   top: 0px;
   padding: 3%;
+  display: table-cell;
+
 }
 
 .mainPitch img {
   max-width: 100%;
   height: auto;
+}
+
+.board {
+  display: inline-block;
+  background-color: #F2F2E6;
+  overflow: auto;
 }
 
 .navbar-default {
@@ -54,7 +62,7 @@ input[type=text] {
   font-size: 16px !important;
   line-height: 40px !important;
   margin-right: 2% !important;
-  width: 20% !important;
+  width: 12vw !important;
 
 }
 
@@ -93,7 +101,7 @@ input[type=text] {
 .navbar-default .navbar-nav > li,
 .navbar-default .navbar-nav > li:hover,
 .navbar-default .navbar-nav > li:focus {
-     color: #ddd;
+     color: #fff;
      background: #F4BA56;
      margin-top: 10px !important;
      margin-right: 50px !important;
@@ -143,12 +151,10 @@ input[type=text] {
 .rig-img {
     display:block;
     height: 100%;
-    height: auto;
     border:none;
     transform:scale(1);
     transition:all 1s;
     overflow: hidden;
-
 }
 
 #rig li:hover .rig-img {
@@ -322,6 +328,12 @@ input[type=text] {
   padding: 1em 1em;
 }
 
+.total-flight {
+  font-family: 'Permanent Marker', cursive;
+  background-color: #F4BA56;
+  padding: 2rem;
+}
+
 .total-flights {
   position: absolute;
   bottom: 2%;
@@ -330,6 +342,7 @@ input[type=text] {
   font-family: 'Permanent Marker', cursive;
   background-color: #F4BA56;
   height: 50%;
+  width: 25%;
 }
 
 .btn-flight {
@@ -464,7 +477,9 @@ a.btn-flights {
   padding-top: 5rem;
 }
 
-
+.container-fluid {
+  margin-top: .6vh !important;
+}
 
 .fancy {
   color: #6B19A5;
@@ -584,5 +599,10 @@ a.btn-flights {
   margin-left: 8%;
   padding: 1rem;
   color: #21A558;
+
+}
+
+label {
+  font-family: 'Permanent Marker', cursive;
 
 }
