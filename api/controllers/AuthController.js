@@ -38,6 +38,7 @@ module.exports = {
   'google/callback': function (req, res) {
     passport.authenticate('google',
       function (req, res) {
+        console.log('google/callback', res);
       res.redirect('/');
     })(req, res);
   },
