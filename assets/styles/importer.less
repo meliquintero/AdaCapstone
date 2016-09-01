@@ -2,10 +2,8 @@ body {
   font-size: 18px;
 }
 
-.jumbotron {
-  min-height: 420px;
-  margin-top: 0px;
-  background-repeat: no-repeat;
+#myCarousel {
+  width: 100%;
 }
 
 .dos {
@@ -44,7 +42,7 @@ body {
   background-image: none;
   background-repeat: no-repeat;
   margin-bottom: 0px;
-  height: 80px;
+  // height: 80px;
   z-index: 1000;
 }
 
@@ -62,9 +60,7 @@ input[type=text] {
   line-height: 40px !important;
   margin-right: 2% !important;
   width: 12vw !important;
-
 }
-
 
 @media (max-width: 700px) {
     input[type=text] {
@@ -72,21 +68,23 @@ input[type=text] {
     }
 }
 
-
 .btn {
     border-radius: 0px;
 }
 
 .btn-lg, .btn-group-lg > .btn {
-  background: #1DBF60;
   color: white;
   border-radius: 0px;
   border-color: #21A558;
+  background: #21A558;
+  text-shadow: 1px 1px 1px black;
+
 }
 
-.btn-lg, .btn-group-lg > .btn:hover {
+.btn-default:focus, .btn-default:hover {
   color: white;
-  background: #21A558;
+  background: #1DBF60;
+  border-color: #21A558;
 
 }
 
@@ -118,7 +116,7 @@ input[type=text] {
 .navbar-default .navbar-nav > li,
 .navbar-default .navbar-nav > li:hover,
 .navbar-default .navbar-nav > li:focus {
-     color: #fff;
+     color: black !important;
      background: #F4BA56; //yellow
      margin-top: 10px !important;
      margin-right: 50px !important;
@@ -665,11 +663,11 @@ footer p {
   font-style: italic;
 }
 
-
 footer a {
-  text-decoration: underline !important;
   color: #25282b;
 }
-#myCarousel {
-  width: 100%;
+
+footer a:hover {
+  text-decoration: underline !important;
+  color: #25282b;
 }
