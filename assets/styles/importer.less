@@ -1,13 +1,17 @@
 body {
   font-size: 18px;
+  font-family: 'Abel', ;
 }
 
+h1 {
+  font-family: 'Permanent Marker', Tahoma;
+  color: #6B19A5;
+  text-align: center;
+}
+
+// CAROUSEL
 #myCarousel {
   width: 100%;
-}
-
-.dos {
-  float: right;
 }
 
 .mainPitch {
@@ -19,7 +23,6 @@ body {
   top: 0px;
   padding: 3%;
   display: table-cell;
-
 }
 
 .board img {
@@ -35,6 +38,47 @@ body {
   border-radius: 2%;
   box-shadow:0 0 6px rgba(0,0,0,0.3);
   margin-bottom: 3vh;
+}
+
+// FOOTER
+footer {
+  background: #BA5AFF;
+  height: 8rem;
+}
+
+footer img {
+  float: right;
+  align: right;
+}
+
+footer p {
+  margin-top:2rem;
+  text-align: right;
+  font-style: italic;
+}
+
+footer a {
+  color: #25282b;
+}
+
+footer a:hover {
+  text-decoration: underline !important;
+  color: #25282b;
+}
+
+// NAVBAR
+
+.affix {
+  top: 0;
+  width: 100%;
+}
+
+.affix + .container-fluid {
+  padding-top: 5rem;
+}
+
+.container-fluid {
+  margin-top: .6vh !important;
 }
 
 .navbar-default {
@@ -68,8 +112,14 @@ input[type=text] {
     }
 }
 
+label {
+  font-family: 'Abel', Tahoma;
+  text-shadow: 1.2px 1.2px 1.5px #CCCCCC;
+  font-size: 2.4rem;
+}
+
 .btn {
-    border-radius: 0px;
+  border-radius: 0px;
 }
 
 .btn-lg, .btn-group-lg > .btn {
@@ -78,19 +128,16 @@ input[type=text] {
   border-color: #21A558;
   background: #21A558;
   text-shadow: 1px 1px 1px black;
-
 }
 
 .btn-default:focus, .btn-default:hover {
   color: white;
   background: #1DBF60;
   border-color: #21A558;
-
 }
 
 .form-control {
   border-radius: 0px;
-  // width:100% !important;
 }
 
 
@@ -110,7 +157,6 @@ input[type=text] {
   color:#FFFFFF;
   background:#F4BA56; //yellow
   text-shadow: 1.8px 1.8px 3px #000000;
-
 }
 
 .navbar-default .navbar-nav > li,
@@ -125,389 +171,6 @@ input[type=text] {
 
 
 // HOMEPAGE
-
-#rig {
-    max-width:80%;
-    margin:0 auto; /*center aligned*/
-    padding:0;
-    font-size:0; /* Remember to change it back to normal font size if have captions */
-    list-style:none;
-    background-color:white;
-}
-#rig li {
-    display: inline-block;
-    *display:inline;/*for IE6 - IE7*/
-    // width:50%;
-    vertical-align:middle;
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-    font-size: 2rem;
-    font-family: 'Permanent Marker', cursive;
-    -webkit-flex-basis: 30em;
-    -ms-flex-preferred-size: 30em;
-    flex-basis: 30em;
-    -webkit-box-flex: 1;
-    -webkit-flex-grow: 1;
-    -ms-flex-positive: 1;
-    flex-grow: 1;
-}
-
-/* The wrapper for each item */
-.rig-cell {
-    /*margin:12px;
-    box-shadow:0 0 6px rgba(0,0,0,0.3);*/
-    display:block;
-    position: relative;
-    overflow:hidden;
-}
-
-/* If have the image layer */
-.rig-img {
-    display:block;
-    height: 100%;
-    border:none;
-    transform:scale(1);
-    transition:all 1s;
-    overflow: hidden;
-}
-
-#rig li:hover .rig-img {
-    transform:scale(1.05);
-}
-
-/* If have the overlay layer */
-.rig-overlay {
-    position: absolute;
-    display:block;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    margin: auto;
-    background: #009F85 url(img/link.png) no-repeat center 20%;
-    background-size:50px 50px;
-    opacity:0;
-    filter:alpha(opacity=0);/*For IE6 - IE8*/
-    transition:all 0.6s;
-}
-#rig li:hover .rig-overlay {
-    opacity:0.8;
-}
-
-/* If have captions */
-.rig-text {
-    display:block;
-    padding:0 30px;
-    box-sizing:border-box;
-    position:absolute;
-    left:0;
-    width:100%;
-    text-align:center;
-    text-transform:capitalize;
-    font-size: 3rem;
-    font-weight:bold;
-    font-family: 'Architects Daughter', cursive;
-    font-weight:normal!important;
-    top:40%;
-    color:white;
-    opacity:0;
-    filter:alpha(opacity=0);/*For older IE*/
-    transform:translateY(-20px);
-    transition:all .3s;
-}
-
-#rig li:hover .rig-text {
-    transform:translateY(0px);
-    opacity:0.9;
-}
-
-@media (max-width: 9000px) {
-    #rig li {
-        width:50%;
-    }
-}
-
-@media (max-width: 800px) {
-    #rig li {
-        width:80%;
-    }
-}
-
-@media (max-width: 550px) {
-    #rig li {
-        width:100%;
-    }
-}
-
-// HOMEPAGE
-
-.container-flights {
-  // border: solid blue;
-  display: flex;
-  flex-wrap: wrap;
-  -webkit-box-pack: justify;
-  justify-content: space-between !important;
-}
-
-.main-destination-box {
-  display: inline-block;
-  height: 400px;
-  overflow: visible;
-  background-size: cover;
-  border: 1px solid gainsboro;
-  border-radius: 3px;
-  box-shadow: 0 2px 4px #e6e6e6;
-  -webkit-flex-basis: 30em;
-  -ms-flex-preferred-size: 30em;
-  flex-basis: 30em;
-  -webkit-box-flex: 1;
-  -webkit-flex-grow: 1;
-  -ms-flex-positive: 1;
-  flex-grow: 1;
-  margin: 0 1em 1.5em 1em;
-  position: relative;
-}
-
-.main-destination-info {
-  position: absolute;
-  right: 0px;
-  height: 100%;
-  overflow: visible;
-  background: white;
-  width: 22%;
-  display: inline-block;
-  border: 2px solid blue;
-}
-
-.main-destination-header {
-  float: left;
-  width: : 100%;
-  border-bottom: 2px solid gainsboro;
-  padding-bottom: 4px;
-  clear: both;
-  border: 2px solid yellow;
-  padding-left: 2rem;
-}
-
-.main-destination-copy {
-  float: left;
-  padding-left: 0.5em;
-  width: 100%;
-  clear: both;
-  border: 2px solid red;
-
-}
-
-.destination-box {
-  display: inline-block;
-  width: 40%;
-  height: 400px;
-  position: relative;
-  overflow: visible;
-  background-size: cover;
-  border: 1px solid gainsboro;
-  border-radius: 3px;
-  box-shadow: 0 2px 4px #e6e6e6;
-  -webkit-flex-basis: 20em;
-  -ms-flex-preferred-size: 20em;
-  flex-basis: 30em;
-  -webkit-box-flex: 1;
-  -webkit-flex-grow: 1;
-  -ms-flex-positive: 1;
-  flex-grow: 1;
-  margin: 0 1em 1.5em 1em;
-  position: relative;
-  flex-basis: 20em;
-}
-
-.destination-header {
-  padding-left: 2rem;
-  float: left;
-  width: 100%;
-  border-bottom: 2px solid gainsboro;
-  padding-bottom: 4px;
-}
-
-.destination-info {
-  position: absolute;;
-  bottom: 0px;
-  height: 35%;
-  overflow: visible;
-  background: white;
-  width: 100%;
-}
-
-.destination-copy {
-  float: left;
-  padding: 0.5em;
-}
-
-.destination-copy p {
-  margin: 0px !important;
-}
-
-.total-flight {
-  font-family: 'Architects Daughter', cursive !important;
-  background-color: #F4BA56; //yellow
-  padding: 2rem;
-  font-size: 24px;
-}
-
-.total-flights {
-  font-size: 28px;
-
-  position: absolute;
-  bottom: 2%;
-  right: 2%;
-  text-align: center;
-  font-family: 'Architects Daughter', cursive;
-  background-color: #F4BA56; //yellow
-  width: 25%;
-}
-
-.btn-flight {
-  background-color: #1DBF60; /* Green */
-  border: none;
-  color: white;
-  padding: 10px 12px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  cursor: pointer;
-  font-size: 14px;
-  position: absolute;
-  bottom: 4rem;
-  margin: auto;
-  margin-right: auto;
-}
-.btn-flights {
-  background-color: #1DBF60; /* Green */
-  border: none;
-  color: white;
-  padding: 10px 12px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  margin: 4px 2px;
-  cursor: pointer;
-  font-size: 14px;
-  position: absolute;
-  right: 0px;
-  top:8px;
-}
-
-.btn-flights > a:hover {
-  color: black;
-  background:#21A558;
-  text-decoration:none;
-}
-
-a:hover {
-    text-decoration:none;
-}
-
-a.btn-flights {
-  text-decoration: none;
-}
-
-.destination-header h3{
-  width: 50%;
-  margin-top: 8px;
-  margin-bottom: 5px;
-  font-family: 'Architects Daughter', cursive;
-  font-size: 34px;
-}
-
-.destination-header h4{
-  margin-top: 5px;
-  margin-bottom: 2px;
-  color: #444040;
-}
-
-.destination-info p {
-  position: relative;
-
-}
-
-.plane-icon {
-  font-size: 28px;
-}
-
-
-// SHOW
-.price {
-  float: left;
-  border: solid #3DF288;
-  width: 44%;
-  padding-top: 20px;
-  margin-right: 10px;
-  height: 100%;
-  overflow: visible;
-  font-family: 'Architects Daughter', cursive;
-  font-size: 2rem;
-  text-align: center;
-}
-
-.tinerarie-box{
-  float: left;
-  width: 100%;
-  border: solid yellow;
-  clear: both;
-}
-
-.tinerarie {
-  display: inline-block;
-  width: 28%;
-  border: solid red;
-}
-
-.tinerarie h3 {
-  border: solid green;
-  margin-top: 0px;
-  margin-bottom: 1px;
-
-}
-
-.arrow {
-  display: inline-block;
-  width: 10%;
-  border: solid blue;
-}
-
-.booking {
-  display: inline-block;
-  width: 44%;
-  overflow: visible;
-
-  background-color: #1DBF60; /* Green */
-  color: white;
-  // padding: 10px 12px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  // margin: 4px 2px;
-  cursor: pointer;
-  font-size: 14px;
-  // position: absolute;
-  // right: 0px;
-  // top:5px;
-
-}
-
-.affix {
-  top: 0;
-  width: 100%;
-}
-
-.affix + .container-fluid {
-  padding-top: 5rem;
-}
-
-.container-fluid {
-  margin-top: .6vh !important;
-}
-
 .fancy {
   color: #6B19A5;
   font-size: 12rem;
@@ -520,7 +183,7 @@ a.btn-flights {
 }
 
 .fancy span {
-  font-family: 'Permanent Marker', cursive;
+  font-family: 'Permanent Marker', Tahoma;
   text-shadow: 2px 2px 2px #CCCCCC;
 }
 
@@ -584,32 +247,413 @@ a.btn-flights {
 }
 
 
+#rig {
+    max-width:80%;
+    margin:0 auto; /*center aligned*/
+    padding:0;
+    font-size:0; /* Remember to change it back to normal font size if have captions */
+    list-style:none;
+    background-color:white;
+}
+#rig li {
+    display: inline-block;
+    *display:inline;/*for IE6 - IE7*/
+    vertical-align:middle;
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-size: 2rem;
+    font-family: 'Permanent Marker', Tahoma;
+    -webkit-flex-basis: 30em;
+    -ms-flex-preferred-size: 30em;
+    flex-basis: 30em;
+    -webkit-box-flex: 1;
+    -webkit-flex-grow: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+}
+
+/* The wrapper for each item */
+.rig-cell {
+    /*margin:12px;
+    box-shadow:0 0 6px rgba(0,0,0,0.3);*/
+    display:block;
+    position: relative;
+    overflow:hidden;
+}
+
+/* If have the image layer */
+.rig-img {
+    display:block;
+    height: 100%;
+    border:none;
+    transform:scale(1);
+    transition:all 1s;
+    overflow: hidden;
+}
+
+#rig li:hover .rig-img {
+    transform:scale(1.05);
+}
+
+/* If have the overlay layer */
+.rig-overlay {
+    position: absolute;
+    display:block;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    background: #009F85 url(img/link.png) no-repeat center 20%;
+    background-size:50px 50px;
+    opacity:0;
+    filter:alpha(opacity=0);/*For IE6 - IE8*/
+    transition:all 0.6s;
+}
+
+#rig li:hover .rig-overlay {
+    opacity:0.8;
+}
+
+/* If have captions */
+.rig-text {
+    display:block;
+    padding:0 30px;
+    box-sizing:border-box;
+    position:absolute;
+    left:0;
+    width:100%;
+    text-align:center;
+    text-transform:capitalize;
+    font-size: 3rem;
+    font-weight:bold;
+    font-family: 'Architects Daughter', Tahoma;
+    font-weight:normal!important;
+    top:40%;
+    color:white;
+    opacity:0;
+    filter:alpha(opacity=0);/*For older IE*/
+    transform:translateY(-20px);
+    transition:all .3s;
+}
+
+#rig li:hover .rig-text {
+    transform:translateY(0px);
+    opacity:0.9;
+}
+
+@media (max-width: 9000px) {
+    #rig li {
+        width:50%;
+    }
+}
+
+@media (max-width: 800px) {
+    #rig li {
+        width:80%;
+    }
+}
+
+@media (max-width: 550px) {
+    #rig li {
+        width:100%;
+    }
+}
+
+// INDEX
+.container-flights {
+  display: flex;
+  flex-wrap: wrap;
+  -webkit-box-pack: justify;
+  justify-content: space-between !important;
+}
+
+.main-destination-box {
+  display: inline-block;
+  height: 400px;
+  overflow: visible;
+  background-size: cover;
+  border: 1px solid gainsboro;
+  border-radius: 3px;
+  box-shadow: 0 2px 4px #e6e6e6;
+  -webkit-flex-basis: 30em;
+  -ms-flex-preferred-size: 30em;
+  flex-basis: 30em;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  margin: 0 1em 1.5em 1em;
+  position: relative;
+}
+
+.main-destination-info {
+  position: absolute;
+  right: 0px;
+  height: 100%;
+  overflow: visible;
+  background: white;
+  width: 22%;
+  display: inline-block;
+  border: 2px solid blue;
+}
+
+.main-destination-header {
+  float: left;
+  width: : 100%;
+  border-bottom: 2px solid gainsboro;
+  padding-bottom: 4px;
+  clear: both;
+  border: 2px solid yellow;
+  padding-left: 2rem;
+}
+
+.main-destination-copy {
+  float: left;
+  padding-left: 0.8em;
+  width: 100%;
+  clear: both;
+  border: 2px solid red;
+}
+
+.destination-box {
+  display: inline-block;
+  width: 40%;
+  height: 400px;
+  position: relative;
+  overflow: visible;
+  background-size: cover;
+  border: 1px solid gainsboro;
+  border-radius: 3px;
+  box-shadow: 0 2px 4px #e6e6e6;
+  -webkit-flex-basis: 20em;
+  -ms-flex-preferred-size: 20em;
+  flex-basis: 30em;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  margin: 0 1em 1.5em 1em;
+  position: relative;
+  flex-basis: 20em;
+}
+
+.destination-header {
+  padding-left: 2rem;
+  float: left;
+  width: 100%;
+  border-bottom: 2px solid gainsboro;
+  padding-bottom: 4px;
+}
+
+.destination-info {
+  position: absolute;;
+  bottom: 0px;
+  height: 35%;
+  overflow: visible;
+  background: white;
+  width: 100%;
+}
+
+.destination-copy {
+  float: left;
+  padding: 0.2em;
+  margin-left: 0.5em;
+}
+
+.destination-copy p {
+  margin: 0px !important;
+}
+
+.total-flight {
+  font-family: 'Architects Daughter', Tahoma !important;
+  background-color: #F4BA56; //yellow
+  padding: 2rem;
+  font-size: 24px;
+  line-height: 80px;
+  box-shadow: 0 2px 4px #e6e6e6;
+}
+
+.total-flights {
+  font-size: 26px;
+  position: absolute;
+  bottom: 2%;
+  right: 2%;
+  text-align: center;
+  font-family: 'Architects Daughter', Tahoma;
+  border: solid #F4BA56; //yellow
+  width: 25%;
+  padding: .7rem;
+}
+
+.btn-flight {
+  background-color: #1DBF60; /* Green */
+  border: none;
+  color: white;
+  padding: 10px 12px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  font-size: 16px;
+  position: absolute;
+  bottom: 4rem;
+  margin: auto;
+  margin-right: auto;
+}
+
+.btn-flights {
+  background-color: #1DBF60; /* Green */
+  border: none;
+  color: white;
+  padding: 10px 12px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 4px 2px;
+  cursor: pointer;
+  font-size: 14px;
+  position: absolute;
+  right: 0px;
+  top:8px;
+}
+
+.btn-flights > a:hover {
+  color: black;
+  background:#21A558;
+  text-decoration:none;
+}
+
+a:hover {
+    text-decoration:none;
+}
+
+a.btn-flights {
+  text-decoration: none;
+}
+
+.destination-header h3{
+  width: 50%;
+  margin-top: 8px;
+  margin-bottom: 1px;
+  font-family: 'Architects Daughter', Tahoma;
+  font-size: 34px;
+}
+
+.destination-header h4{
+  margin-top: 0px;
+  margin-bottom: 2px;
+  color: #777;
+}
+
+.destination-header a:hover{
+  color: white;
+}
+
+.destination-info p {
+  position: relative;
+  line-height: 2.4rem;
+}
+
+.plane-icon {
+  font-size: 36px;
+}
+
+.usd {
+  font-family: 'Permanent Marker', Tahoma;
+  color: green;
+}
+
+// SHOW
+.price {
+  float: left;
+  border: solid #3DF288;
+  width: 44%;
+  padding-top: 20px;
+  margin-right: 10px;
+  height: 100%;
+  overflow: visible;
+  font-family: 'Architects Daughter', Tahoma;
+  font-size: 2rem;
+  text-align: center;
+}
+
+.tinerarie-box{
+  float: left;
+  width: 100%;
+  clear: both;
+  border-bottom: 2px solid gainsboro;
+}
+
+.tinerarie {
+  display: inline-block;
+  width: 28%;
+}
+
+.tinerarie-right {
+  border-right: 2px solid gainsboro !important;
+}
+
+.tinerarie h3 {
+  margin-top: 0px;
+  margin-bottom: 1px;
+}
+
+.arrow {
+  display: inline-block;
+  width: 10%;
+  border: solid blue;
+}
+
+.booking {
+  display: inline-block;
+  width: 44%;
+  overflow: visible;
+  background-color: #1DBF60; /* Green */
+  color: white;
+  height: 5rem;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.panel {
+  border: 1px solid gainsboro !important;
+  border-radius: 3px !important;
+  box-shadow: 0 2px 4px #e6e6e6 !important;
+  margin: 0 1em 1.5em 1em !important;
+
+}
+
+.itinerary-stops {
+  color: #777;
+  font-size: 1.5rem !important;
+}
 
 // about
 
 .tecnologies {
   font-size: 52px;
-  margin-top: 8rem;
+  margin-top: 9rem;
+  margin-bottom: 4rem;
 }
 
 .sub {
-  font-family: 'Architects Daughter', cursive;
+  font-family: 'Architects Daughter', Tahoma;
   font-size: 5rem;
 
 }
 
 .sub-one {
-  font-family: 'Architects Daughter', cursive;
+  font-family: 'Architects Daughter', Tahoma;
   font-size: 5rem;
   line-height: 4rem;
 
 }
 
-h1 {
-  font-family: 'Permanent Marker', cursive;
-  color: #6B19A5;
-  text-align: center;
-}
 
 .container-flex {
   margin-left: 7%;
@@ -617,13 +661,9 @@ h1 {
   display: flex;
   flex-wrap: wrap;
   align-content: stretch;
-
-  // -webkit-box-pack: justify;
-  // justify-content: space-between;
 }
 
 .tech{
-  // box-shadow: 0 2px 4px #F4BA56; //yellow
   -webkit-flex-basis: 18em;
   -ms-flex-preferred-size: 18em;
   flex-basis: 18em;
@@ -639,41 +679,8 @@ h1 {
 .tech-tittle {
   font-size: 38px;
   clear: both;
-  font-family: 'Architects Daughter', cursive;
+  font-family: 'Architects Daughter', Tahoma;
   margin-left: 8%;
   padding: 1rem;
   color: #21A558;
-
-}
-
-label {
-  font-family: 'Abel', cursive;
-  text-shadow: 1.2px 1.2px 1.5px #CCCCCC;
-  font-size: 2.4rem;
-}
-
-footer {
-  background: #BA5AFF;
-  height: 8rem;
-
-}
-
-footer img {
-  float: right;
-  align: right;
-}
-
-footer p {
-  margin-top:2rem;
-  text-align: right;
-  font-style: italic;
-}
-
-footer a {
-  color: #25282b;
-}
-
-footer a:hover {
-  text-decoration: underline !important;
-  color: #25282b;
 }

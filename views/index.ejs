@@ -7,25 +7,26 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
-      </button>
+        </button>
     </div>
-
-    <ul class="nav navbar-nav">
-       <li><a href="/about">About</a></li>
-     </ul>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li><a href="/about">About</a></li>
+      </ul>
 
       <form method="post" action="/destinations" class="navbar-form form-inline">
-        <div class="form-group">
-          <input type="text" name="origin_one" class="form-control air" id="term" placeholder="City name or airport code" />
+          <div class="form-group">
+            <label for="origin_one">Origin One</label>
+            <input type="text" name="origin_one" class="form-control air" id="term" placeholder="City name or airport code" />
 
-          <input type="text" name="origin_two" class="form-control air" id="term" placeholder="City name or airport code" />
+            <label for="origin_one">Origin Two</label>
+            <input type="text" name="origin_two" class="form-control air" id="term" placeholder="City name or airport code" />
 
-          <input type="text" id="from" name="from" class="form-control" placeholder="Departure Date"/>
-
-          <input type="text" id="to" name="to" class="form-control" placeholder="Return Date"/>
+            <label for="origin_one">Dates</label>
+            <input type="text" id="from" name="from" class="form-control" placeholder="Departure Date"/>
+            <input type="text" id="to" name="to" class="form-control" placeholder="Return Date"/>
 
         </div>
         <button type="submit" class="btn btn-default btn-lg">Submit</button>
@@ -55,14 +56,14 @@
         </div>
         <div class="main-destination-copy">
           <p>
-            <span class="plane-icon">&#9992; </span><%=searchresults['originOne']['airportCode']%> <span class="glyphicon glyphicon-usd"></span> <%= searchresults.destinations[0].priceFromOriginOne %>
+            <span class="plane-icon">&#9992; </span><%=searchresults['originOne']['airportCode']%> <span class="usd">$</span> <%= searchresults.destinations[0].priceFromOriginOne %>
             <br>
-            <span class="plane-icon">&#9992; </span><%=searchresults['originTwo']['airportCode']%> <span class="glyphicon glyphicon-usd"></span> <%= searchresults.destinations[0].priceFromOriginTwo  %>
+            <span class="plane-icon">&#9992; </span><%=searchresults['originTwo']['airportCode']%> <span class="usd">$</span> <%= searchresults.destinations[0].priceFromOriginTwo  %>
           </p>
           <div class="total-flight">
             <strong> TOTAL:  <%= searchresults.destinations[0].sumPrices %></strong>
           </div>
-        <a href="flights/<%=searchresults['originOne']['airportCode']%>/<%=searchresults['originTwo']['airportCode']%>/<%= searchresults.destinations[0].airportCode %>/<%=depdate%>/<%=retdate%>" type="button" class="btn-flight" >See more flights to this city</a>
+        <a href="flights/<%=searchresults['originOne']['airportCode']%>/<%=searchresults['originTwo']['airportCode']%>/<%= searchresults.destinations[0].airportCode %>/<%=depdate%>/<%=retdate%>" type="button" class="btn-flight" >All flights</a>
 
         </div> <!-- main-destination-copy -->
 
@@ -84,17 +85,15 @@
         <div class="destination-info">
           <div class="destination-header">
 
-            <a href="flights/<%=searchresults['originOne']['airportCode']%>/<%=searchresults['originTwo']['airportCode']%>/<%= searchresults.destinations[i].airportCode %>/<%=depdate%>/<%=retdate%>" type="button" class="btn-flights" >See more flights to this city</a>
+            <a href="flights/<%=searchresults['originOne']['airportCode']%>/<%=searchresults['originTwo']['airportCode']%>/<%= searchresults.destinations[i].airportCode %>/<%=depdate%>/<%=retdate%>" type="button" class="btn-flights" >All flights</a>
             <h3><%= searchresults.destinations[i].city %></h3>
             <h4><%= searchresults.destinations[i].country %></h4>
           </div>
           <div class="destination-copy">
             <p>
-              &#9992; <%=searchresults['originOne']['airportCode']%> <span class="glyphicon glyphicon-usd"></span> <%= searchresults.destinations[i].priceFromOriginOne %>
+              &#9992; <%=searchresults['originOne']['airportCode']%> <span class="usd">$</span> <%= searchresults.destinations[i].priceFromOriginOne %>
               <br>
-              &#9992; <%=searchresults['originTwo']['airportCode']%> <span class="glyphicon glyphicon-usd"></span> <%= searchresults.destinations[i].priceFromOriginTwo  %>
-              <br>
-              <br>
+              &#9992; <%=searchresults['originTwo']['airportCode']%> <span class="usd">$</span> <%= searchresults.destinations[i].priceFromOriginTwo  %>
               <div class="total-flights">
                 <p> TOTAL:
                   <br> <%= searchresults.destinations[i].sumPrices %>

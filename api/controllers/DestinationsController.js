@@ -1,3 +1,4 @@
+var GetAirportInfo = require('airportsjs');
 var destinationRequests = require('../../ApisWrapper')
 var flightRequests = require('../../FlightsWrapper')
 
@@ -35,13 +36,17 @@ module.exports = {
 		var DepDate = req.params.DepDate
 		var RetDate = req.params.RetDate
 
+		var destLoca = GetAirportInfo.lookupByIataCode(destination.toUpperCase())
+		console.log("destination", destination);
 
+		console.log("destLoca", destLoca);
 		flightRequests.theFlights(originOne, originTwo, destination, DepDate, RetDate).then(function(flightsResult){
 			return res.view('show', {
 					searchresults: flightsResult,
 					originOne: originOne,
 					originTwo: originTwo,
 					destination: destination,
+					destLoca: destLoca,
 					searchBar: "true",
 					user: req.user
 				});
