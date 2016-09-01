@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default" data-spy="affix" data-offset-top="197">
+<nav class="navbar navbar-default">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -10,10 +10,14 @@
       </button>
     </div>
 
+    <ul class="nav navbar-nav">
+       <li><a href="/about">About</a></li>
+     </ul>
+
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
-      <form class="navbar-form form-inline">
+      <form method="post" action="/destinations" class="navbar-form form-inline">
         <div class="form-group">
           <input type="text" name="origin_one" class="form-control air" id="term" placeholder="City name or airport code" />
 
@@ -24,9 +28,8 @@
           <input type="text" id="to" name="to" class="form-control" placeholder="Return Date"/>
 
         </div>
-        <button type="submit" class="btn btn-default">Submit</button>
+        <button type="submit" class="btn btn-default btn-lg">Submit</button>
       </form>
-
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
@@ -37,7 +40,6 @@
     <% searchresults[0].forEach(function(flight) { %>
       <div class="panel panel-success">
         <div class="panel-body">
-          <div class="price"><%= flight.Price.Amount%></div>
           <div class="tinerarie-box">
             <div class="tinerarie-row">
 
@@ -93,8 +95,10 @@
                   <%= flightInfo.AirlineCode %>
                 <% }); %>
               </div>
+
             </div> <!-- row-->
           </div><!-- box-->
+          <div class="price"><%= flight.Price.Amount%></div>
 
           <div class="booking">
             <% if (flight.Price.superLink !== undefined) { %>
@@ -110,7 +114,6 @@
     <% searchresults[1].forEach(function(flight) { %>
       <div class="panel panel-success">
         <div class="panel-body">
-          <div class="price"><%= flight.Price.Amount%></div>
           <div class="tinerarie-box">
             <div class="tinerarie-row">
 
@@ -168,6 +171,7 @@
               </div>
             </div> <!-- row-->
           </div><!-- box-->
+          <div class="price"><%= flight.Price.Amount%></div>
 
           <div class="booking">
             <% if (flight.Price.superLink !== undefined) { %>

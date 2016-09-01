@@ -14,6 +14,8 @@ module.exports = {
 		destinationRequests.matchedDestinations(Origin1, Origin2, DepDate, RetDate).then(function(destinationsresult){
 				return res.view('index', {
 					searchresults: destinationsresult,
+					OriginOne: Origin1,
+					OriginTwo: Origin2,
 					depdate: DepDate,
 					retdate: RetDate,
 					searchBar: "true",
