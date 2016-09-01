@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-default navbar-fixed-top">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -37,6 +37,7 @@
 <div class="container">
 <div class="row">
   <div class="col-md-6">
+    <h1 class="tecnologies">Flights from <%= originOne %></h1>
     <% searchresults[0].forEach(function(flight) { %>
       <div class="panel panel-success">
         <div class="panel-body">
@@ -44,7 +45,8 @@
             <div class="tinerarie-row">
 
               <div class="tinerarie">
-                <p><h3><%= originOne %></h3>
+                <h3><%= originOne %></h3>
+                <p>
                   <span class="glyphicon glyphicon-time"></span>
                   <%=flight.OutboundLegInfo.Departure.slice(11, 16)%>
                 </p>
@@ -56,7 +58,8 @@
               </div>
 
               <div class="tinerarie">
-                <p> <h3><%= destination %> </h3>
+                 <h3><%= destination %> </h3>
+                 <p>
                   <span class="glyphicon glyphicon-time"></span>
                   <%=flight.OutboundLegInfo.Arrival.slice(11, 16)%>
                 </p>
@@ -111,6 +114,8 @@
   </div>
 
   <div class="col-sm-6">
+    <h1 class="tecnologies">Flights from <%= originTwo%></h1>
+
     <% searchresults[1].forEach(function(flight) { %>
       <div class="panel panel-success">
         <div class="panel-body">
@@ -178,6 +183,8 @@
               <a href="<%= flight.Price.superLink%>">BOOK!!!</a>
               <% } %>
           </div>
+
+
         </div> <!-- panel panel-success -->
       </div> <!-- panel-body -->
     <% }); %>
