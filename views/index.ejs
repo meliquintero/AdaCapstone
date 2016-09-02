@@ -42,7 +42,7 @@
 
     <% if (searchresults.destinations[0].googlePhotoReference !== undefined) {%>
       <% var theReference = searchresults.destinations[0].googlePhotoReference[0]['photo_reference']%>
-      <div class="main-destination-box" id="box-<%=i%>" style="background-image: url('https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=<%=theReference%>&key=<%=process.env.GOOGLE_KEY%>')">
+      <div class="main-destination-box" style="background-image: url('https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=<%=theReference%>&key=<%=process.env.GOOGLE_KEY%>')">
     <% } else if (searchresults.destinations[0].googlePhotoReference === undefined) {%>
       <div class="main-destination-box" style="background-image: url('http://www.muxlowsurveying.com/wp-content/uploads/2015/06/Detroit-Metro-Airport-min.jpg')">
     <% } %>

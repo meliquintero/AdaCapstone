@@ -204,7 +204,6 @@ label {
 .fa-angle-double-down:before {content: "\f103";}
 
 .bounce {
-  border: solid blue;
   position: absolute;
   top: 68.5rem;
   bottom: 30px;
@@ -386,6 +385,8 @@ label {
   flex-grow: 1;
   margin: 0 1em 1.5em 1em;
   position: relative;
+  background-position: bottom;
+  background-repeat: no-repeat;
 }
 
 .main-destination-info {
@@ -405,7 +406,6 @@ label {
   border-bottom: 2px solid gainsboro;
   padding-bottom: 4px;
   clear: both;
-  border: 2px solid yellow;
   padding-left: 2rem;
 }
 
@@ -414,7 +414,6 @@ label {
   padding-left: 0.8em;
   width: 100%;
   clear: both;
-  border: 2px solid red;
 }
 
 .destination-box {
@@ -437,6 +436,9 @@ label {
   margin: 0 1em 1.5em 1em;
   position: relative;
   flex-basis: 20em;
+  background-position: bottom;
+  background-repeat: no-repeat;
+
 }
 
 .destination-header {
@@ -464,19 +466,20 @@ label {
 
 .destination-copy p {
   margin: 0px !important;
+  margin-top: .5rem !important;
 }
 
 .total-flight {
   font-family: 'Architects Daughter', Tahoma !important;
-  background-color: #F4BA56; //yellow
-  padding: 2rem;
-  font-size: 24px;
-  line-height: 80px;
+  border: solid #F4BA56; //yellow
+  padding: 1.5rem;
+  font-size: 3rem;
+  line-height: 72px;
   box-shadow: 0 2px 4px #e6e6e6;
 }
 
 .total-flights {
-  font-size: 26px;
+  font-size: 2.2rem;
   position: absolute;
   bottom: 2%;
   right: 2%;
@@ -484,7 +487,12 @@ label {
   font-family: 'Architects Daughter', Tahoma;
   border: solid #F4BA56; //yellow
   width: 25%;
-  padding: .7rem;
+  padding: .6rem;
+
+}
+
+.total-flights p {
+  line-height: 18px !important;
 }
 
 .btn-flight {
@@ -533,7 +541,7 @@ a.btn-flights {
   text-decoration: none;
 }
 
-.destination-header h3{
+.destination-header h3, .main-destination-header h3{
   width: 50%;
   margin-top: 8px;
   margin-bottom: 1px;
@@ -541,7 +549,7 @@ a.btn-flights {
   font-size: 34px;
 }
 
-.destination-header h4{
+.destination-header h4, .main-destination-header h4{
   margin-top: 0px;
   margin-bottom: 2px;
   color: #777;
@@ -549,6 +557,11 @@ a.btn-flights {
 
 .destination-header a:hover{
   color: white;
+}
+
+.destination-header a {
+  width: 25%;
+  margin-right: 1rem;
 }
 
 .destination-info p {
@@ -565,25 +578,14 @@ a.btn-flights {
   color: green;
 }
 
-// SHOW
-.price {
-  float: left;
-  border: solid #3DF288;
-  width: 44%;
-  padding-top: 20px;
-  margin-right: 10px;
-  height: 100%;
-  overflow: visible;
-  font-family: 'Architects Daughter', Tahoma;
-  font-size: 2rem;
-  text-align: center;
-}
 
+// SHOW
 .tinerarie-box{
   float: left;
   width: 100%;
   clear: both;
   border-bottom: 2px solid gainsboro;
+  margin-bottom: 1.1rem;
 }
 
 .tinerarie {
@@ -603,21 +605,54 @@ a.btn-flights {
 .arrow {
   display: inline-block;
   width: 10%;
-  border: solid blue;
+}
+
+.price {
+  display: table;
+  float: left;
+  width: 46%;
+  border: solid #3DF288;
+  height: 100%;
+  font-family: 'Architects Daughter', Tahoma;
+  font-size: 2rem;
+  margin-right: 3rem;
+}
+
+.price p {
+  height: 5rem;
+  text-align:center;
+  vertical-align: middle;
+  display: table-cell;
+  font-size: 2rem;
 }
 
 .booking {
-  display: inline-block;
-  width: 44%;
-  overflow: visible;
+  display: table;
+  float: left;
+  width: 46%;
+  height: 5rem;
   background-color: #1DBF60; /* Green */
   color: white;
-  height: 5rem;
-  text-align: center;
   text-decoration: none;
-  display: inline-block;
   cursor: pointer;
-  font-size: 14px;
+  // position: relative;
+}
+
+.booking p {
+  text-align:center;
+  vertical-align: middle;
+  display: table-cell;
+  font-size: 2.2rem;
+  text-shadow: 1.8px 1.8px 3px #000000;
+}
+
+.booking p:hover {
+  background:#F4BA56; //yellow
+}
+
+.booking p:focus {
+  background:##3DF288; //yellow
+
 }
 
 .panel {
@@ -632,6 +667,8 @@ a.btn-flights {
   color: #777;
   font-size: 1.5rem !important;
 }
+
+
 
 // about
 

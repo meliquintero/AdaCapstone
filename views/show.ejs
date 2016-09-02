@@ -107,26 +107,22 @@
 
             </div> <!-- row-->
           </div><!-- box-->
-          <div class="price"><%= flight.Price.Amount%></div>
+          <div class="price"><p>$<%= flight.Price.Amount%></p></div>
 
           <% if (flight.Price.superLink !== undefined) { %>
             <a href="<%= flight.Price.superLink%>">
               <div class="booking">
-                  <p>
-                    BOOK THIS!!!
-                  </p>
+                <p> BOOK THIS!!!</p>
               </div>
             </a>
           <% } else {%>
             <div class="booking">
-                <p>
-                  No Booking
-                </p>
+              <p>Not booking available </p>
             </div>
           <% } %>
 
-        </div> <!-- panel panel-success -->
-      </div> <!-- panel-body -->
+        </div> <!-- panel-body -->
+      </div> <!-- panel panel-success -->
     <% }); %>
   </div>
 
@@ -191,13 +187,19 @@
               </div>
             </div> <!-- row-->
           </div><!-- box-->
-          <div class="price"><%= flight.Price.Amount%></div>
+          <div class="price"><p>$<%= flight.Price.Amount%></p></div>
 
-          <div class="booking">
-            <% if (flight.Price.superLink !== undefined) { %>
-              <a href="<%= flight.Price.superLink%>">BOOK!!!</a>
-              <% } %>
-          </div>
+          <% if (flight.Price.superLink !== undefined) { %>
+            <a href="<%= flight.Price.superLink%>">
+              <div class="booking">
+                <p> BOOK THIS!!!</p>
+              </div>
+            </a>
+          <% } else {%>
+            <div class="booking">
+              <p>Not booking available </p>
+            </div>
+          <% } %>
 
 
         </div> <!-- panel panel-success -->
