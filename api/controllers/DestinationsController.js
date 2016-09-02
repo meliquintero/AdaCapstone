@@ -9,8 +9,6 @@ module.exports = {
     var Origin2 = req.body.origin_two
     var DepDate = req.body.from.slice(6,10) +  "-" + req.body.from.slice(0,2) + "-" + req.body.from.slice(3,5)
     var RetDate = req.body.to.slice(6,10) + "-" + req.body.to.slice(0,2) + "-" + req.body.to.slice(3,5)
-		console.log("DepDate", DepDate);
-		console.log("RetDate", RetDate);
 
 		destinationRequests.matchedDestinations(Origin1, Origin2, DepDate, RetDate).then(function(destinationsresult){
 				return res.view('index', {
@@ -35,11 +33,8 @@ module.exports = {
 		var destination = req.params.destination
 		var DepDate = req.params.DepDate
 		var RetDate = req.params.RetDate
-
 		var destLoca = GetAirportInfo.lookupByIataCode(destination.toUpperCase())
-		console.log("destination", destination);
 
-		console.log("destLoca", destLoca);
 		flightRequests.theFlights(originOne, originTwo, destination, DepDate, RetDate).then(function(flightsResult){
 			return res.view('show', {
 					searchresults: flightsResult,

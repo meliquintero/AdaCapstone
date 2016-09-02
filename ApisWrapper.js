@@ -222,6 +222,8 @@ module.exports = {
       }
       if (originInfoTwo.destinations[i]['country'] === originInfoOne.destinations[i]['country']) {
         obj['country'] = originInfoTwo.destinations[i]['country']
+      } else {
+        obj['country'] = originInfoOne.destinations[i]['country']
       }
 
       obj['priceFromOriginOne'] = originInfoOne.destinations[i]['price']

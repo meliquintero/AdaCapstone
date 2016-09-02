@@ -37,7 +37,7 @@
 
 <div class="container">
   <%  if (user !== undefined) {%>
-    <h1 class="tecnologies"><%=user.displayName%> , <%=destLoca.city%> is a great choice!</h1>
+    <h1 class="tecnologies"><%=user.displayName.split(' ')[0]%> , <%=destLoca.city%> is a great choice!</h1>
   <% } else if (user === undefined) {%>
     <h1 class="tecnologies"> <%=destLoca.city%> is great choice!</h1>
   <%}%>
