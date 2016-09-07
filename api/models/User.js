@@ -1,4 +1,3 @@
-var bcrypt = require('bcrypt');
 module.exports = {
   attributes: {
     uid: {
@@ -34,34 +33,22 @@ module.exports = {
     }
   },
 
-  // create: function(profile){
-  //   User.create({
-  //       uid: profile.id,
-  //       provider: profile.provider,
-  //       email: profile.emails,
-  //       photo:profile.photos,
-  //       givenName: profile.name,
-  //       familyName: profile.displayName,
-  //   }).exec(function createCB(err, created){
-  //     return created
-  //   })
-  //
-  //   console.log( profile );
-  //   sails.log.debug(profile);
-  //   return profile.id
-  // },
+  create: function(profile){
+    User.create({
+        uid: profile.id,
+        provider: profile.provider,
+        email: profile.emails,
+        photo:profile.photos,
+        givenName: profile.name,
+        familyName: profile.displayName,
+    }).exec(function createCB(err, created){
+      return created
+    })
 
-  beforeCreate: function(user, cb) {
-    bcrypt.genSalt(10, function(err, salt) {
-      bcrypt.hash(user.password, salt, function(err, hash) {
-        if (err) {
-          console.log(err);
-          cb(err);
-        }else{
-          user.password = hash;
-          cb(null, user);
-        }
-      });
-    });
+    console.log( profile );
+    sails.log.debug(profile);
+    return profile.id
   }
+
+
 };

@@ -1,6 +1,5 @@
 var passport = require('passport'),
-   GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,
-  LocalStrategy = require('passport-local').Strategy;
+   GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 module.exports = {
  http: {
